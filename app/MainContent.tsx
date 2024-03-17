@@ -6,9 +6,13 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { HiChevronUpDown } from 'react-icons/hi2';
 import { IoMdCheckmark, IoIosSearch } from 'react-icons/io';
+import { IoLocation, IoTimeSharp } from 'react-icons/io5';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
+import Image from 'next/image';
+import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
+import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa';
 const frameworks = [
   {
     value: 'next.js',
@@ -162,6 +166,419 @@ export default function MainContent() {
           </Button>
         </div>
       </Card>
+      <div className="grid sm:grid-cols-1 gap-3 my-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
+          <div className="flex justify-between gap-3 items-center">
+            <Image
+              className="rounded object-cover w-[100px] h-[70px]"
+              src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg'}
+              alt="Pic 1"
+              height={100}
+              width={100}
+            />
+            <div className="flex flex-col">
+              <span className="text-sm">Lorem ipsum dolor sit amet consectetur. Lorem ipsu...</span>
+              <div className="flex justify-between">
+                <span className="text-sm text-black font-bold">Rp. 59jt</span>
+                <span className="text-sm text-black/60">Quad</span>
+              </div>
+            </div>
+          </div>
+          <div className="my-2">
+            <div className="flex justify-between">
+              <span className="text-sm">Sisa Seat</span>
+              <span className="text-sm font-bold">33 Seat</span>
+            </div>
+            <Progress value={33} />
+          </div>
+          <Separator />
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaRegCalendarAlt />
+              10 Apr 2024
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              4 <FaRegStar /> <FaHotel />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <FaPlaneDeparture /> Garuda
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              17 Hari <IoTimeSharp />
+            </span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span className="text-sm flex gap-2 items-center">
+              <IoLocation /> Jakarta
+            </span>
+            <span className="text-sm flex gap-2 items-center">
+              Sekamar Ber-4 <FaBed />
+            </span>
+          </div>
+        </Card>
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center">
+          <Button>Lihat lebih banyak</Button>
+        </div>
+      </div>
     </section>
   );
 }

@@ -7,6 +7,16 @@ const nextConfig = {
         hostname: 'cloud.umroh.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'umroh-static.s3.ap-southeast-1.amazonaws.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.umroh.com',
+        port: '',
+      },
     ],
   },
 };
