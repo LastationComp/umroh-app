@@ -1,0 +1,201 @@
+{
+  "hotels": [
+    {
+      "id": 1,
+      "title": "Anjum Makkah Hotel",
+      "location": "0m dari Maqam Ibrahim",
+      "facility": [
+        "Free Wifi",
+        "Ruangan keluarga",
+        "Disabilitas",
+        "Tempat makan",
+        "Shuttle Bandara",
+        "Pelayanan kamar"
+      ],
+      "other_facility": [],
+      "star_hotel": 4
+    }
+  ],
+  "paket_umroh": [
+    {
+      "id": 1,
+      "hotelId": 1,
+      "img": "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg",
+      "title": "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat",
+      "date_going": "2004-03-27",
+      "departing from": "Jakarta",
+      "days": 17,
+      "plane": "Garuda Indonesia",
+      "price": 55400000,
+      "syarat": [
+        "Paspor ASLI",
+        "Suntik Vaksin Meningitis untuk saat ini tidak diwajibkan [Tetapi dianjurkan bagi calon jamaah yang memiliki riwayat kesehatan penyakit tertentu (komorbid)]",
+        "Fotocopy KTP",
+        "Fotocopy Kartu keluarga",
+        "Fotocopy Akta Nikah (Bagi Pasangan Suami istri yang berangkat bersama dan usia istri di bawah 45th)"
+      ],
+      "star_hotel" : 4,
+      "sisa_seat" : 15,
+      "feature" : "Quad",
+      "feature_detail" : "Sekamar Ber-4"
+      
+    },
+    {
+      "id": 2,
+      "hotelId": 1,
+      "img": "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202024-01-19%20at%2014.44.30.jpeg",
+      "title": "Umroh Lailatul Qadr Dan Idul Fitri 29 Maret 2024",
+      "date_going": "2004-03-29",
+      "departing from": "Jakarta",
+      "days": 16,
+      "plane": "Saudia",
+      "price": 39500000,
+      "syarat": [
+        "Paspor ASLI",
+        "Suntik Vaksin Meningitis untuk saat ini tidak diwajibkan [Tetapi dianjurkan bagi calon jamaah yang memiliki riwayat kesehatan penyakit tertentu (komorbid)]",
+        "Fotocopy KTP",
+        "Fotocopy Kartu keluarga",
+        "Fotocopy Akta Nikah (Bagi Pasangan Suami istri yang berangkat bersama dan usia istri di bawah 45th)"
+      ],
+      "star_hotel" : 4,
+      "sisa_seat" : 33,
+      "feature" : "Quad",
+      "feature_detail" : "Sekamar Ber-4"
+    },
+    {
+      "id": 3,
+      "hotelId": 1,
+      "img": "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202024-01-15%20at%2010.34.11%20AM.jpeg",
+      "title": "Myhajiumroh 17 Hari Umroh Akhir Ramadhan 1445h",
+      "date_going": "2004-03-31",
+      "departing from": "Jakarta",
+      "days": 17,
+      "plane": "Qatar Airways",
+      "price": 50988000,
+      "syarat": [
+        "Paspor ASLI",
+        "Suntik Vaksin Meningitis untuk saat ini tidak diwajibkan [Tetapi dianjurkan bagi calon jamaah yang memiliki riwayat kesehatan penyakit tertentu (komorbid)]",
+        "Fotocopy KTP",
+        "Fotocopy Kartu keluarga",
+        "Fotocopy Akta Nikah (Bagi Pasangan Suami istri yang berangkat bersama dan usia istri di bawah 45th)"
+      ],
+      "star_hotel" : 4,
+      "sisa_seat" : 35,
+      "feature" : "Quad",
+      "feature_detail" : "Sekamar Ber-4"
+    },
+    {
+      "id": 4,
+      "hotelId": 1,
+      "img": "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/Untitled-1.jpg",
+      "title": "Umroh I'tikaf Ramadhan 1 April 2024 17 Hari",
+      "date_going": "2004-04-01",
+      "departing from": "Jakarta",
+      "days": 17,
+      "plane": "Saudia",
+      "price": 33900000,
+      "syarat": [
+        "Paspor ASLI",
+        "Suntik Vaksin Meningitis untuk saat ini tidak diwajibkan [Tetapi dianjurkan bagi calon jamaah yang memiliki riwayat kesehatan penyakit tertentu (komorbid)]",
+        "Fotocopy KTP",
+        "Fotocopy Kartu keluarga",
+        "Fotocopy Akta Nikah (Bagi Pasangan Suami istri yang berangkat bersama dan usia istri di bawah 45th)"
+      ],
+      "star_hotel" : 4,
+      "sisa_seat" : 18,
+      "feature" : "Quad",
+      "feature_detail" : "Sekamar Ber-4"
+    },
+    {
+      "id": 5,
+      "hotelId": 1,
+      "img": "https://cloud.umroh.com/images/upload/c_contain,f_auto,g_face,b_rgb:000000,dpr_2.0,h_391,w_627,q_80,fl_progressive/IMG-20240202-WA0006.jpg",
+      "title": "Umroh Lebaran Di Haram Starting Medan",
+      "date_going": "2004-04-08",
+      "departing from": "Medan",
+      "days": 12,
+      "plane": "Lion Air",
+      "price": 31300000,
+      "syarat": [
+        "Paspor ASLI",
+        "Suntik Vaksin Meningitis untuk saat ini tidak diwajibkan [Tetapi dianjurkan bagi calon jamaah yang memiliki riwayat kesehatan penyakit tertentu (komorbid)]",
+        "Fotocopy KTP",
+        "Fotocopy Kartu keluarga",
+        "Fotocopy Akta Nikah (Bagi Pasangan Suami istri yang berangkat bersama dan usia istri di bawah 45th)"
+      ],
+      "star_hotel" : 4,
+      "sisa_seat" : 30,
+      "feature" : "Quad",
+      "feature_detail" : "Sekamar Ber-4"
+    },
+    {
+      "id": 6,
+      "hotelId": 1,
+      "img": "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-13%20at%2009.45.10.jpeg",
+      "title": "Umroh Syawal Shappire 12 April City Tour Thaif",
+      "date_going": "2004-04-12",
+      "departing from": "Jakarta",
+      "days": 9,
+      "plane": "Saudia",
+      "price": 47700000,
+      "syarat": [
+        "Paspor ASLI",
+        "Suntik Vaksin Meningitis untuk saat ini tidak diwajibkan [Tetapi dianjurkan bagi calon jamaah yang memiliki riwayat kesehatan penyakit tertentu (komorbid)]",
+        "Fotocopy KTP",
+        "Fotocopy Kartu keluarga",
+        "Fotocopy Akta Nikah (Bagi Pasangan Suami istri yang berangkat bersama dan usia istri di bawah 45th)"
+      ],
+      "star_hotel" : 4,
+      "sisa_seat" : 20,
+      "feature" : "Quad",
+      "feature_detail" : "Sekamar Ber-4"
+    }
+  ],
+  "patner" : [
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,w_60,dpr_2.0,q_20,fl_progressive/icon%20Percaya%20Umroh%20512.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/biro_cover/smefihtefs5byuwfgsmc.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/6b595b03dd5023d18020bbbd355d1cc5.jpeg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/LF6Gv6jy_400x400.jpg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/b6f2383737f15d1184d2a7e3c97b7e86.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/biro_cover/gfhdpwxjpgcmldekjc0h.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/biro_cover/txdo1grzttct31t9ubuc.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/ec9a651a55a1794b5ff5145e639692b9.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/biro_cover/yjaiomtxlkf4zhmqa18k.jpg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/94b2f8d51e0edd7d3ac978cdd7adea66.jpeg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/a49ad87b103aa29caa9ffdf29fd0b2e8.jpeg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/hamsa%20tour.png"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/f9e6bbb9aa1a263c9dddca176d203e47.jpeg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/5e2c0cd0aaf3a3821ee750229cc518a0.jpeg"
+    },
+    {
+      "img_url" : "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_center,dpr_2.0,q_80,fl_progressive/cover/b8d8f8609b021a17ea7a27e83bff0bfb.png"
+    }
+  ]
+}
