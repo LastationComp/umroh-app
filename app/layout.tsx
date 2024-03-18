@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
-// Base styles for media player and provider (~400B).
-import '@vidstack/react/player/styles/base.css';
-
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import Navbar from './Navbar';
+config.autoAddCss = false;
 const inter = Poppins({ subsets: ['latin'], weight: '400' });
 
 export const metadata: Metadata = {
@@ -17,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

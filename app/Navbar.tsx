@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Separator } from '@/components/ui/separator';
@@ -7,7 +8,7 @@ import Link from 'next/link';
 import React from 'react';
 export default function Navbar() {
   return (
-    <nav className="h-[4rem] shadow-md">
+    <nav className="h-[4rem] shadow-md fixed top-0 z-50 bg-white w-full">
       <section className="container mx-auto flex items-center justify-between h-full">
         <div className="sm:flex md:hidden">
           <Sheet>
