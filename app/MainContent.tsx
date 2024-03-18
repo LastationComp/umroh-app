@@ -442,7 +442,7 @@ export default function MainContent() {
               <span className="text-sm">Sisa Seat</span>
               <span className="text-sm font-bold">33 Seat</span>
             </div>
-            <Progress value={33} />
+            <Progress className="bg-green-600" value={33} />
           </div>
           <Separator />
           <div className="flex justify-between my-2">

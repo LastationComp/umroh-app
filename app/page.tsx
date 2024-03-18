@@ -8,6 +8,10 @@ import Gallery from './Gallery';
 import FeaturesContent from './FeaturesContent';
 import PartnerContent from './PartnerContent';
 import StoryContent from './StoryContent';
+import CoverContent from './CoverContent';
+import Footer from './Footer';
+import FAQContent from './FAQContent';
+import ContactContent from './ContactContent';
 const Content = dynamic(() => import('@/app/Content'), { ssr: false });
 export default function Home() {
   return (
@@ -19,7 +23,10 @@ export default function Home() {
       <FeaturesContent />
       <PartnerContent />
       <StoryContent />
-      
+      <CoverContent />
+      <FAQContent />
+      <ContactContent />
+      <Footer />
     </section>
   );
 }
