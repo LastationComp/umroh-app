@@ -11,7 +11,7 @@ import StoryContent from './StoryContent';
 const Content = dynamic(() => import('@/app/Content'), { ssr: false });
 export default function Home() {
   return (
-    <section className="h-screen">
+    <section className="h-full bg-tacao">
       <Navbar />
       <TopCarousel />
       <MainContent />
@@ -19,6 +19,7 @@ export default function Home() {
       <FeaturesContent />
       <PartnerContent />
       <StoryContent />
+      
     </section>
   );
 }
