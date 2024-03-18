@@ -5,14 +5,13 @@ import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Button } from '@/components/ui/button';
 import { MediaPlayer, MediaProvider } from '@vidstack/react';
-export default function PartnerContent() {
+export default function CoverContent() {
   return (
     <>
       <section className="container mx-auto">
         <div className="flex justify-center items-center">
           <div className="flex flex-col text-center">
-            <span className="text-[24px]">Rekan Biro Travel Umroh Kami</span>
-            <span className="text-black/60">Lebih Dari 100 Biro Travel Umroh telah Menjadi Rekan Kami</span>
+            <span className="text-[24px]">Diliput Oleh</span>
           </div>
         </div>
       </section>
@@ -93,9 +92,6 @@ export default function PartnerContent() {
             </CarouselItem>
           </CarouselContent>
         </Carousel>
-      </section>
-      <section className="flex justify-center my-3">
-        <Button variant={'outline'}>Lihat Lebih Banyak</Button>
       </section>
     </>
   );
