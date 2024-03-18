@@ -15,7 +15,9 @@ export default function Navbar() {
             <SheetTrigger>Open</SheetTrigger>
             <SheetContent side={'left'}>
               <SheetHeader>
-                <SheetTitle>Umroh.ai</SheetTitle>
+                <SheetTitle>
+                  <Link href={'/'}>Umroh.ai</Link>
+                </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-3 items-center">
                 <Button variant={'ghost'} className="w-full">
@@ -48,7 +50,9 @@ export default function Navbar() {
           </Sheet>
         </div>
         <div className="flex gap-3 max-md:hidden">
-          <h1 className="brand text-xl font-bold my-auto text-white/90">Umroh.ai</h1>
+          <h1 className="brand text-xl font-bold my-auto text-white/90">
+            <Link href={'/'}>Umroh.ai</Link>
+          </h1>
           <div className="flex gap-3 items-center">
             <Separator orientation="vertical" />
             <NavigationMenu>
