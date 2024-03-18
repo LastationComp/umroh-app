@@ -47,6 +47,8 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        'tacao' : '#f7f1ed',
+        'blue-dark' : '#071437'
       },
       borderRadius: {
         lg: 'var(--radius)',

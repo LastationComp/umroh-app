@@ -6,7 +6,7 @@ export default function FeaturesContent() {
   return (
     <section className="container mx-auto">
       <div className="flex justify-center my-3 gap-3 flex-col">
-        <span className="text-[24px] text-center">Mengapa Pesan Paket Umroh di Umroh.com</span>
+        <span className="text-[24px] text-center">Mengapa Pesan Paket Umroh di Umroh.ai</span>
         <Card className="p-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="flex flex-col items-center">
