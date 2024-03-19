@@ -103,7 +103,7 @@ export default function MainContent() {
     return uniqueValue;
   };
 
-  const { data: paket_umroh, mutate } = useSWR('http://localhost:4000/paket_umroh', fetcher);
+  const { data: paket_umroh, mutate } = useSWR('https://umroh-ai-dummy-api-production.up.railway.app/paket_umroh', fetcher);
   return (
     <section className="container mx-auto ">
       <Card className="p-3">
