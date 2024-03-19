@@ -12,7 +12,7 @@ export default function FAQContent() {
         online, pembelian paket data, ibadah nyaman semua mudah ditemukan hanya dengan Umroh.ai. Saat ini sudah banyak travel terpercaya yang sudah bergabung dengan kami, Umroh.ai ingin memudahkan umat muslim Indonesia dalam beribadah,
         menghilangkan kekhawatiran dikalangan masyarakat dan memberikan layanan yang terpercaya dan aman. Transaksi aman, ibadah nyaman bersama Umroh.ai
       </p>
-      <Accordion type={'multiple'} collapsible>
+      <Accordion type={'multiple'}>
         <AccordionItem value="item-1">
           <AccordionTrigger>
             <span className="text-xl font-semibold ">Paket Umroh Dari Travel Terpercaya</span>

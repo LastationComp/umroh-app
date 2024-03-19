@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 import ContactContent from './ContactContent';
 import Footer from './Footer';
 config.autoAddCss = false;
-const inter = Poppins({ subsets: ['latin'], weight: '400' });
+const inter = Poppins({ subsets: ['latin-ext'], weight: '400' });
 
 export const metadata: Metadata = {
   title: 'Umroh.ai',
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + ' h-screen'}>
+      <body className={inter.className + ' h-screen transition-all'}>
         <Navbar />
         {children}
         <ContactContent />

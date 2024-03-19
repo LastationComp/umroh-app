@@ -29,7 +29,7 @@ export default function StoryContent() {
               </div>
               <Image src={'https://umroh-static.s3.ap-southeast-1.amazonaws.com/gallery/3.jpg'} className="rounded w-full object-cover h-[200px]" alt="blog 1" width={1000} height={1000} />
             </div>
-            <Link href={'/'} className="text-md hover:text-blue-600 font-bold transition">
+            <Link href={'/'} className="text-md hover:text-blue-600 font-bold transition line-clamp-2">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore, quod!
             </Link>
             <p className="text-black/70 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis velit itaque consequatur non praesentium veritatis neque voluptatum adipisci, iste iusto.</p>
@@ -46,7 +46,7 @@ export default function StoryContent() {
               </div>
               <Image src={'https://umroh-static.s3.ap-southeast-1.amazonaws.com/gallery/3.jpg'} className="rounded w-full object-cover h-[200px]" alt="blog 1" width={1000} height={1000} />
             </div>
-            <Link href={'/'} className="text-md hover:text-blue-600 font-bold transition">
+            <Link href={'/'} className="text-md hover:text-blue-600 font-bold transition line-clamp-2">
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore, quod!
             </Link>
             <p className="text-black/70 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis velit itaque consequatur non praesentium veritatis neque voluptatum adipisci, iste iusto.</p>
@@ -63,8 +63,8 @@ export default function StoryContent() {
               </div>
               <Image src={'https://umroh-static.s3.ap-southeast-1.amazonaws.com/gallery/3.jpg'} className="rounded w-full object-cover h-[200px]" alt="blog 1" width={1000} height={1000} />
             </div>
-            <Link href={'/'} className="text-md hover:text-blue-600 font-bold transition">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore, quod!
+            <Link href={'/'} className="text-md hover:text-blue-600 font-bold transition line-clamp-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, fuga. Vitae ipsum sit inventore saepe sed voluptate, ab eius consequatur! Amet, iure blanditiis similique voluptatibus facilis corrupti a aut recusandae!
             </Link>
             <p className="text-black/70 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis velit itaque consequatur non praesentium veritatis neque voluptatum adipisci, iste iusto.</p>
             <span className="text-black/70">

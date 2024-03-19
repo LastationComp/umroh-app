@@ -12,11 +12,15 @@ export default function Navbar() {
       <section className="container mx-auto flex items-center justify-between h-full">
         <div className="sm:flex md:hidden">
           <Sheet>
-            <SheetTrigger>Open</SheetTrigger>
-            <SheetContent side={'left'}>
+            <SheetTrigger>
+              <span className="text-white">Umroh.ai</span>
+            </SheetTrigger>
+            <SheetContent side={'left'} className="bg-blue-dark text-white">
               <SheetHeader>
                 <SheetTitle>
-                  <Link href={'/'}>Umroh.ai</Link>
+                  <Link href={'/'} className="text-white">
+                    Umroh.ai
+                  </Link>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-3 items-center">
@@ -29,7 +33,7 @@ export default function Navbar() {
                 <NavigationMenu>
                   <NavigationMenuList>
                     <NavigationMenuItem>
-                      <NavigationMenuTrigger>Lainnya</NavigationMenuTrigger>
+                      <NavigationMenuTrigger className="bg-blue-dark">Lainnya</NavigationMenuTrigger>
                       <NavigationMenuContent className="mr-auto">
                         <div className="flex flex-col w-full">
                           <Link href={'/'}>
@@ -37,7 +41,7 @@ export default function Navbar() {
                           </Link>
                           <Link href={'/'}>
                             <Button variant={'ghost'} className="w-full">
-                              Al Qur'an
+                              Al Quran
                             </Button>
                           </Link>
                         </div>
@@ -59,12 +63,12 @@ export default function Navbar() {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <Link href={'/'} legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle() + " bg-transparent hover:bg-transparent text-white/90 hover:text-white/70"}>Paket Promo</NavigationMenuLink>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle() + ' bg-transparent hover:bg-transparent text-white/90 hover:text-white/70'}>Paket Promo</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Link href={'/'} legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle() + " bg-transparent hover:bg-transparent text-white/90 hover:text-white/70"}>Blog</NavigationMenuLink>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle() + ' bg-transparent hover:bg-transparent text-white/90 hover:text-white/70'}>Blog</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -80,7 +84,7 @@ export default function Navbar() {
                       </Link>
                       <Link href={'/'}>
                         <Button variant={'ghost'} className="w-full">
-                          Al Qur'an
+                          Al Quran
                         </Button>
                       </Link>
                     </div>
@@ -91,8 +95,10 @@ export default function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant={'ghost'} className='hover:bg-transparent'><span className='hover:text-blue-500 text-white/90'>Masuk</span> </Button>
-          <Button className='bg-green-600 hover:bg-green-700' >Daftar</Button>
+          <Button variant={'ghost'} className="hover:bg-transparent">
+            <span className="hover:text-blue-500 text-white/90">Masuk</span>{' '}
+          </Button>
+          <Button className="bg-green-600 hover:bg-green-700">Daftar</Button>
         </div>
       </section>
     </nav>
