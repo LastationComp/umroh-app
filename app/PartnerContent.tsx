@@ -11,7 +11,7 @@ import { fetcher } from '@/lib/Fetcher';
 
 export default function PartnerContent() {
 
-  const { data: patner, mutate } = useSWR("http://localhost:4000/patner", fetcher);
+  const { data: patner, mutate } = useSWR('https://umroh-ai-dummy-api-production.up.railway.app/patner', fetcher);
 
   return (
     <>
