@@ -231,7 +231,7 @@ export default function MainContent() {
       </Card>
       <div className="grid sm:grid-cols-1 gap-3 my-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {paket_umroh?.map((paket_umroh: any, index: number) => (
-          <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`}>
+          <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
             <Card key={index} className="p-3 hover:cursor-pointer hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
               <div className="flex justify-between gap-3 items-center">
                 <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
