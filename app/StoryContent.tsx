@@ -12,11 +12,13 @@ import 'yet-another-react-lightbox/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function StoryContent() {
   return (
-    <div className=" container mx-auto my-5">
+    <div className=" md:container md:mx-auto mx-3 my-5">
       <Card className="bg-white p-5">
         <div className="flex justify-between items-center">
           <span className="text-[24px]">Cerita Islam Terkini</span>
-          <Link href={'/'}>Lihat Lebih Banyak</Link>
+          <Link href={'/'} className="text-end">
+            Lihat Lebih Banyak
+          </Link>
         </div>
         <Separator />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

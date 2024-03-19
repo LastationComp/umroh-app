@@ -1,16 +1,14 @@
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Button } from '@/components/ui/button';
 import { MediaPlayer, MediaProvider } from '@vidstack/react';
-import useSWR from "swr";
+import useSWR from 'swr';
 import { fetcher } from '@/lib/Fetcher';
 
-
 export default function PartnerContent() {
-
   const { data: patner, mutate } = useSWR('https://umroh-ai-dummy-api-production.up.railway.app/patner', fetcher);
 
   return (
@@ -39,12 +37,12 @@ export default function PartnerContent() {
           <CarouselContent className="">
             {patner?.map((patner: any, index: number) => (
               <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">
-              <div className="p-5 bg-white shadow border border-1 flex items-center">
-                <Image src={patner.img_url} className=" rounded transition border-black w-[150px] h-auto" alt="Galeri " width={1000} height={1000} />
-              </div>
-            </CarouselItem>
+                <div className="p-5 bg-white shadow border border-1 flex items-center">
+                  <Image src={patner.img_url} className=" rounded transition border-black w-[150px] h-auto" alt="Galeri " width={1000} height={1000} />
+                </div>
+              </CarouselItem>
             ))}
-            
+
             {/* <CarouselItem className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">
               <div className="p-5 bg-white shadow border border-1 flex items-center h-full">
                 <Image
@@ -102,10 +100,14 @@ export default function PartnerContent() {
               </div>
             </CarouselItem> */}
           </CarouselContent>
+          <CarouselNext />
+          <CarouselPrevious />
         </Carousel>
       </section>
       <section className="flex justify-center my-3">
-        <Button variant={'ghost'} className='hover:bg-tacao'><span className='text-green-600 hover:text-green-700 font-semibold'>Lihat Lebih Banyak {">"}</span></Button>
+        <Button variant={'ghost'} className="hover:bg-tacao">
+          <span className="text-green-600 hover:text-green-700 font-semibold">Lihat Lebih Banyak {'>'}</span>
+        </Button>
       </section>
     </>
   );

@@ -1,4 +1,4 @@
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -35,6 +35,8 @@ export default function Gallery() {
               </CarouselItem>
             ))}
           </CarouselContent>
+          <CarouselNext />
+          <CarouselPrevious />
         </Carousel>
       </section>
     </>

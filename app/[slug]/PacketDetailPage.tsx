@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegCalendarAlt, FaStar } from 'react-icons/fa';
+import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegBookmark, FaRegCalendarAlt, FaRegHeart, FaStar } from 'react-icons/fa';
 import { MdGroup, MdPerson } from 'react-icons/md';
 
 const pricelist = [
@@ -63,10 +63,16 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
               />
             </CarouselItem>
           </CarouselContent>
+          <CarouselPrevious />
           <CarouselNext />
         </Carousel>
         <div className="flex flex-col gap-5">
-          <h1 className="text-xl font-bold">{slug}</h1>
+          <div className="flex justify-between items-center">
+            <span className="text-xl font-bold">{slug}</span>
+            <Button variant={'ghost'}>
+              <FaRegBookmark className="w-[24px]" size={'small'} />
+            </Button>
+          </div>
           {!list && (
             <span className="text-xl font-semibold flex items-center gap-3 font-bold">
               {rupiah.format(Math.min(...allPrice))} - {rupiah.format(Math.max(...allPrice))} <Separator orientation={'vertical'} />

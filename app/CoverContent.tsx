@@ -1,4 +1,4 @@
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -15,7 +15,7 @@ export default function CoverContent() {
           </div>
         </div>
       </section>
-      <section className="flex justify-center my-3 max-md:container max-md:mx-auto">
+      <section className="flex justify-center my-3 max-md:container max-md:mx-auto bg-blue-dark py-5">
         <Carousel
           plugins={[
             Autoplay({
@@ -91,6 +91,8 @@ export default function CoverContent() {
               </div>
             </CarouselItem>
           </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
         </Carousel>
       </section>
     </>

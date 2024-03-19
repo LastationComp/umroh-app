@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function FeaturesContent() {
   return (
-    <section className="container mx-auto">
+    <section className="md:container md:mx-auto mx-3">
       <div className="flex justify-center my-3 gap-3 flex-col">
         <span className="text-[24px] text-center">Mengapa Pesan Paket Umroh di Umroh.ai</span>
         <Card className="p-3">
