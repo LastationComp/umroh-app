@@ -13,11 +13,11 @@ import React from 'react';
 //  **/
 // import '@/components/_metronic/assets/sass/style.scss';
 
-type Props = {
+type MetadataProps = {
   params: { slug: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: MetadataProps) {
   return {
     title: params.slug + ' - Umroh.ai',
   };
