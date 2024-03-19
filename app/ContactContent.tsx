@@ -5,7 +5,7 @@ import { MdEmail } from 'react-icons/md';
 
 export default function ContactContent() {
   return (
-    <section className="container mx-auto">
+    <section className="md:container md:mx-auto mx-3">
       <div className="flex justify-between flex-col lg:flex-row gap-10">
         <div className="flex flex-col gap-5">
           <h1 className="text-[24px] font-bold">Umroh.ai</h1>

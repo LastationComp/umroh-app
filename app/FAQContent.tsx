@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function FAQContent() {
   return (
-    <section className="container mx-auto my-5">
+    <section className="md:container md:mx-auto mx-3 my-5">
       <span className="text-xl font-semibold ">Umroh.ai – Cari Paket Umroh Murah di Indonesia</span>
       <p className="text-sm leading-7 my-5 text-black/70">
         Umroh.ai adalah marketplace yang menyediakan paket umroh lebih dari 100 travel umroh terpercaya di Indonesia dengan izin resmi Kementerian Agama. Ibadah terasa mudah karena tidak lagi pusing untuk mencari travel umroh dan temukan

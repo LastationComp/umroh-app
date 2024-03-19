@@ -1,10 +1,10 @@
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 export default function TopCarousel() {
   return (
-    <section className="container mx-auto my-3 mt-[5rem]">
+    <section className="md:container container-md mx-auto my-3 mt-[5rem]">
       <div className="flex justify-center">
         <Carousel
           plugins={[
@@ -25,6 +25,8 @@ export default function TopCarousel() {
               </div>
             </CarouselItem>
           </CarouselContent>
+          <CarouselNext />
+          <CarouselPrevious />
         </Carousel>
       </div>
     </section>
