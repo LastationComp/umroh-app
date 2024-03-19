@@ -15,7 +15,7 @@ import React from 'react';
 
 type MetadataProps = {
   params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  // searchParams: { [key: string]: string | string[] | undefined };
 };
 export async function generateMetadata({ params }: MetadataProps) {
   return {
