@@ -1,4 +1,5 @@
 'use client';
+import Favorites from '@/components/order/Favorites';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -69,9 +70,9 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
         <div className="flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <span className="text-xl font-bold">{slug}</span>
-            <Button variant={'ghost'}>
-              <FaRegBookmark className="w-[24px]" size={'small'} />
-            </Button>
+            <div className="mb-auto">
+              <Favorites />
+            </div>
           </div>
           {!list && (
             <span className="text-xl font-semibold flex items-center gap-3 font-bold">

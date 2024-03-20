@@ -8,14 +8,17 @@ import ContactContent from './ContactContent';
 import Footer from './Footer';
 import NextTopLoader from 'nextjs-toploader';
 import { faWifi, fas } from '@fortawesome/free-solid-svg-icons';
+import { Toaster } from '@/components/ui/toaster';
 config.autoAddCss = false;
 const inter = Poppins({ subsets: ['latin-ext'], weight: '400' });
 
 library.add(faWifi, fas);
+
 export const metadata: Metadata = {
   title: 'Umroh.ai',
   description: 'Umroh.ai by PT. UBIG',
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,11 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + ' h-screen transition-all'}>
-        <NextTopLoader showSpinner={false} initialPosition={0.5}/>
-        <Navbar />
+        <NextTopLoader showSpinner={false} initialPosition={0.5} />
         {children}
-        <ContactContent />
-        <Footer />
+        <Toaster />
       </body>
     </html>
   );

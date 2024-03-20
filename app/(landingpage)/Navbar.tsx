@@ -102,7 +102,9 @@ export default function Navbar() {
         </div>
         <div className="flex items-center gap-3">
           <Button variant={'ghost'} className="hover:bg-transparent">
-            <span className="hover:text-blue-500 text-white/90">Masuk</span>{' '}
+            <Link href={'/auth'} className="hover:text-blue-500 text-white/90">
+              Masuk
+            </Link>
           </Button>
           <Button className="bg-green-600 hover:bg-green-700">Daftar</Button>
         </div>
