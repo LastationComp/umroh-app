@@ -10,16 +10,16 @@ import { IoLocation, IoPricetagOutline, IoTimeSharp } from 'react-icons/io5';
 import { CiLocationOn } from 'react-icons/ci';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/Fetcher';
-import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { BiCartDownload } from 'react-icons/bi';
 import Image from 'next/image';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegClock, FaRegStar } from 'react-icons/fa';
-import { getShortString } from '@/lib/String/GetShortTitle';
+import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegClock, FaRegHeart, FaRegStar } from 'react-icons/fa';
 import Link from 'next/link';
-import { MdDateRange } from 'react-icons/md';
+import { MdCompare, MdDateRange, MdOutlineShare, MdOutlineShop } from 'react-icons/md';
 import { formatDate } from '@/lib/Parser/DateFormat';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import Favorites from '@/components/order/Favorites';
 const frameworks = [
   {
     value: 'next.js',
@@ -96,8 +96,6 @@ export default function MainContent() {
   const [openPrice, setOpenPrice] = useState(false);
   const [priceValue, setPriceValue] = useState('');
 
-
-
   const uniqueDeparting = (departing: any) => {
     const uniqueValue = new Set(departing);
     return uniqueValue;
@@ -107,16 +105,8 @@ export default function MainContent() {
   return (
     <section className="md:container md:mx-auto mx-3">
       <Card className="p-3">
-        <div className="flex justify-between items-center max-md:flex-col gap-3 cla">
-          {/* <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <Button variant={'outline'}>Lokasi Berangkat</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Jakarta</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
-          <div className="flex gap-3 max-lg:flex-col w-full">
+        <div className="flex items-center max-md:flex-col gap-3 cla">
+          <div className="flex gap-3 max-lg:flex-col max-md:w-full">
             <div className="flex flex-col">
               <span>Lokasi Keberangkatan</span>
               <Popover open={openLocation} onOpenChange={setOpenLocation}>
@@ -234,62 +224,120 @@ export default function MainContent() {
               </Popover>
             </div>
           </div>
-          <Button className="flex gap-3 bg-orange-500 hover:bg-orange-600">
+
+          <Button className="flex gap-3 bg-orange-500 hover:bg-orange-600 mt-auto">
             <IoIosSearch /> Cari Paket Umroh
           </Button>
         </div>
       </Card>
       <div className="grid sm:grid-cols-1 gap-3 my-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {paket_umroh?.map((paket_umroh: any, index: number) => (
-          <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
-            <Card key={index} className="p-3 hover:cursor-pointer hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
-              <div className="flex justify-between gap-3 items-center">
-                <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold line-clamp-2">{paket_umroh.title}</span>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-orange-400 font-bold">
-                      Rp. {paket_umroh.price.toString().length >= 6 ? paket_umroh.price.toString().slice(0, 2) + ',' + paket_umroh.price.toString().charAt(2) + 'jt' : paket_umroh.price.toString().slice(0, 3) + 'rb'}
-                    </span>
-                    <span className="text-sm text-black/60">{paket_umroh.feature}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="my-2">
+          <Card key={index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
+            <div className="flex justify-between gap-3 items-center">
+              <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
+              <div className="flex flex-col">
+                <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
+                  <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
+                </Link>
                 <div className="flex justify-between">
-                  <span className="text-sm">Sisa Seat</span>
-                  <span className="text-sm font-bold">{paket_umroh.sisa_seat} Seat</span>
+                  <span className="text-sm text-orange-400 font-bold">
+                    Rp. {paket_umroh.price.toString().length >= 6 ? paket_umroh.price.toString().slice(0, 2) + ',' + paket_umroh.price.toString().charAt(2) + 'jt' : paket_umroh.price.toString().slice(0, 3) + 'rb'}
+                  </span>
+                  <span className="text-sm text-black/60">{paket_umroh.feature}</span>
                 </div>
-                <Progress className="" value={paket_umroh.sisa_seat} />
               </div>
-              <Separator />
-              <div className="flex justify-between my-2">
-                <span className="text-sm flex gap-2 items-center">
-                  <FaRegCalendarAlt />
-                  {formatDate(paket_umroh.date_going)}
-                </span>
-                <span className="text-sm flex gap-2 items-center">
-                  {paket_umroh.star_hotel} <FaRegStar className="text-yellow-500" /> <FaHotel />
-                </span>
+            </div>
+            <div className="my-2">
+              <div className="flex justify-between">
+                <span className="text-sm">Sisa Seat</span>
+                <span className="text-sm font-bold">{paket_umroh.sisa_seat} Seat</span>
               </div>
-              <div className="flex justify-between my-2">
-                <span className="text-sm flex gap-2 items-center">
-                  <FaPlaneDeparture /> {paket_umroh.plane}
-                </span>
-                <span className="text-sm flex gap-2 items-center">
-                  {paket_umroh.days} Hari <IoTimeSharp />
-                </span>
+              <Progress className="" value={paket_umroh.sisa_seat} />
+            </div>
+            <Separator />
+            <div className="flex justify-between my-2">
+              <span className="text-sm flex gap-2 items-center">
+                <FaRegCalendarAlt />
+                {formatDate(paket_umroh.date_going)}
+              </span>
+              <span className="text-sm flex gap-2 items-center">
+                {paket_umroh.star_hotel} <FaRegStar className="text-yellow-500" /> <FaHotel />
+              </span>
+            </div>
+            <div className="flex justify-between my-2">
+              <span className="text-sm flex gap-2 items-center">
+                <FaPlaneDeparture /> {paket_umroh.plane}
+              </span>
+              <span className="text-sm flex gap-2 items-center">
+                {paket_umroh.days} Hari <IoTimeSharp />
+              </span>
+            </div>
+            <div className="flex justify-between my-2">
+              <span className="text-sm flex gap-2 items-center">
+                <IoLocation /> {paket_umroh.departing_from}
+              </span>
+              <span className="text-sm flex gap-2 items-center">
+                {paket_umroh.feature_detail} <FaBed />
+              </span>
+            </div>
+            <div className="flex justify-between items-center my-3">
+              <div>
+                <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} alt="Is Syariah" width={60} height={20} />
               </div>
-              <div className="flex justify-between my-2">
-                <span className="text-sm flex gap-2 items-center">
-                  <IoLocation /> {paket_umroh.departing_from}
-                </span>
-                <span className="text-sm flex gap-2 items-center">
-                  {paket_umroh.feature_detail} <FaBed />
-                </span>
+              <div className="flex items-center gap-1">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`}>
+                        <Button>
+                          <BiCartDownload />
+                        </Button>
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Pesan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant={'secondary'}>
+                        <MdCompare />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-blue-dark">
+                      <p>Bandingkan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div>
+                        <Favorites />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-blue-dark">
+                      <p>Tambahkan ke Favorit</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant={'ghost'}>
+                        <MdOutlineShare className="text-lg" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-blue-dark">
+                      <p>Bagikan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
-            </Card>
-          </Link>
+            </div>
+          </Card>
         ))}
 
         {/* <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">

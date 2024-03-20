@@ -1,10 +1,11 @@
+'use client'
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import React from 'react';
 
 export default function FeaturesContent() {
   return (
-    <section className="md:container md:mx-auto mx-3">
+    <section className="md:container md:mx-auto mx-3 text-sm">
       <div className="flex justify-center my-3 gap-3 flex-col">
         <span className="text-[24px] text-center">Mengapa Pesan Paket Umroh di Umroh.ai</span>
         <Card className="p-3">
