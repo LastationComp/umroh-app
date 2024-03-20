@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import Navbar from './Navbar';
 import ContactContent from './ContactContent';
 import Footer from './Footer';
+import NextTopLoader from 'nextjs-toploader';
 import { faWifi, fas } from '@fortawesome/free-solid-svg-icons';
 config.autoAddCss = false;
 const inter = Poppins({ subsets: ['latin-ext'], weight: '400' });
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + ' h-screen transition-all'}>
+        <NextTopLoader showSpinner={false} initialPosition={0.5}/>
         <Navbar />
         {children}
         <ContactContent />

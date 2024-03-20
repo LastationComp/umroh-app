@@ -41,7 +41,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
   return (
     <Card className="p-5 gap-5">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <Carousel className="xl:w-[550px] flex justify-center place-self-center">
+        <Carousel className="xl:w-[550px] full flex justify-center place-self-center">
           <CarouselPrevious />
           <CarouselContent>
             <CarouselItem>
@@ -89,43 +89,46 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
                 </span>
               ))}
           <Separator />
-          <span className="flex items-center gap-3">
-            <FaRegCalendarAlt />
-            <div className="flex flex-col ">
-              <span className="font-semibold">Waktu Keberangkatan</span>
-              <span className="text-sm ">27 Maret 2024</span>
-            </div>
-          </span>
-          <span className="flex items-center gap-3">
-            <FaLocationArrow />
-            <div className="flex flex-col ">
-              <span className="font-semibold">Berangkat Dari</span>
-              <span className="text-sm ">Jakarta</span>
-            </div>
-          </span>
-          <span className="flex items-center gap-3">
-            <FaClock />
-            <div className="flex flex-col ">
-              <span className="font-semibold">Durasi Perjalanan</span>
-              <span className="text-sm ">27 Maret 2024</span>
-            </div>
-          </span>
-          <span className="flex items-center gap-3">
-            <FaPlaneDeparture />
-            <div className="flex flex-col ">
-              <span className="font-semibold">Pesawat</span>
-              <span className="text-sm ">Garuda Indonesia</span>
-            </div>
-          </span>
-          <span className="flex items-center gap-3">
-            <FaHotel />
-            <div className="flex flex-col ">
-              <span className="font-semibold">Kelas Hotel</span>
-              <span className="text-sm flex gap-1 items-center">
-                4 <FaStar className="text-yellow-600" />
-              </span>
-            </div>
-          </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <span className="flex items-center gap-3">
+              <FaRegCalendarAlt />
+              <div className="flex flex-col ">
+                <span className="font-semibold">Waktu Keberangkatan</span>
+                <span className="text-sm ">27 Maret 2024</span>
+              </div>
+            </span>
+            <span className="flex items-center gap-3">
+              <FaLocationArrow />
+              <div className="flex flex-col ">
+                <span className="font-semibold">Berangkat Dari</span>
+                <span className="text-sm ">Jakarta</span>
+              </div>
+            </span>
+            <span className="flex items-center gap-3">
+              <FaClock />
+              <div className="flex flex-col ">
+                <span className="font-semibold">Durasi Perjalanan</span>
+                <span className="text-sm ">6 Hari</span>
+              </div>
+            </span>
+            <span className="flex items-center gap-3">
+              <FaPlaneDeparture />
+              <div className="flex flex-col ">
+                <span className="font-semibold">Pesawat</span>
+                <span className="text-sm ">Garuda Indonesia</span>
+              </div>
+            </span>
+            <span className="flex items-center gap-3">
+              <FaHotel />
+              <div className="flex flex-col ">
+                <span className="font-semibold">Kelas Hotel</span>
+                <span className="text-sm flex gap-1 items-center">
+                  4 <FaStar className="text-yellow-600" />
+                </span>
+              </div>
+            </span>
+          </div>
+
           <Separator />
           <div className="flex items-center gap-5">
             <span>Pilih Paket</span>

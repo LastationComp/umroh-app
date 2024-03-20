@@ -17,9 +17,9 @@ export default function TravelProfile() {
       <div className="flex flex-col gap-3 justify-center">
         <span className="text-xl font-semibold">Jejak Imani</span>
         <div className="flex gap-3 items-center text-sm text-black/70 max-md:hidden">
-          <span>7 Penilaian</span>
+          <span className="font-bold text-black">7</span> Penilaian
           <Separator orientation={'vertical'} />
-          <span>76 Terjual</span>
+          <span className="font-bold text-black">77</span> Terjual
           <Separator orientation={'vertical'} />
           <span>
             Izin Umroh : <span className="font-bold text-black">Lorem, ipsum dolor.</span>

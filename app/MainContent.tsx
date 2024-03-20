@@ -6,7 +6,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { HiChevronUpDown } from 'react-icons/hi2';
 import { IoMdCheckmark, IoIosSearch } from 'react-icons/io';
-import { IoLocation, IoTimeSharp } from 'react-icons/io5';
+import { IoLocation, IoPricetagOutline, IoTimeSharp } from 'react-icons/io5';
+import { CiLocationOn } from 'react-icons/ci';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/Fetcher';
 import { DropdownMenu } from '@radix-ui/react-dropdown-menu';
@@ -14,9 +15,11 @@ import { DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/co
 import Image from 'next/image';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa';
+import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegClock, FaRegStar } from 'react-icons/fa';
 import { getShortString } from '@/lib/String/GetShortTitle';
 import Link from 'next/link';
+import { MdDateRange } from 'react-icons/md';
+import { formatDate } from '@/lib/Parser/DateFormat';
 const frameworks = [
   {
     value: 'next.js',
@@ -93,11 +96,7 @@ export default function MainContent() {
   const [openPrice, setOpenPrice] = useState(false);
   const [priceValue, setPriceValue] = useState('');
 
-  const formatDate = (date: any) => {
-    const get_date = new Date(date).toDateString();
-    const dateArray = get_date.split(' ');
-    return dateArray[2] + ' ' + dateArray[1] + ' ' + dateArray[3];
-  };
+
 
   const uniqueDeparting = (departing: any) => {
     const uniqueValue = new Set(departing);
@@ -121,9 +120,13 @@ export default function MainContent() {
             <div className="flex flex-col">
               <span>Lokasi Keberangkatan</span>
               <Popover open={openLocation} onOpenChange={setOpenLocation}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                   <Button variant="outline" role="combobox" aria-expanded={openLocation} className="w-auto xl:w-[300px] justify-between">
-                    {locationValue ? city.find((city: any) => city.value === locationValue)?.label : 'Lokasi Keberangkatan...'}
+                    <div className="flex gap-3 items-center">
+                      <CiLocationOn className="text-lg" />
+                      {locationValue ? city.find((city: any) => city.value === locationValue)?.label : 'Lokasi Keberangkatan...'}
+                    </div>
+
                     <HiChevronUpDown />
                   </Button>
                 </PopoverTrigger>
@@ -156,9 +159,12 @@ export default function MainContent() {
             <div className="flex flex-col">
               <span>Waktu Keberangkatan</span>
               <Popover open={openDate} onOpenChange={setOpenDate}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                   <Button variant="outline" role="combobox" aria-expanded={openDate} className="w-auto xl:w-[300px] justify-between">
-                    {dateValue ? keberangkatan.find((keberangkatan) => keberangkatan.value === dateValue)?.label : 'Waktu Keberangkatan...'}
+                    <div className="flex gap-3 items-center">
+                      <MdDateRange className="text-lg" />
+                      {dateValue ? keberangkatan.find((keberangkatan) => keberangkatan.value === dateValue)?.label : 'Waktu Keberangkatan...'}
+                    </div>
                     <HiChevronUpDown />
                   </Button>
                 </PopoverTrigger>
@@ -191,9 +197,12 @@ export default function MainContent() {
             <div className="flex flex-col">
               <span>Biaya Umroh</span>
               <Popover open={openPrice} onOpenChange={setOpenPrice}>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                   <Button variant="outline" role="combobox" aria-expanded={openPrice} className="w-auto xl:w-[300px] justify-between">
-                    {priceValue ? biaya.find((biaya) => biaya.value === priceValue)?.label : 'Biaya Umroh...'}
+                    <div className="flex gap-3 items-center">
+                      <IoPricetagOutline className="text-lg" />
+                      {priceValue ? biaya.find((biaya) => biaya.value === priceValue)?.label : 'Biaya Umroh...'}
+                    </div>
                     <HiChevronUpDown />
                   </Button>
                 </PopoverTrigger>
@@ -202,16 +211,17 @@ export default function MainContent() {
                     <CommandInput placeholder="Biaya Umroh..." />
                     <CommandList>
                       <CommandEmpty>No framework found.</CommandEmpty>
-                      <CommandGroup>
-                        {biaya.map((biaya) => (
+                      <CommandGroup value={priceValue}>
+                        {biaya.map((biaya, index) => (
                           <CommandItem
-                            className="flex justify-between"
-                            key={biaya.value}
+                            className="flex justify-between max-lg:aria-selected:bg-white"
+                            key={index}
                             value={biaya.value}
                             onSelect={(currentValue) => {
                               setPriceValue(currentValue === priceValue ? '' : currentValue);
                               setOpenPrice(false);
                             }}
+                            aria-selected={priceValue === biaya.value}
                           >
                             {biaya.label}
                             {priceValue === biaya.value && <IoMdCheckmark />}

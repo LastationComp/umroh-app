@@ -5,7 +5,7 @@ import Autoplay from 'embla-carousel-autoplay';
 export default function TopCarousel() {
   return (
     <section className="md:container container-md mx-auto my-3 mt-[5rem]">
-      <div className="flex justify-center">
+      <div className="flex justify-center mx-3">
         <Carousel
           plugins={[
             Autoplay({
