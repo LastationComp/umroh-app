@@ -14,7 +14,7 @@ export default function TimeLine({ className, items, icon }: TimeLine) {
   return (
     <ol className="relative border-s border-gray-200 dark:border-gray-700">
       {items?.map((item, index) => (
-        <li className="mb-10 ms-6">
+        <li className="mb-10 ms-6" key={index}>
           <span className="absolute flex items-center justify-center p-1 w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
             <div className="text-sm ">{icon}</div>
           </span>
