@@ -7,19 +7,20 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { HiChevronUpDown } from 'react-icons/hi2';
 import { IoMdCheckmark, IoIosSearch } from 'react-icons/io';
 import { IoLocation, IoPricetagOutline, IoTimeSharp } from 'react-icons/io5';
+import { FiShoppingCart } from 'react-icons/fi';
 import { CiLocationOn } from 'react-icons/ci';
 import useSWR from 'swr';
 import { fetcher } from '@/lib/Fetcher';
-import { BiCartDownload } from 'react-icons/bi';
 import Image from 'next/image';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegClock, FaRegHeart, FaRegStar } from 'react-icons/fa';
 import Link from 'next/link';
-import { MdCompare, MdDateRange, MdOutlineShare, MdOutlineShop } from 'react-icons/md';
+import { MdCompare, MdCompareArrows, MdDateRange, MdOutlineShare, MdOutlineShop } from 'react-icons/md';
 import { formatDate } from '@/lib/Parser/DateFormat';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Favorites from '@/components/order/Favorites';
+import { Skeleton } from '@/components/ui/skeleton';
 const frameworks = [
   {
     value: 'next.js',
@@ -88,6 +89,7 @@ const biaya = [
   },
 ];
 
+const loadingPage = [1, 2, 3, 4, 5, 6, 7, 8];
 export default function MainContent() {
   const [openLocation, setOpenLocation] = useState(false);
   const [locationValue, setLocationValue] = useState('');
@@ -231,12 +233,13 @@ export default function MainContent() {
         </div>
       </Card>
       <div className="grid sm:grid-cols-1 gap-3 my-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {!paket_umroh && loadingPage?.map((paket_umroh: any, index: number) => <Skeleton key={index} className="p-3 hover:outline hover:outline-1 w-full h-[300px] shadow-md  hover:outline-blue-600" />)}
         {paket_umroh?.map((paket_umroh: any, index: number) => (
           <Card key={index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
             <div className="flex justify-between gap-3 items-center">
               <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
               <div className="flex flex-col">
-                <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
+                <Link href={`/packets/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
                   <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
                 </Link>
                 <div className="flex justify-between">
@@ -282,7 +285,18 @@ export default function MainContent() {
             </div>
             <div className="flex justify-between items-center my-3">
               <div>
-                <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} alt="Is Syariah" width={60} height={20} />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link href={`/blogs/pembayaran-syariah`}>
+                        <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={index === 3 || index === 1 ? 'opacity-40' : ''} alt="Is Syariah" width={60} height={20} />
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Pembayaran Syariah</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <div className="flex items-center gap-1">
                 <TooltipProvider>
@@ -290,7 +304,7 @@ export default function MainContent() {
                     <TooltipTrigger asChild>
                       <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`}>
                         <Button>
-                          <BiCartDownload />
+                          <FiShoppingCart />
                         </Button>
                       </Link>
                     </TooltipTrigger>
@@ -303,7 +317,7 @@ export default function MainContent() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button variant={'secondary'}>
-                        <MdCompare />
+                        <MdCompareArrows />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent className="bg-blue-dark">

@@ -4,12 +4,27 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { Separator } from '@/components/ui/separator';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
+import Image from 'next/image';
+import avatar from '@/public/profile/avatar.png';
+import { MdCompareArrows } from 'react-icons/md';
+import { Badge } from '@/components/ui/badge';
+import { FiShoppingCart } from 'react-icons/fi';
 export default function Navbar() {
+  // const authenticated = localStorage.getItem('auth') === 'true';
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    let value;
+    // Get the value from local storage if it exists
+    value = localStorage.getItem('auth') === 'true';
+    setAuthenticated(value);
+  }, []);
   return (
-    <nav className="h-[4rem] shadow-md fixed top-0 z-50 bg-blue-dark w-full">
+    <nav className="h-[4rem] shadow-md fixed top-0 z-50 bg-blue-dark w-full ">
       <section className="container mx-auto flex items-center justify-between h-full">
         <div className="flex md:hidden items-center gap-3">
           <Sheet>
@@ -100,14 +115,52 @@ export default function Navbar() {
             </NavigationMenu>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <Button variant={'ghost'} className="hover:bg-transparent">
-            <Link href={'/auth'} className="hover:text-blue-500 text-white/90">
-              Masuk
-            </Link>
-          </Button>
-          <Button className="bg-green-600 hover:bg-green-700">Daftar</Button>
-        </div>
+        {!authenticated && (
+          <div className="flex items-center gap-3">
+            <Button variant={'ghost'} className="hover:bg-transparent">
+              <Link href={'/auth'} className="hover:text-blue-500 text-white/90">
+                Masuk
+              </Link>
+            </Button>
+            <Button className="bg-green-600 hover:bg-green-700">Daftar</Button>
+          </div>
+        )}
+        {authenticated && (
+          <div className="flex items-center gap-3 mr-3">
+            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+              <Link href={'/comparison'}>
+                <FiShoppingCart />
+                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span>
+                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1"></span>
+              </Link>
+            </Button>
+            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+              <Link href={'/comparison'}>
+                <MdCompareArrows />
+                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span>
+                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1"></span>
+              </Link>
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Image src={avatar} alt={'Avatar'} className="object-cover rounded-full w-auto h-auto cursor-pointer" width={25} height={25} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align={'end'} sticky={'always'}>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="text-red-400 cursor-pointer"
+                  onClick={() => {
+                    localStorage.setItem('auth', 'false');
+                    setAuthenticated(false);
+                  }}
+                >
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </section>
     </nav>
   );

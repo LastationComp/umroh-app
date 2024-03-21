@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + ' h-screen transition-all'}>
+      <body className={inter.className + ' transition-all'}>
         <NextTopLoader showSpinner={false} initialPosition={0.5} />
         {children}
         <Toaster />

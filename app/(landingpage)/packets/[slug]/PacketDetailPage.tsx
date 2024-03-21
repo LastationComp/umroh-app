@@ -7,10 +7,12 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { formatRupiah } from '@/lib/String/RupiahFormat';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegBookmark, FaRegCalendarAlt, FaRegHeart, FaStar } from 'react-icons/fa';
-import { MdGroup, MdPerson } from 'react-icons/md';
+import { FiShoppingCart } from 'react-icons/fi';
+import { MdCompareArrows, MdGroup, MdPerson } from 'react-icons/md';
 
 const pricelist = [
   {
@@ -39,6 +41,7 @@ const rupiah = new Intl.NumberFormat('id-ID', {
 });
 export default function PacketDetailPage({ slug }: { slug: string }) {
   const [list, setList] = useState('');
+  const [qty, setQty] = useState(1);
   return (
     <Card className="p-5 gap-5">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -76,7 +79,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
           </div>
           {!list && (
             <span className="text-xl font-semibold flex items-center gap-3 font-bold">
-              {rupiah.format(Math.min(...allPrice))} - {rupiah.format(Math.max(...allPrice))} <Separator orientation={'vertical'} />
+              {formatRupiah(Math.min(...allPrice))} - {formatRupiah(Math.max(...allPrice))} <Separator orientation={'vertical'} />
               <Badge>Pembayaran Syariah</Badge>
             </span>
           )}
@@ -85,7 +88,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
               .filter((price) => price.name.toLowerCase() === list.toLowerCase())
               .map((price, index) => (
                 <span key={index} className="text-xl font-semibold flex items-center gap-3 font-bold fw-800">
-                  {rupiah.format(price.price)} <Separator orientation={'vertical'} />
+                  {formatRupiah(price.price)} <Separator orientation={'vertical'} />
                   <Badge>Pembayaran Syariah</Badge>
                 </span>
               ))}
@@ -150,15 +153,26 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
             </div>
             <Progress value={33} />
           </div>
+          <div className="flex items-center gap-3">
+            <span className="text-sm">Jumlah Paket</span>
+            <Separator orientation="vertical" />
+            <Button variant={'outline'} size={'sm'} onClick={() => setQty((qty) => qty - 1)} disabled={qty <= 1}>
+              -
+            </Button>
+            <span className="text-sm">{qty}</span>
+            <Button variant={'outline'} size={'sm'} onClick={() => setQty((qty) => qty + 1)}>
+              +
+            </Button>
+          </div>
           <div className="flex gap-3 items-center flex-wrap">
             <Button variant={'outline'} className="flex items-center gap-3">
-              <FaPlus /> Tambahkan ke Perbandingan
+              <MdCompareArrows /> Bandingkan
             </Button>
-            <Button variant={'secondary'} className="flex items-center gap-3" disabled={!list}>
+            {/* <Button variant={'secondary'} className="flex items-center gap-3" disabled={!list}>
               <MdGroup /> Pesan Group
-            </Button>
+            </Button> */}
             <Button className="flex items-center gap-3" disabled={!list}>
-              <MdPerson /> Pesan Paket
+              <FiShoppingCart /> Pesan Paket
             </Button>
           </div>
         </div>
