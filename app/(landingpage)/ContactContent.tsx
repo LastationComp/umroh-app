@@ -50,20 +50,11 @@ export default function ContactContent() {
             <Link href={''} className="text-black/70 hover:underline">
               Paket Umroh
             </Link>
-            <Link href={''} className="text-black/70 hover:underline">
-              Jadwal Sholat
-            </Link>
-            <Link href={''} className="text-black/70 hover:underline">
-              Al-Quran Online
-            </Link>
           </div>
           <div className="flex flex-col gap-5">
             <span className="text-xl font-bold">Travel Partner</span>
             <Link href={''} className="text-black/70 hover:underline">
               Gabung Travel Partner
-            </Link>
-            <Link href={''} className="text-black/70 hover:underline">
-              Travel Umroh
             </Link>
           </div>
           <div className="flex flex-col gap-5">

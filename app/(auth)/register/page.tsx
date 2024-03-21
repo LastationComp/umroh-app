@@ -33,7 +33,7 @@ export default function Page() {
             </Button>
           </Link>
           <div className="flex justify-end flex-col">
-            <p className="text-white">
+            <p className="text-white text-end">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis ipsum culpa ipsam deleniti veniam expedita voluptate amet saepe, odio tempora ratione dignissimos ducimus, soluta beatae iste maiores cupiditate? Ex, temporibus.
             </p>
             <div className="text-sm text-white/70 my-3 ml-auto">Copyright &copy; {new Date().getFullYear()} Umroh.ai</div>

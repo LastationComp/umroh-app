@@ -1,18 +1,23 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import React from 'react';
 import { IoLogoGoogle } from 'react-icons/io5';
+import { auth } from './action';
 
 export default function AuthenticationPage() {
+  const handleSubmit = () => {
+    localStorage.setItem('auth', 'true');
+  };
   return (
     <section className="flex flex-col gap-5 items-center">
       <span className="text-2xl font-bold">Masuk Umroh.ai</span>
       <span className="text-sm text-center">Masukkan username dan password untuk login ke umroh.ai</span>
-      <form action="" className="w-full flex flex-col gap-3" method="post">
+      <form action={auth} onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
         {/* <Input type="text" name="name" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Nama Anda..." /> */}
-        <Input type="email" name="email" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
-        <Input type="password" name="password" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
+        <Input type="email" name="email" value={'demo@gmail.com'} readOnly className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
+        <Input type="password" name="password" value={'demopassword'} readOnly className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
         <Button>Masuk</Button>
       </form>
       <div className="relative w-full">
