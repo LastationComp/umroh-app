@@ -8,6 +8,8 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { formatRupiah } from '@/lib/String/RupiahFormat';
+import { faArrowsLeftRight, faLeftRight, faRightLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegBookmark, FaRegCalendarAlt, FaRegHeart, FaStar } from 'react-icons/fa';
@@ -166,7 +168,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
           </div>
           <div className="flex gap-3 items-center flex-wrap">
             <Button variant={'outline'} className="flex items-center gap-3">
-              <MdCompareArrows /> Bandingkan
+              <FontAwesomeIcon icon={faRightLeft} /> Bandingkan
             </Button>
             {/* <Button variant={'secondary'} className="flex items-center gap-3" disabled={!list}>
               <MdGroup /> Pesan Group
