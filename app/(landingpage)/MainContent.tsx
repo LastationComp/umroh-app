@@ -21,6 +21,8 @@ import { formatDate } from '@/lib/Parser/DateFormat';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Favorites from '@/components/order/Favorites';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsLeftRight, faRightLeft } from '@fortawesome/free-solid-svg-icons';
 const frameworks = [
   {
     value: 'next.js',
@@ -289,7 +291,7 @@ export default function MainContent() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link href={`/blogs/pembayaran-syariah`}>
-                        <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={index === 3 || index === 1 ? 'opacity-40' : ''} alt="Is Syariah" width={60} height={20} />
+                        <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={index === 3 || index === 1 ? ' grayscale' : ''} alt="Is Syariah" width={60} height={20} />
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -317,7 +319,7 @@ export default function MainContent() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button variant={'secondary'}>
-                        <MdCompareArrows />
+                        <FontAwesomeIcon icon={faRightLeft} />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent className="bg-blue-dark">

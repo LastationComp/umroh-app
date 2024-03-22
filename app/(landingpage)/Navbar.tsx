@@ -13,6 +13,8 @@ import avatar from '@/public/profile/avatar.png';
 import { MdCompareArrows } from 'react-icons/md';
 import { Badge } from '@/components/ui/badge';
 import { FiShoppingCart } from 'react-icons/fi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 export default function Navbar() {
   // const authenticated = localStorage.getItem('auth') === 'true';
   const [authenticated, setAuthenticated] = useState(false);
@@ -136,7 +138,7 @@ export default function Navbar() {
             </Button>
             <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
               <Link href={'/comparison'}>
-                <MdCompareArrows />
+                <FontAwesomeIcon icon={faRightLeft} />
                 <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span>
                 <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1"></span>
               </Link>
