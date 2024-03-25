@@ -24,7 +24,7 @@ export default function Page() {
           <Link href={'/'} className="md:hidden text-2xl font-bold">
             Umroh.ai
           </Link>
-          <Link href={'/register'} className="md:ml-auto">
+          <Link href={'/daftar'} className="md:ml-auto">
             <Button variant={'ghost'} className="font-bold">
               Daftar
             </Button>

@@ -119,28 +119,32 @@ export default function Navbar() {
         </div>
         {!authenticated && (
           <div className="flex items-center gap-3">
+            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+              <Link href={'/masuk'}>
+                <FontAwesomeIcon icon={faRightLeft} />
+              </Link>
+            </Button>
             <Button variant={'ghost'} className="hover:bg-transparent">
-              <Link href={'/auth'} className="hover:text-blue-500 text-white/90">
+              <Link href={'/masuk'} className="hover:text-blue-500 text-white/90">
                 Masuk
               </Link>
             </Button>
-            <Button className="bg-green-600 hover:bg-green-700">Daftar</Button>
+            <Button className="bg-green-600 hover:bg-green-700">
+              <Link href={'/daftar'} className="hover:text-blue-500 text-white/90">
+                Daftar
+              </Link>
+            </Button>
           </div>
         )}
         {authenticated && (
           <div className="flex items-center gap-3 mr-3">
             <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/comparison'}>
-                <FiShoppingCart />
-                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span>
-                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1"></span>
-              </Link>
-            </Button>
-            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/comparison'}>
+              <Link href={'/perbandingan'}>
                 <FontAwesomeIcon icon={faRightLeft} />
-                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span>
-                <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1"></span>
+                {/* <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span> */}
+                <span className="bg-red-400 px-1 rounded-full absolute -top-2 -right-2 hover:text-white">
+                  <span className="text-[10px] hover:text-white">22</span>
+                </span>
               </Link>
             </Button>
             <DropdownMenu>
@@ -148,7 +152,13 @@ export default function Navbar() {
                 <Image src={avatar} alt={'Avatar'} className="object-cover rounded-full w-auto h-auto cursor-pointer" width={25} height={25} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align={'end'} sticky={'always'}>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
+                <DropdownMenuItem>
+                  <Link href={'/favorit'}>Favorit Saya</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={'/favorit'}>Pesanan Saya</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="text-red-400 cursor-pointer"

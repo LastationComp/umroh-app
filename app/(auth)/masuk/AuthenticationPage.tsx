@@ -25,13 +25,13 @@ export default function AuthenticationPage() {
           <Separator className="w-full" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+          <span className="bg-background px-2 text-muted-foreground">atau masuk dengan</span>
         </div>
       </div>
       <div className="w-full">
         <Button className="text-sm w-full flex gap-3 items-center" variant={'outline'}>
           <IoLogoGoogle />
-          Login with Google
+          Masuk dengan Google
         </Button>
       </div>
     </section>

@@ -15,7 +15,7 @@ export default function Page() {
           <Link href={'/'} className="text-black max-md:hidden text-2xl font-bold">
             Umroh.ai
           </Link>
-          <Link href={'/auth'} className="md:hidden">
+          <Link href={'/masuk'} className="md:hidden">
             <Button variant={'ghost'} className="font-bold md:ml-auto">
               Masuk
             </Button>
@@ -27,7 +27,7 @@ export default function Page() {
       </div>
       <div className="bg-blue-dark p-5 max-md:hidden">
         <div className="flex flex-col justify-between h-full">
-          <Link href={'/auth'} className="md:ml-auto">
+          <Link href={'/masuk'} className="md:ml-auto">
             <Button variant={'ghost'} className="font-bold md:ml-auto text-white hover:bg-white/30 hover:text-white">
               Masuk
             </Button>
