@@ -131,11 +131,11 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
           >
             <Suspense fallback={<div>Loading...</div>}>
               {images.filter(orderSlideSelecter).map((image: any, index: number) => (
-                <Image src={image.url} alt="Image Promo" className=" object-cover xl:max-w-2xl" loading={'lazy'} width={2000} height={1000} quality={100} />
+                <Image src={image.url} key={index} alt="Image Promo" className=" object-cover xl:max-w-2xl" loading={'lazy'} width={2000} height={1000} quality={100} />
               ))}
             </Suspense>
             {images.filter(orderNotSlide).map((image: any, index: number) => (
-              <Image src={image.url} alt="Image Promo" className=" object-cover xl:max-w-2xl" loading={'lazy'} width={2000} height={1000} quality={100} />
+              <Image src={image.url} key={index} alt="Image Promo" className=" object-cover xl:max-w-2xl" loading={'lazy'} width={2000} height={1000} quality={100} />
             ))}
           </Carousel>
         </DialogContent>
@@ -151,6 +151,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
           >
             {images.map((image: any, index: number) => (
               <CarouselItem
+                key={index}
                 onClick={() => {
                   setSlide(index);
                   setOpenImage(!openImage);

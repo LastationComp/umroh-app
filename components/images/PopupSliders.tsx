@@ -6,13 +6,13 @@ import { Dialog, DialogClose, DialogContent } from '../ui/dialog';
 import { Button } from '../ui/button';
 
 interface PopupSliders {
-    data: any[],
-    open: boolean,
-    onOpenChange: any
+  data: any[];
+  open: boolean;
+  onOpenChange: any;
 }
 export default function PopupSliders({ data }: { data: any[] }) {
   return (
-    <Dialog >
+    <Dialog>
       <DialogContent className="max-w-xl">
         <DialogClose className="fixed top-8 right-8 z-30">
           <Button className="rounded-full uppercase opacity-50">x</Button>
@@ -70,8 +70,8 @@ export default function PopupSliders({ data }: { data: any[] }) {
           slidesToSlide={1}
           swipeable
         >
-          {data.map((image: any) => (
-            <Image src={image.url} alt="Image" className="max-md:w-[600px] object-cover" width={2000} height={1000} />
+          {data.map((image: any, index: number) => (
+            <Image src={image.url} key={index} alt="Image" className="max-md:w-[600px] object-cover" width={2000} height={1000} />
           ))}
         </Carousel>
       </DialogContent>
