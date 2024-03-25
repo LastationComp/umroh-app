@@ -304,7 +304,7 @@ export default function MainContent() {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Link href={`/${String(paket_umroh.title).replaceAll(' ', '-')}`}>
+                      <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`}>
                         <Button>
                           <FiShoppingCart />
                         </Button>
