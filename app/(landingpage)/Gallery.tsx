@@ -29,7 +29,7 @@ export default function Gallery() {
         >
           <CarouselContent className="">
             {images.map((image, i) => (
-              <CarouselItem key={i} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/4 pl-5 flex justify-center">
+              <CarouselItem key={i} className="basis-1/1 md:basis-1/2 lg:basis-1/4 lg:basis-1/6 pl-5 flex justify-center">
                 <div className="pt-1 pb-10 px-1 bg-white shadow border border-1">
                   <Image src={`https://umroh-static.s3.ap-southeast-1.amazonaws.com/gallery/${image}.jpg`} className="w-[250px] h-[150px] shadow-lg rounded transition border-black" alt="Galeri " width={300} height={300} />
                 </div>

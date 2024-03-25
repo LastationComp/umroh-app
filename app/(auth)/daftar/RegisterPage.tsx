@@ -20,13 +20,13 @@ export default function RegisterPage() {
           <Separator className="w-full" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+          <span className="bg-background px-2 text-muted-foreground">atau daftar dengan</span>
         </div>
       </div>
       <div className="w-full">
         <Button className="text-sm w-full flex gap-3 items-center" variant={'outline'}>
           <IoLogoGoogle />
-          Register with Google
+          Daftar dengan Google
         </Button>
       </div>
     </section>

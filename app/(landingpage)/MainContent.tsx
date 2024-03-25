@@ -241,7 +241,7 @@ export default function MainContent() {
             <div className="flex justify-between gap-3 items-center">
               <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
               <div className="flex flex-col">
-                <Link href={`/packets/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
+                <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
                   <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
                 </Link>
                 <div className="flex justify-between">
