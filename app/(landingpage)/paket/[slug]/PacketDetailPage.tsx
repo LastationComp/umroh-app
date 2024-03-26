@@ -18,6 +18,7 @@ import Image from 'next/image';
 import React, { Suspense, useRef, useState } from 'react';
 import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegBookmark, FaRegCalendarAlt, FaRegHeart, FaStar } from 'react-icons/fa';
 import { FiShoppingCart } from 'react-icons/fi';
+import PopupSliders from '@/components/images/PopupSliders';
 
 const pricelist = [
   {
@@ -63,6 +64,12 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
   const [openImage, setOpenImage] = useState(false);
   const [slide, setSlide] = useState(0);
 
+  const imagesData = images.map((image) => {
+    return {
+      original: image.url,
+      thumbnail: image.url,
+    };
+  });
   const orderSlideSelecter = (data: any, index: number) => {
     return index === slide;
   };
@@ -71,75 +78,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
   };
   return (
     <Card className="p-5 gap-5">
-      <Dialog open={openImage} onOpenChange={setOpenImage}>
-        <DialogContent className="max-xl:max-w-xl xl:max-w-2xl">
-          <DialogClose className="fixed top-8 right-8 z-30">
-            <Button className="rounded-full uppercase opacity-50">x</Button>
-          </DialogClose>
-          <Carousel
-            additionalTransfrom={0}
-            arrows
-            autoPlaySpeed={3000}
-            centerMode={false}
-            className=""
-            containerClass="container-with-dots max-xl:max-w-xl xl:max-w-2xl -z-1"
-            dotListClass=""
-            draggable
-            focusOnSelect={false}
-            infinite
-            keyBoardControl
-            minimumTouchDrag={80}
-            pauseOnHover
-            renderArrowsWhenDisabled={false}
-            renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={{
-              desktop: {
-                breakpoint: {
-                  max: 3000,
-                  min: 1024,
-                },
-                items: 1,
-                partialVisibilityGutter: 100,
-              },
-              mobile: {
-                breakpoint: {
-                  max: 464,
-                  min: 0,
-                },
-                items: 1,
-                partialVisibilityGutter: 30,
-              },
-              tablet: {
-                breakpoint: {
-                  max: 1024,
-                  min: 464,
-                },
-                items: 2,
-                partialVisibilityGutter: 30,
-              },
-            }}
-            deviceType={'desktop'}
-            rewind={false}
-            rewindWithAnimation={false}
-            rtl={false}
-            shouldResetAutoplay
-            showDots
-            sliderClass=""
-            slidesToSlide={1}
-            swipeable
-          >
-            <Suspense fallback={<div>Loading...</div>}>
-              {images.filter(orderSlideSelecter).map((image: any, index: number) => (
-                <Image src={image.url} key={index} alt="Image Promo" className=" object-cover xl:max-w-2xl" loading={'lazy'} width={2000} height={1000} quality={100} />
-              ))}
-            </Suspense>
-            {images.filter(orderNotSlide).map((image: any, index: number) => (
-              <Image src={image.url} key={index} alt="Image Promo" className=" object-cover xl:max-w-2xl" loading={'lazy'} width={2000} height={1000} quality={100} />
-            ))}
-          </Carousel>
-        </DialogContent>
-      </Dialog>
+      <PopupSliders data={imagesData} currentSlide={slide} open={openImage} onOpenChange={setOpenImage} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <ShadCarousel className="xl:w-[550px] full flex justify-center place-self-center">
           <CarouselPrevious />
