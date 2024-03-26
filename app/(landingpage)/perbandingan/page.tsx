@@ -11,7 +11,7 @@ export default async function Page() {
   const data = await getPaketUmroh();
   return (
     <Card className="my-3">
-      <CardHeader className="font-bold">Perbandingan Paket</CardHeader>
+      <CardHeader className="font-bold">Bandingkan Paket</CardHeader>
       <CardContent className="flex flex-col gap-3">
         <Suspense fallback={<div>Loading...</div>}>
           <ComparisonCarts paket_umroh={data} />

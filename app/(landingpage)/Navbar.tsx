@@ -15,10 +15,11 @@ import { Badge } from '@/components/ui/badge';
 import { FiShoppingCart } from 'react-icons/fi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/navigation';
 export default function Navbar() {
   // const authenticated = localStorage.getItem('auth') === 'true';
   const [authenticated, setAuthenticated] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     let value;
     // Get the value from local storage if it exists
@@ -124,13 +125,13 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faRightLeft} />
               </Link>
             </Button>
-            <Button variant={'ghost'} className="hover:bg-transparent">
-              <Link href={'/masuk'} className="hover:text-blue-500 text-white/90">
+            <Button variant={'outline'} className="bg-transparent hover:bg-transparent outline outline-1 outline-green-1">
+              <Link href={'/masuk'} className="text-white/90">
                 Masuk
               </Link>
             </Button>
             <Button className="bg-green-600 hover:bg-green-700">
-              <Link href={'/daftar'} className="hover:text-blue-500 text-white/90">
+              <Link href={'/daftar'} className="text-white/90">
                 Daftar
               </Link>
             </Button>
@@ -165,6 +166,7 @@ export default function Navbar() {
                   onClick={() => {
                     localStorage.setItem('auth', 'false');
                     setAuthenticated(false);
+                    window.location.reload();
                   }}
                 >
                   Logout

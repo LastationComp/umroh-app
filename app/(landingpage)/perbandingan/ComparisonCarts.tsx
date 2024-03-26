@@ -1,28 +1,26 @@
 'use client';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import React, { useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import Link from 'next/link';
-import useSWR from 'swr';
-import { fetcher } from '@/lib/Fetcher';
-import { FaBed, FaCheck, FaHotel, FaMinus, FaPlaneDeparture, FaPlus, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa';
+import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa';
 import { formatDate } from '@/lib/Parser/DateFormat';
 import { IoLocation, IoTimeSharp } from 'react-icons/io5';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MdOutlineShare } from 'react-icons/md';
-import Favorites from '@/components/order/Favorites';
 import { FiShoppingCart, FiTrash2 } from 'react-icons/fi';
-import { CiSaveDown2 } from 'react-icons/ci';
+import { type CarouselApi } from '@/components/ui/carousel';
+import { useDotButton } from '@/components/images/useDotButtons';
+
 export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
   const [compare, setCompare]: any = useState([]);
-
+  const [dots, setDots]: any = useState([]);
+  const [api, setApi] = React.useState<CarouselApi>();
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
   paket_umroh = paket_umroh.map((paket: any, index: number) => {
     let isSyariah = true;
     if (index === 3 || index === 1) isSyariah = false;
@@ -81,10 +79,21 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
 
     setCompare(comparison);
   };
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+    const data = api.slidesInView();
+    api.scrollTo(7);
+    setDots(data);
+    console.log(api.slidesInView());
+  }, [api]);
+
   return (
     <section>
       {paket.length === 0 && <div className="text-center">Tidak ada Paket yang ingin dibandingkan.</div>}
-      <Carousel opts={{ loop: false }} className="w-full">
+      <Carousel opts={{ loop: false }} className="w-full" setApi={setApi}>
         <CarouselContent className="p-1 py-5">
           {paket &&
             paket.map((paket_umroh: any, index: number) => (
@@ -226,11 +235,16 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
         </CarouselContent>
         {paket.length !== 0 && (
           <>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious variant={'default'} className="bg-green-400/70 hover:bg-green-500" />
+            <CarouselNext variant={'default'} className="bg-green-400/70 hover:bg-green-500" />
           </>
         )}
       </Carousel>
+      <div className="flex items-center gap-3 justify-center">
+        {scrollSnaps.map((_, index: number) => (
+          <span key={index} className={'bg-transparent outline outline-2 p-1 rounded-full cursor-pointer ' + (index === selectedIndex ? 'outline-blue-dark' : 'outline-black/60')} onClick={() => onDotButtonClick(index)}></span>
+        ))}
+      </div>
     </section>
   );
 }

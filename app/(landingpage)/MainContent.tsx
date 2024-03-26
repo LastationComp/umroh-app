@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -14,37 +14,19 @@ import { fetcher } from '@/lib/Fetcher';
 import Image from 'next/image';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegClock, FaRegHeart, FaRegStar } from 'react-icons/fa';
+import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa';
 import Link from 'next/link';
-import { MdCompare, MdCompareArrows, MdDateRange, MdOutlineShare, MdOutlineShop } from 'react-icons/md';
+import { MdDateRange, MdOutlineShare } from 'react-icons/md';
 import { formatDate } from '@/lib/Parser/DateFormat';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import Favorites from '@/components/order/Favorites';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsLeftRight, faRightLeft } from '@fortawesome/free-solid-svg-icons';
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-];
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
+import nProgress from 'nprogress';
+import { useRouter } from 'next/navigation';
+import OrderButton from '@/components/order/OrderButton';
+import ShareButton from '@/components/packet/ShareButton';
 
 const city = [
   {
@@ -78,34 +60,38 @@ const keberangkatan = [
 
 const biaya = [
   {
-    value: 'semua biaya',
-    label: 'Semua Biaya',
+    value: 'semua',
+    label: 'Semua',
   },
   {
-    value: '< 50jt',
-    label: '< 50jt',
+    value: '<30',
+    label: '< 30jt',
   },
   {
-    value: '> 50jt',
-    label: '> 50jt',
+    value: '30-40',
+    label: '30jt - 40jt',
+  },
+  {
+    value: '>40jt',
+    label: '> 40jt',
   },
 ];
 
 const loadingPage = [1, 2, 3, 4, 5, 6, 7, 8];
-export default function MainContent() {
+
+export default function MainContent({ data }: { data: any[] }) {
   const [openLocation, setOpenLocation] = useState(false);
   const [locationValue, setLocationValue] = useState('');
   const [openDate, setOpenDate] = useState(false);
   const [dateValue, setDateValue] = useState('');
   const [openPrice, setOpenPrice] = useState(false);
   const [priceValue, setPriceValue] = useState('');
-
-  const uniqueDeparting = (departing: any) => {
-    const uniqueValue = new Set(departing);
-    return uniqueValue;
+  const paket_umroh = data;
+  const router = useRouter();
+  const handleUrlImage = (url: string) => {
+    nProgress.start();
+    router.push('/paket/' + url);
   };
-
-  const { data: paket_umroh, mutate } = useSWR('https://umroh-ai-dummy-api-production.up.railway.app/paket_umroh', fetcher);
   return (
     <section className="md:container md:mx-auto mx-3">
       <Card className="p-3">
@@ -166,7 +152,7 @@ export default function MainContent() {
                   <Command>
                     <CommandInput placeholder="Waktu Keberangkatan..." />
                     <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandEmpty>Tidak ada data.</CommandEmpty>
                       <CommandGroup>
                         {keberangkatan.map((keberangkatan) => (
                           <CommandItem
@@ -189,22 +175,22 @@ export default function MainContent() {
               </Popover>
             </div>
             <div className="flex flex-col">
-              <span>Biaya Umroh</span>
+              <span>Biaya Umroh/Haji</span>
               <Popover open={openPrice} onOpenChange={setOpenPrice}>
                 <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                   <Button variant="outline" role="combobox" aria-expanded={openPrice} className="w-auto xl:w-[300px] justify-between">
                     <div className="flex gap-3 items-center">
                       <IoPricetagOutline className="text-lg" />
-                      {priceValue ? biaya.find((biaya) => biaya.value === priceValue)?.label : 'Biaya Umroh...'}
+                      {priceValue ? biaya.find((biaya) => biaya.value === priceValue)?.label : 'Biaya Umroh/Haji...'}
                     </div>
                     <HiChevronUpDown />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto xl:w-[300px] p-0">
                   <Command>
-                    <CommandInput placeholder="Biaya Umroh..." />
+                    <CommandInput placeholder="Biaya Umroh/Haji..." />
                     <CommandList>
-                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandEmpty>Tidak ada data.</CommandEmpty>
                       <CommandGroup value={priceValue}>
                         {biaya.map((biaya, index) => (
                           <CommandItem
@@ -230,7 +216,7 @@ export default function MainContent() {
           </div>
 
           <Button className="flex gap-3 bg-orange-500 hover:bg-orange-600 mt-auto">
-            <IoIosSearch /> Cari Paket Umroh
+            <IoIosSearch /> Cari Paket
           </Button>
         </div>
       </Card>
@@ -239,7 +225,16 @@ export default function MainContent() {
         {paket_umroh?.map((paket_umroh: any, index: number) => (
           <Card key={index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
             <div className="flex justify-between gap-3 items-center">
-              <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
+              <Image
+                className="rounded object-cover w-[100px] h-[70px] cursor-pointer"
+                onClick={() => handleUrlImage(String(paket_umroh.title).replaceAll(' ', '-'))}
+                loading={'lazy'}
+                src={paket_umroh?.img}
+                alt="Pic 1"
+                height={100}
+                width={100}
+              />
+
               <div className="flex flex-col">
                 <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
                   <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
@@ -290,7 +285,7 @@ export default function MainContent() {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Link href={`/blogs/pembayaran-syariah`}>
+                      <Link href={`/blog/pembayaran-syariah`} target="_blank">
                         <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={index === 3 || index === 1 ? ' grayscale' : ''} alt="Is Syariah" width={60} height={20} />
                       </Link>
                     </TooltipTrigger>
@@ -301,20 +296,7 @@ export default function MainContent() {
                 </TooltipProvider>
               </div>
               <div className="flex items-center gap-1">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`}>
-                        <Button>
-                          <FiShoppingCart />
-                        </Button>
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Pesan</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <OrderButton />
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -339,410 +321,14 @@ export default function MainContent() {
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant={'ghost'}>
-                        <MdOutlineShare className="text-lg" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-blue-dark">
-                      <p>Bagikan</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <ShareButton image_url={paket_umroh.img} title={paket_umroh.title} url={'http://localhost:3000/paket/' + String(paket_umroh.title).replaceAll(' ', '-')} />
               </div>
             </div>
           </Card>
         ))}
 
-        {/* <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card>
-        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress className="" value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card>
-        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card>
-        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card>
-        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card>
-        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card>
-        <Card className="p-3 hover:cursor-pointer hover:outline hover:outline-1 shadow-md">
-          <div className="flex justify-between gap-3 items-center">
-            <Image
-              className="rounded object-cover w-[100px] h-[70px]"
-              src={
-                "https://cloud.umroh.com/images/upload/c_cover,f_auto,g_face,b_rgb:000000,dpr_2.0,h_146,w_298,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg"
-              }
-              alt="Pic 1"
-              height={100}
-              width={100}
-            />
-            <div className="flex flex-col">
-              <span className="text-sm">
-                Lorem ipsum dolor sit amet consectetur. Lorem ipsu...
-              </span>
-              <div className="flex justify-between">
-                <span className="text-sm text-black font-bold">Rp. 59jt</span>
-                <span className="text-sm text-black/60">Quad</span>
-              </div>
-            </div>
-          </div>
-          <div className="my-2">
-            <div className="flex justify-between">
-              <span className="text-sm">Sisa Seat</span>
-              <span className="text-sm font-bold">33 Seat</span>
-            </div>
-            <Progress value={33} />
-          </div>
-          <Separator />
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaRegCalendarAlt />
-              10 Apr 2024
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              4 <FaRegStar /> <FaHotel />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <FaPlaneDeparture /> Garuda
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              17 Hari <IoTimeSharp />
-            </span>
-          </div>
-          <div className="flex justify-between my-2">
-            <span className="text-sm flex gap-2 items-center">
-              <IoLocation /> Jakarta
-            </span>
-            <span className="text-sm flex gap-2 items-center">
-              Sekamar Ber-4 <FaBed />
-            </span>
-          </div>
-        </Card> */}
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center">
-          <Button className="bg-green-600 hover:bg-green-700">Lihat lebih banyak</Button>
+          <Button className="bg-green-600 hover:bg-green-700">Tampilkan lainnya</Button>
         </div>
       </div>
     </section>
