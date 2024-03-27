@@ -3,29 +3,23 @@ import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Separator } from '@/components/ui/separator';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import Image from 'next/image';
 import avatar from '@/public/profile/avatar.png';
-import { MdCompareArrows } from 'react-icons/md';
-import { Badge } from '@/components/ui/badge';
-import { FiShoppingCart } from 'react-icons/fi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
-import { useRouter } from 'next/navigation';
-export default function Navbar() {
-  // const authenticated = localStorage.getItem('auth') === 'true';
-  const [authenticated, setAuthenticated] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    let value;
-    // Get the value from local storage if it exists
-    value = localStorage.getItem('auth') === 'true';
-    setAuthenticated(value);
-  }, []);
+import { Logout } from './action';
+import { delay } from '@/lib/Promise/Delay';
+export default function Navbar({ auth }: { auth: boolean }) {
+  const [authenticated, setAuthenticated] = useState(auth);
+
+  const handleLogout = async () => {
+    await delay(500);
+    window.location.reload();
+  };
   return (
     <nav className="h-[4rem] shadow-md fixed top-0 z-50 bg-blue-dark w-full ">
       <section className="container mx-auto flex items-center justify-between h-full">
@@ -45,8 +39,8 @@ export default function Navbar() {
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-3 items-center">
-                <Button variant={'ghost'} className="w-full">
-                  Paket Promo
+                <Button variant={'ghost'} className="w-full" asChild>
+                  <Link href={'/paket'}>Paket Promo</Link>
                 </Button>
                 <Button variant={'ghost'} className="w-full">
                   Blog
@@ -86,7 +80,7 @@ export default function Navbar() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <Link href={'/'} legacyBehavior passHref>
+                  <Link href={'/paket'} legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle() + ' bg-transparent hover:bg-transparent text-white/90 hover:text-white/70'}>Paket Promo</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
@@ -142,7 +136,6 @@ export default function Navbar() {
             <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
               <Link href={'/perbandingan'}>
                 <FontAwesomeIcon icon={faRightLeft} />
-                {/* <span className="bg-red-400 p-1 rounded-full absolute -top-1 -right-1 animate-ping"></span> */}
                 <span className="bg-red-400 px-1 rounded-full absolute -top-2 -right-2 hover:text-white">
                   <span className="text-[10px] hover:text-white">22</span>
                 </span>
@@ -161,16 +154,11 @@ export default function Navbar() {
                   <Link href={'/favorit'}>Pesanan Saya</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="text-red-400 cursor-pointer"
-                  onClick={() => {
-                    localStorage.setItem('auth', 'false');
-                    setAuthenticated(false);
-                    window.location.reload();
-                  }}
-                >
-                  Logout
-                </DropdownMenuItem>
+                <form action={Logout} onSubmit={handleLogout}>
+                  <button type="submit" className="w-full">
+                    <DropdownMenuItem className="text-red-400 cursor-pointer">Logout</DropdownMenuItem>
+                  </button>
+                </form>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
