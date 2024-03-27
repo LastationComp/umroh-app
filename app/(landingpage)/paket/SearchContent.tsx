@@ -11,7 +11,7 @@ export default async function SearchContent() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {data.map((paket_umroh: any, index: number) => (
-        <PacketCard data={paket_umroh} index={index} />
+        <PacketCard data={paket_umroh} index={index} key={index}/>
       ))}
     </div>
   );
