@@ -19,16 +19,17 @@ import ShareButton from './ShareButton';
 interface PacketProps {
   data: any;
   index?: number;
+  props?: React.Attributes;
 }
 
-export default function PacketCard({ data, index }: PacketProps) {
+export default function PacketCard({ data, index, props }: PacketProps) {
   const router = useRouter();
   const handleUrlImage = (url: string) => {
     nProgress.start();
     router.push('/paket/' + url);
   };
   return (
-    <Card key={data.id + index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
+    <Card {...props} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
       <div className="flex justify-between gap-3 items-center">
         <Image className="rounded object-cover w-[100px] h-[70px] cursor-pointer" onClick={() => handleUrlImage(String(data.title).replaceAll(' ', '-'))} loading={'lazy'} src={data?.img} alt="Pic 1" height={100} width={100} />
 

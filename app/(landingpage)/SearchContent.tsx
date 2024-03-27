@@ -225,7 +225,7 @@ export default function SearchContent({ data }: { data: any[] }) {
       <div className="grid sm:grid-cols-1 gap-3 my-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {!paket_umroh && loadingPage?.map((paket_umroh: any, index: number) => <Skeleton key={index} className="p-3 hover:outline hover:outline-1 w-full h-[300px] shadow-md  hover:outline-blue-600" />)}
         {paket_umroh?.map((paket_umroh: any, index: number) => (
-          <PacketCard data={paket_umroh} index={index} />
+          <PacketCard data={paket_umroh} index={index} key={index}  />
         ))}
 
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center">
