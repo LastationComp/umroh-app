@@ -28,7 +28,7 @@ export default function PacketCard({ data, index }: PacketProps) {
     router.push('/paket/' + url);
   };
   return (
-    <Card key={index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
+    <Card key={data.id + index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
       <div className="flex justify-between gap-3 items-center">
         <Image className="rounded object-cover w-[100px] h-[70px] cursor-pointer" onClick={() => handleUrlImage(String(data.title).replaceAll(' ', '-'))} loading={'lazy'} src={data?.img} alt="Pic 1" height={100} width={100} />
 
