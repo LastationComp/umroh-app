@@ -5,34 +5,34 @@ import CoverContent from './CoverContent';
 import FAQContent from './FAQContent';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-import MainContent from './MainContent';
+import MainContent from './SearchContent';
+import LoadingUI from '@/components/Suspense/Loading';
+import Search from './Search';
+import Partner from './Partner';
+import Gallery from './Gallery';
 
 const importDynamic = (url: string) => {
   return dynamic(() => import('@/app/(landingpage)/' + url), { ssr: false });
 };
 
-const Gallery = importDynamic('Gallery');
 // const MainContent = importDynamic('MainContent');
 const PartnerContent = importDynamic('PartnerContent');
 
-async function getPaketUmroh() {
-  const res = await fetch('https://umroh-ai-dummy-api-production.up.railway.app/paket_umroh', { cache: 'no-store' });
-  return res.json();
-}
 export default async function Home() {
-  const umrohData = await getPaketUmroh();
   return (
     <>
-      <Suspense fallback={<div className="text-center">Loading...</div>}>
-        <TopCarousel />
-        <MainContent data={umrohData}/>
-        <Gallery />
-        <FeaturesContent />
-        <PartnerContent />
-        <StoryContent />
-        <CoverContent />
-        <FAQContent />
+      <TopCarousel />
+      <Suspense fallback={<LoadingUI />}>
+        <Search />
       </Suspense>
+      <Gallery />
+      <FeaturesContent />
+      <Suspense fallback={<LoadingUI />}>
+        <Partner />
+      </Suspense>
+      <StoryContent />
+      <CoverContent />
+      <FAQContent />
     </>
   );
 }

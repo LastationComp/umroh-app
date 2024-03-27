@@ -8,18 +8,15 @@ import { Dialog, DialogClose, DialogContent } from '../ui/dialog';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import nProgress from 'nprogress';
+import { FavoritePacket } from './action';
 
 export default function Favorites() {
   const [isFavorite, setIsFavorite] = useState(false);
   const { toast } = useToast();
-  const router = useRouter();
-  const [authenticated, setAuthenticated] = useState(false);
 
-  const handleButton = () => {
-    if (!authenticated) {
-      nProgress.start();
-      return router.push('/masuk');
-    }
+  const handleButton = async () => {
+    const favorite = await FavoritePacket();
+    if (!favorite) return;
     setIsFavorite(!isFavorite);
     if (isFavorite) return;
     return toast({
@@ -28,12 +25,6 @@ export default function Favorites() {
     });
   };
 
-  useEffect(() => {
-    let value;
-    // Get the value from local storage if it exists
-    value = localStorage.getItem('auth') === 'true';
-    setAuthenticated(value);
-  }, []);
   return (
     <Button className="text-lg" variant={'ghost'} onClick={handleButton}>
       {!isFavorite ? <FaRegHeart /> : <FaHeart className="text-red-400" />}

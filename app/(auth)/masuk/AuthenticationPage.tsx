@@ -7,14 +7,14 @@ import { IoLogoGoogle } from 'react-icons/io5';
 import { auth } from './action';
 
 export default function AuthenticationPage() {
-  const handleSubmit = () => {
-    localStorage.setItem('auth', 'true');
-  };
+  // const handleSubmit = () => {
+  //   localStorage.setItem('auth', 'true');
+  // };
   return (
     <section className="flex flex-col gap-5 items-center">
       <span className="text-2xl font-bold">Masuk Umroh.ai</span>
       <span className="text-sm text-center">Masukkan username dan password untuk login ke umroh.ai</span>
-      <form action={auth} onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
+      <form action={auth} className="w-full flex flex-col gap-3">
         {/* <Input type="text" name="name" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Nama Anda..." /> */}
         <Input type="email" name="email" value={'demo@gmail.com'} readOnly className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
         <Input type="password" name="password" value={'demopassword'} readOnly className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />

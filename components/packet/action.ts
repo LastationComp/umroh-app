@@ -1,0 +1,12 @@
+'use server';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
+export async function Compare() {
+  const cookiesStorage = cookies();
+  const authenticated = cookiesStorage.get('auth');
+
+  if (!cookiesStorage.has('auth') || authenticated?.value !== 'true') return redirect('/masuk');
+
+  return true;
+}

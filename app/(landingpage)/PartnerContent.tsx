@@ -1,17 +1,12 @@
-'use client'
+'use client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Button } from '@/components/ui/button';
-import { MediaPlayer, MediaProvider } from '@vidstack/react';
-import useSWR from 'swr';
-import { fetcher } from '@/lib/Fetcher';
 
-export default function PartnerContent() {
-  const { data: patner, mutate } = useSWR('https://umroh-ai-dummy-api-production.up.railway.app/patner', fetcher);
-
+export default function PartnerContent({ data }: { data: any[] }) {
   return (
     <>
       <section className="container mx-auto">
@@ -36,7 +31,7 @@ export default function PartnerContent() {
           className="w-full -ml-5"
         >
           <CarouselContent className="">
-            {patner?.map((patner: any, index: number) => (
+            {data?.map((patner: any, index: number) => (
               <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">
                 <div className="p-5 bg-white shadow border border-1 flex items-center">
                   <Link href={'http://localhost:3000/travel/name-travel'} target="_blank">

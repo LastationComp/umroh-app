@@ -27,6 +27,8 @@ import nProgress from 'nprogress';
 import { useRouter } from 'next/navigation';
 import OrderButton from '@/components/order/OrderButton';
 import ShareButton from '@/components/packet/ShareButton';
+import CompareButton from '@/components/packet/CompareButton';
+import PacketCard from '@/components/packet/PacketCard';
 
 const city = [
   {
@@ -79,7 +81,7 @@ const biaya = [
 
 const loadingPage = [1, 2, 3, 4, 5, 6, 7, 8];
 
-export default function MainContent({ data }: { data: any[] }) {
+export default function SearchContent({ data }: { data: any[] }) {
   const [openLocation, setOpenLocation] = useState(false);
   const [locationValue, setLocationValue] = useState('');
   const [openDate, setOpenDate] = useState(false);
@@ -223,108 +225,7 @@ export default function MainContent({ data }: { data: any[] }) {
       <div className="grid sm:grid-cols-1 gap-3 my-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {!paket_umroh && loadingPage?.map((paket_umroh: any, index: number) => <Skeleton key={index} className="p-3 hover:outline hover:outline-1 w-full h-[300px] shadow-md  hover:outline-blue-600" />)}
         {paket_umroh?.map((paket_umroh: any, index: number) => (
-          <Card key={index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
-            <div className="flex justify-between gap-3 items-center">
-              <Image
-                className="rounded object-cover w-[100px] h-[70px] cursor-pointer"
-                onClick={() => handleUrlImage(String(paket_umroh.title).replaceAll(' ', '-'))}
-                loading={'lazy'}
-                src={paket_umroh?.img}
-                alt="Pic 1"
-                height={100}
-                width={100}
-              />
-
-              <div className="flex flex-col">
-                <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
-                  <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
-                </Link>
-                <div className="flex justify-between">
-                  <span className="text-sm text-orange-400 font-bold">
-                    Rp. {paket_umroh.price.toString().length >= 6 ? paket_umroh.price.toString().slice(0, 2) + ',' + paket_umroh.price.toString().charAt(2) + 'jt' : paket_umroh.price.toString().slice(0, 3) + 'rb'}
-                  </span>
-                  <span className="text-sm text-black/60">{paket_umroh.feature}</span>
-                </div>
-              </div>
-            </div>
-            <div className="my-2">
-              <div className="flex justify-between">
-                <span className="text-sm">Sisa Seat</span>
-                <span className="text-sm font-bold">{paket_umroh.sisa_seat} Seat</span>
-              </div>
-              <Progress className="" value={paket_umroh.sisa_seat} />
-            </div>
-            <Separator />
-            <div className="flex justify-between my-2">
-              <span className="text-sm flex gap-2 items-center">
-                <FaRegCalendarAlt />
-                {formatDate(paket_umroh.date_going)}
-              </span>
-              <span className="text-sm flex gap-2 items-center">
-                {paket_umroh.star_hotel} <FaRegStar className="text-yellow-500" /> <FaHotel />
-              </span>
-            </div>
-            <div className="flex justify-between my-2">
-              <span className="text-sm flex gap-2 items-center">
-                <FaPlaneDeparture /> {paket_umroh.plane}
-              </span>
-              <span className="text-sm flex gap-2 items-center">
-                {paket_umroh.days} Hari <IoTimeSharp />
-              </span>
-            </div>
-            <div className="flex justify-between my-2">
-              <span className="text-sm flex gap-2 items-center">
-                <IoLocation /> {paket_umroh.departing_from}
-              </span>
-              <span className="text-sm flex gap-2 items-center">
-                {paket_umroh.feature_detail} <FaBed />
-              </span>
-            </div>
-            <div className="flex justify-between items-center my-3">
-              <div>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link href={`/blog/pembayaran-syariah`} target="_blank">
-                        <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={index === 3 || index === 1 ? ' grayscale' : ''} alt="Is Syariah" width={60} height={20} />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Pembayaran Syariah</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="flex items-center gap-1">
-                <OrderButton />
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant={'secondary'}>
-                        <FontAwesomeIcon icon={faRightLeft} />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-blue-dark">
-                      <p>Bandingkan</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div>
-                        <Favorites />
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-blue-dark">
-                      <p>Tambahkan ke Favorit</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <ShareButton image_url={paket_umroh.img} title={paket_umroh.title} url={'http://localhost:3000/paket/' + String(paket_umroh.title).replaceAll(' ', '-')} />
-              </div>
-            </div>
-          </Card>
+          <PacketCard data={paket_umroh} index={index} key={index}  />
         ))}
 
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 text-center">

@@ -48,6 +48,7 @@ export default function Gallery() {
                     }}
                     className="w-[250px] h-[150px] shadow-lg rounded transition border-black cursor-pointer"
                     alt="Galeri "
+                    loading="lazy"
                     width={300}
                     height={300}
                   />

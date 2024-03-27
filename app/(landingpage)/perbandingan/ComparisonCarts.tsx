@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { FiShoppingCart, FiTrash2 } from 'react-icons/fi';
 import { type CarouselApi } from '@/components/ui/carousel';
 import { useDotButton } from '@/components/images/useDotButtons';
+import OrderButton from '@/components/order/OrderButton';
 
 export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
   const [compare, setCompare]: any = useState([]);
@@ -73,19 +74,11 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
     return false;
   };
 
-  const setReverse = () => {
-    let comparison = [...compare];
-    comparison = comparison.reverse();
-
-    setCompare(comparison);
-  };
-
   React.useEffect(() => {
     if (!api) {
       return;
     }
     const data = api.slidesInView();
-    api.scrollTo(7);
     setDots(data);
     console.log(api.slidesInView());
   }, [api]);
@@ -168,18 +161,7 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
                       </TooltipProvider>
                     </div>
                     <div className="flex items-center gap-1 z-20">
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button onClick={() => setComparison(paket_umroh)}>
-                              <FiShoppingCart />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Pesan</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
+                      <OrderButton />
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>

@@ -22,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className + ' transition-all'}>
+    <html lang="en" className="scroll-p-0 overflow-x-hidden">
+      <body className={inter.className}>
         <NextTopLoader showSpinner={false} initialPosition={0.5} />
         {children}
         <Toaster />
