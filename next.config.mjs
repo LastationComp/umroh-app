@@ -17,6 +17,10 @@ const nextConfig = {
         hostname: 'www.umroh.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'c4.wallpaperflare.com',
+      },
     ],
   },
   compiler: {
