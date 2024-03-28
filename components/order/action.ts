@@ -1,7 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import nProgress from 'nprogress';
 
 export async function Order(formData: FormData) {
   const cookiesStorage = cookies();

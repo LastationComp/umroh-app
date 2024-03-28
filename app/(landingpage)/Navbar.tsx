@@ -42,8 +42,8 @@ export default function Navbar({ auth }: { auth: boolean }) {
                 <Button variant={'ghost'} className="w-full" asChild>
                   <Link href={'/paket'}>Paket Promo</Link>
                 </Button>
-                <Button variant={'ghost'} className="w-full">
-                  Blog
+                <Button variant={'ghost'} className="w-full" asChild>
+                  <Link href={'/blog'}>Blog</Link>
                 </Button>
                 <NavigationMenu>
                   <NavigationMenuList>
@@ -85,7 +85,7 @@ export default function Navbar({ auth }: { auth: boolean }) {
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href={'/'} legacyBehavior passHref>
+                  <Link href={'/blog'} legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle() + ' bg-transparent hover:bg-transparent text-white/90 hover:text-white/70'}>Blog</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>

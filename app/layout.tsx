@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-p-0 overflow-x-hidden">
-      <body className={inter.className}>
+      <body className={inter.className + ' bg-tacao'}>
         <NextTopLoader showSpinner={false} initialPosition={0.5} />
         {children}
         <Toaster />
