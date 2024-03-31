@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 export default function SearchFilter() {
   return (
     <div className="flex flex-col gap-3 mt-3">
@@ -58,6 +59,7 @@ export default function SearchFilter() {
           {'> 40jt'}
         </ToggleGroupItem>
       </ToggleGroup>
+      <Button variant={'outline'}>Reset</Button>
     </div>
   );
 }

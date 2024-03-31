@@ -28,7 +28,7 @@ export default function PartnerContent({ data }: { data: any[] }) {
             loop: true,
             align: 'start',
           }}
-          className="w-full -ml-5"
+          className="w-full -ml-5 md:container md:mx-auto "
         >
           <CarouselContent className="">
             {data?.map((patner: any, index: number) => (

@@ -6,5 +6,5 @@ export const metadata: Metadata = {
   description: 'Login to full access umroh.ai',
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+  return <section className="bg-white">{children}</section>;
 }
