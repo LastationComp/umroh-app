@@ -34,7 +34,7 @@ export default function Gallery() {
             loop: true,
             align: 'start',
           }}
-          className="w-full -ml-5"
+          className="w-full -ml-5 md:container md:mx-auto "
         >
           <CarouselContent className="">
             {images.map((image, i) => (

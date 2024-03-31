@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,7 +27,7 @@ export default function CoverContent() {
             loop: true,
             align: 'start',
           }}
-          className="w-full -ml-5"
+          className="w-full -ml-5 md:container md:mx-auto "
         >
           <CarouselContent className="">
             <CarouselItem key={1} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">

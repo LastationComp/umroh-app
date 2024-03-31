@@ -14,7 +14,7 @@ interface PopupSliders {
 export default function PopupSliders({ data, open, onOpenChange, currentSlide = 0 }: PopupSliders) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-auto">
+      <DialogContent className="w-auto scale-90">
         <DialogClose className="fixed top-8 right-8 z-30">
           <Button className="rounded-full uppercase opacity-50">x</Button>
         </DialogClose>
