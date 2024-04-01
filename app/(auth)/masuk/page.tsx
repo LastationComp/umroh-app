@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import React, { Suspense } from 'react';
 import AuthenticationPage from './AuthenticationPage';
 import Link from 'next/link';
+import LoadingUI from '@/components/Suspense/Loading';
 
 export default function Page() {
   return (
@@ -31,7 +32,9 @@ export default function Page() {
           </Link>
         </div>
         <div className="h-full flex justify-center items-center">
-          <AuthenticationPage />
+          <Suspense fallback={<LoadingUI />}>
+            <AuthenticationPage />
+          </Suspense>
         </div>
       </div>
     </section>
