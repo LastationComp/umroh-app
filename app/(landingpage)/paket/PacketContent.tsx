@@ -29,7 +29,7 @@ export default function PacketContent({ data }: { data: any[] }) {
         ))}
         {isLoading && totalPage !== packetData.length && <LoadingSingleSkeleton card={packetData.length % 3 !== 0 ? (packetData.length % 3) + 6 : 6} />}
       </div>
-      <div className="flex justify-center my-3">{!isLoading && totalPage !== packetData.length && <Button onClick={fetchData}>Tampilkan Banyak</Button>}</div>
+      <div className="flex justify-center my-3">{!isLoading && totalPage !== packetData.length && <Button onClick={fetchData}>Tampilkan Lainnya</Button>}</div>
     </section>
   );
 }
