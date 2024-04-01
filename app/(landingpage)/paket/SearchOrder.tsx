@@ -7,7 +7,7 @@ export default function SearchOrder() {
   return (
     <div className="flex items-center gap-3">
       <span className="">Urutkan</span>
-      <Select>
+      <Select defaultValue="terbaru">
         <SelectTrigger className="w-full">
           <SelectValue placeholder="Pilih urutan" />
         </SelectTrigger>

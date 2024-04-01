@@ -80,7 +80,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
     <Card className="p-5 gap-5">
       <PopupSliders data={imagesData} currentSlide={slide} open={openImage} onOpenChange={setOpenImage} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <ShadCarousel className="xl:w-[550px] full flex justify-center place-self-center">
+        <ShadCarousel className="w-full flex justify-center place-self-center">
           <CarouselPrevious />
           <CarouselContent
             className="cursor-pointer"

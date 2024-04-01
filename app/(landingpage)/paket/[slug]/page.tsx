@@ -12,7 +12,7 @@ import LoadingUI from '@/components/Suspense/Loading';
 
 export default function Page({ params }: { params: { slug: string } }) {
   return (
-    <section className="my-[5rem] md:container md:mx-auto mx-3">
+    <section className=" md:container md:mx-auto">
       <PacketDetailPage slug={params.slug} />
       <TravelProfile />
       <Facilities />

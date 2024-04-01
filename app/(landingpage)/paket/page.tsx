@@ -12,7 +12,7 @@ import { FiFilter } from 'react-icons/fi';
 export default function Page() {
   return (
     <section>
-      <span className="text-2xl font-semibold">Pencarian Paket</span>
+      <span className=" font-bold">Pencarian Paket</span>
       <div className="grid grid-cols-12 grid-flow-row gap-3">
         <Card className=" col-span-2 rounded max-lg:hidden shadow-md p-3">
           <div className="flex flex-col gap-3">

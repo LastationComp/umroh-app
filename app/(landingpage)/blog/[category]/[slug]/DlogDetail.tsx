@@ -1,11 +1,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import Shares from './Shares';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
-export default function DlogDetail() {
+interface BlogDetailProps {
+  className?: HTMLAttributes<HTMLDivElement> | string;
+}
+export default function DlogDetail({ className }: BlogDetailProps) {
   return (
-    <section className="flex flex-col gap-3 my-5">
+    <section className={cn('flex flex-col gap-3 my-5', className)}>
       <Link href={'/blog/content/title'} className="text-md hover:text-blue-600 font-bold transition line-clamp-2 ease-in duration-300">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, fuga. Vitae ipsum sit inventore saepe sed voluptate, ab eius consequatur! Amet, iure blanditiis similique voluptatibus facilis corrupti a aut recusandae!
       </Link>
@@ -16,7 +21,7 @@ export default function DlogDetail() {
         height={1000}
         alt="Image Blog"
       />
-      
+
       <p className="leading-relaxed text-slate-500 indent-8 text-justify">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non maiores illum fuga, quia iure amet velit fugiat! Explicabo voluptates, ullam laborum consequuntur architecto delectus magnam incidunt fugit mollitia accusamus dignissimos
         nam iste beatae hic. Fugiat, aliquid nesciunt nihil voluptatem nam totam cumque ea laudantium eligendi vel inventore doloribus exercitationem a ullam ducimus veniam facilis perspiciatis deserunt aperiam rerum porro suscipit
@@ -32,8 +37,12 @@ export default function DlogDetail() {
       <span className="text-slate-800 text-sm">
         Dibuat oleh <b>Lasinto</b>
       </span>
+      <div className="flex justify-between items-center">
         <Shares url="" title="Blog" />
-
+        <Button variant={'outline'} asChild>
+          <Link href={'/blog'}>Kembali</Link>
+        </Button>
+      </div>
     </section>
   );
 }

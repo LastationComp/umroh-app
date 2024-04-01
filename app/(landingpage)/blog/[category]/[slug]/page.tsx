@@ -5,6 +5,8 @@ import React from 'react';
 import { MdOutlineDateRange } from 'react-icons/md';
 import BlogDetail from './DlogDetail';
 import BlogsContent from './BlogsContent';
+import SideBarDetail from './SideBarDetail';
+import Tag from '@/components/blogs/Tag';
 export default function BlogDetailPage({ params }: { params: { slug: string; category: string } }) {
   return (
     <Card className="bg-white md:p-10 p-5">
@@ -14,10 +16,14 @@ export default function BlogDetailPage({ params }: { params: { slug: string; cat
           <span className="text-sm">24 April 2024</span>
         </div>
         <Separator className="h-5" orientation="vertical" />
-        <span className="text-sm text-black/60 capitalize">{params.category}</span>
+        <span className="text-sm text-black/60 capitalize">
+          <Tag>{params.category}</Tag>
+        </span>
       </div>
-      <BlogDetail />
-      <BlogsContent />
+      <section className="grid grid-cols-12 gap-3">
+        <BlogDetail className="col-span-12 lg:col-span-8" />
+        <SideBarDetail />
+      </section>
     </Card>
   );
 }

@@ -13,9 +13,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { Logout } from './action';
 import { delay } from '@/lib/Promise/Delay';
+import { usePathname } from 'next/navigation';
 export default function Navbar({ auth }: { auth: boolean }) {
   const [authenticated, setAuthenticated] = useState(auth);
-
+  const pathname = usePathname();
   const handleLogout = async () => {
     await delay(500);
     window.location.reload();
@@ -115,18 +116,13 @@ export default function Navbar({ auth }: { auth: boolean }) {
         {!authenticated && (
           <div className="flex items-center gap-3">
             <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/masuk'}>
+              <Link href={'/masuk?redirect=/perbandingan'}>
                 <FontAwesomeIcon icon={faRightLeft} />
               </Link>
             </Button>
-            <Button variant={'outline'} className="bg-transparent hover:bg-transparent outline outline-1 outline-green-1">
-              <Link href={'/masuk'} className="text-white/90">
-                Masuk
-              </Link>
-            </Button>
             <Button className="bg-green-600 hover:bg-green-700">
-              <Link href={'/daftar'} className="text-white/90">
-                Daftar
+              <Link href={'/masuk?redirect=' + pathname} className="text-white/90">
+                Masuk
               </Link>
             </Button>
           </div>
