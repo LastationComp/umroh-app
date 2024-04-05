@@ -21,6 +21,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'c4.wallpaperflare.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.discordapp.com',
+      },
     ],
   },
   compiler: {
