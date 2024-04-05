@@ -45,82 +45,60 @@ export default function FavoritLists({ data }: { data: any[] }) {
     setFavorit(fav);
   };
   return (
-    <section className="flex flex-col gap-3">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-3">
       {favorit &&
         favorit.map((paket_umroh: any, index: number) => (
           <Card className={'p-3 hover:outline hover:outline-1 shadow-md hover:outline-blue-400 relative'} key={index}>
-            <div className="flex gap-3 items-center justify-between">
-              <div className="flex gap-3">
-                <Image className="rounded object-cover w-[100px] h-[70px]" loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={100} width={100} />
-                <div className="flex flex-col">
-                  <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
-                    <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
-                  </Link>
-                  <div className="flex items-center gap-3">
-                    <span className="font-semibold">{formatRupiah(paket_umroh.price)}</span>
-                    <Badge variant={'outline'} className="flex w-auto">
-                      <span className="text-sm text-black/60">{paket_umroh.feature}</span>
-                    </Badge>
+            <div className="flex gap-3 items-center">
+              <Image className="rounded object-cover h-[100px] w-[150px] " loading={'lazy'} src={paket_umroh?.img} alt="Pic 1" height={200} width={200} />
+              <div className="flex flex-col w-full gap-3">
+                <Link href={`/paket/${String(paket_umroh.title).replaceAll(' ', '-')}`} key={index}>
+                  <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">{paket_umroh.title}</span>
+                </Link>
+                <div className="flex items-center gap-3">
+                  <span className="font-semibold">{formatRupiah(paket_umroh.price)}</span>
+                  <Badge variant={'outline'} className="flex w-auto">
+                    <span className="text-sm text-black/60">{paket_umroh.feature}</span>
+                  </Badge>
+                </div>
+                <div className="flex">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={!paket_umroh.is_syariah ? ' grayscale' : ''} alt="Is Syariah" width={60} height={20} />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Pembayaran Syariah</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                  <div className="flex items-center ml-auto gap-3">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button>
+                            <FiShoppingCart />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Pesan</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant={'destructive'}>
+                            <FiTrash2 />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-red-400">
+                          <p>Hapus</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 max-md:hidden">
-                <Button variant={'outline'} size={'sm'} onClick={() => setQtyMinus(paket_umroh.id)} disabled={paket_umroh.qty <= 1}>
-                  -
-                </Button>
-                <span className="text-sm">{paket_umroh.qty ?? 1}</span>
-                <Button variant={'outline'} size={'sm'} onClick={() => setQtyPlus(paket_umroh.id)}>
-                  +
-                </Button>
-              </div>
-            </div>
-            <div className="flex justify-between items-center my-3">
-              <div>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Image src={'https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg'} className={!paket_umroh.is_syariah ? ' grayscale' : ''} alt="Is Syariah" width={60} height={20} />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Pembayaran Syariah</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="flex items-center gap-3 md:hidden">
-                <Button variant={'outline'} size={'sm'} onClick={() => setQtyMinus(paket_umroh.id)} disabled={paket_umroh.qty <= 1}>
-                  -
-                </Button>
-                <span className="text-sm">{paket_umroh.qty ?? 1}</span>
-                <Button variant={'outline'} size={'sm'} onClick={() => setQtyPlus(paket_umroh.id)}>
-                  +
-                </Button>
-              </div>
-              <div className="flex items-center gap-1 z-20">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button>
-                        <FiShoppingCart />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Pesan</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant={'destructive'}>
-                        <FiTrash2 />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="bg-red-400">
-                      <p>Hapus</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
               </div>
             </div>
           </Card>

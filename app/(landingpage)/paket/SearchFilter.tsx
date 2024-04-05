@@ -21,7 +21,7 @@ export default function SearchFilter() {
       <span>Lokasi Keberangkatan</span>
       <Select>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Pilih Lokasi Keberangkatan" />
+          <SelectValue placeholder="Lokasi Keberangkatan" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -39,7 +39,7 @@ export default function SearchFilter() {
       <span>Waktu Keberangkatan</span>
       <Select>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Pilih Waktu Keberangkatan" />
+          <SelectValue placeholder="Waktu Keberangkatan" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="maret-2024">Maret-2024</SelectItem>

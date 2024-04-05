@@ -14,6 +14,8 @@ import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { Logout } from './action';
 import { delay } from '@/lib/Promise/Delay';
 import { usePathname } from 'next/navigation';
+import { BiSolidMapPin } from 'react-icons/bi';
+import ProfileMenu from '@/components/users/profile-menu';
 export default function Navbar({ auth }: { auth: boolean }) {
   const [authenticated, setAuthenticated] = useState(auth);
   const pathname = usePathname();
@@ -120,6 +122,11 @@ export default function Navbar({ auth }: { auth: boolean }) {
                 <FontAwesomeIcon icon={faRightLeft} />
               </Link>
             </Button>
+            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+              <Link href={'/tracks'}>
+                <BiSolidMapPin />
+              </Link>
+            </Button>
             <Button className="bg-green-600 hover:bg-green-700">
               <Link href={'/masuk?redirect=' + pathname} className="text-white/90">
                 Masuk
@@ -137,26 +144,12 @@ export default function Navbar({ auth }: { auth: boolean }) {
                 </span>
               </Link>
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Image src={avatar} alt={'Avatar'} className="object-cover rounded-full w-auto h-auto cursor-pointer" width={25} height={25} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align={'end'} sticky={'always'}>
-                <DropdownMenuLabel>Akun Saya</DropdownMenuLabel>
-                <DropdownMenuItem>
-                  <Link href={'/favorit'}>Favorit Saya</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link href={'/favorit'}>Pesanan Saya</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <form action={Logout} onSubmit={handleLogout}>
-                  <button type="submit" className="w-full">
-                    <DropdownMenuItem className="text-red-400 cursor-pointer">Logout</DropdownMenuItem>
-                  </button>
-                </form>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+              <Link href={'/tracks'}>
+                <BiSolidMapPin />
+              </Link>
+            </Button>
+            <ProfileMenu />
           </div>
         )}
       </section>
