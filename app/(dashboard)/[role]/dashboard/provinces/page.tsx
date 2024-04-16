@@ -1,14 +1,13 @@
 import React from 'react';
 import FormBuilder from '@/components/builder/FormBuilder';
-import CitiesTable from './CitiesTable';
+import ProvinceTable from './ProvinceTable';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-// import ProvinceTable from './ProvinceTable';
 
-export default function CitiesPage() {
+export default function ProvincesPage() {
   return (
     <section className="flex flex-col gap-3">
       <div className="flex justify-between">
-        <span className="font-bold">Data Kota</span>
+        <span className="font-bold">Data Provinsi</span>
         <FormBuilder
           endpoint="api.example.com"
           forms={[
@@ -25,28 +24,16 @@ export default function CitiesPage() {
               ],
             },
             {
-              name: 'province_id',
+              name: 'province',
               label: 'Provinsi',
-              type: 'select',
-              placeholder: 'Pilih Provinsi...',
-              selectData: [
-                {
-                  id: '343223',
-                  name: 'Jawa Timur',
-                },
-              ],
-            },
-            {
-              name: 'city',
-              label: 'Kota',
               type: 'text',
-              placeholder: 'Masukkan Nama Kota...',
+              placeholder: 'Masukkan Nama Provinsi...',
             },
           ]}
         />
       </div>
       <ScrollArea>
-        <CitiesTable />
+        <ProvinceTable />
         <ScrollBar orientation={'horizontal'} />
       </ScrollArea>
     </section>

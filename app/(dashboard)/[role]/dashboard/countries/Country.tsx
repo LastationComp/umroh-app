@@ -16,7 +16,8 @@ export type Country = {
 export const columns: ColumnDef<Country>[] = [
   {
     accessorKey: 'no',
-    header: 'NO',
+    header: () => <div className="text-center">NO</div>,
+    cell: ({ row }) => <div className="text-center">{row.original.id}</div>,
     enableHiding: false,
   },
   {

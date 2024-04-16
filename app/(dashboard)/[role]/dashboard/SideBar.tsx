@@ -1,7 +1,5 @@
 'use client';
 import React from 'react';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from '@/components/ui/command';
-import { CalendarIcon, EnvelopeClosedIcon, FaceIcon, GearIcon, PersonIcon, RocketIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -9,6 +7,7 @@ import { IoMdHome } from 'react-icons/io';
 import { FaCity } from 'react-icons/fa';
 import { Separator } from '@/components/ui/separator';
 import { IoGlobeOutline } from 'react-icons/io5';
+import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 export default function SideBar({ role }: { role: string }) {
   const pathname = usePathname();
   const GenerateBar = ({ url, title, children }: { url: string; title: string; children?: React.ReactNode }) => {
@@ -43,6 +42,9 @@ export default function SideBar({ role }: { role: string }) {
         </div>
         <GenerateBar url="/countries" title="Negara">
           <IoGlobeOutline />
+        </GenerateBar>
+        <GenerateBar url="/provinces" title="Provinsi">
+          <LiaMapMarkedAltSolid />
         </GenerateBar>
         <GenerateBar url="/cities" title="Kota">
           <FaCity />

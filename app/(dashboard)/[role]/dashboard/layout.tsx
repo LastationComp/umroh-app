@@ -16,12 +16,7 @@ export default function Layout({ children, params }: { children: React.ReactNode
       <Separator />
       <div className="grid grid-cols-12 divide-x h-full">
         <SideBar role={params.role} />
-        <div className="col-span-10 md:p-3">
-          <ScrollArea className="p-1">
-            {children}
-            <ScrollBar orientation={'horizontal'} />
-          </ScrollArea>
-        </div>
+        <div className="col-span-10 md:p-3 p-1">{children}</div>
       </div>
     </section>
   );
