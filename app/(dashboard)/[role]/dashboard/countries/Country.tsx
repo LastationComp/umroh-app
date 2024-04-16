@@ -1,5 +1,7 @@
 'use client';
 
+import FormBuilder from '@/components/builder/FormBuilder';
+import DeleteButton from '@/components/dashboard/DeleteButton';
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 
@@ -15,6 +17,7 @@ export const columns: ColumnDef<Country>[] = [
   {
     accessorKey: 'no',
     header: 'NO',
+    enableHiding: false,
   },
   {
     accessorKey: 'name',
@@ -27,8 +30,19 @@ export const columns: ColumnDef<Country>[] = [
 
       return (
         <section className="flex gap-3">
-          <Button variant={'outline'}>Edit</Button>
-          <Button>Delete</Button>
+          <FormBuilder
+            type="Edit"
+            endpoint="api.example.com"
+            forms={[
+              {
+                name: 'negara',
+                type: 'text',
+                placeholder: 'Masukkan Nama Negara...',
+                currentValue: country.name,
+              },
+            ]}
+          />
+          <DeleteButton endpoint="api.example.com/delete" />
         </section>
       );
     },

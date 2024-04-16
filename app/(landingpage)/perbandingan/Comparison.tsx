@@ -2,7 +2,7 @@ import React from 'react';
 import ComparisonCarts from './ComparisonCarts';
 
 async function getPaketUmroh() {
-  const res = await fetch('https://umroh-ai-dummy-api-production.up.railway.app/paket_umroh', { cache: 'no-store' });
+  const res = await fetch(process.env.URL_API + '/paket_umroh', { cache: 'no-store' });
   return res.json();
 }
 

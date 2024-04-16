@@ -2,7 +2,7 @@ import React from 'react';
 import PartnerContent from './PartnerContent';
 
 async function getPartner() {
-  const res = await fetch('https://umroh-ai-dummy-api-production.up.railway.app/patner', { cache: 'no-store' });
+  const res = await fetch(process.env.URL_API + '/patner', { cache: 'no-store' });
   return res.json()
 }
 export default async function Partner() {

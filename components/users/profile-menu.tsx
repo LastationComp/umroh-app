@@ -25,13 +25,21 @@ export default function ProfileMenu() {
           <Link href={'/profile'}>Profil Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={'/favorit'}>Dashboard Saya</Link>
+          <Link href={'/admin/dashboard'}>Dashboard Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link href={'/favorit'}>Favorit Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link href={'/favorit'}>Pesanan Saya</Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel>Travel Saya</DropdownMenuLabel>
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href={'/profile'}>Profil</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href={'/profile'}>Pengaturan</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <form action={Logout} onSubmit={handleLogout}>
