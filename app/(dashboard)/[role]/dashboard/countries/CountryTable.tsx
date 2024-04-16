@@ -9,6 +9,11 @@ export default function CountryTable() {
       no: 1,
       name: 'Indonesia',
     },
+    {
+      id: 2,
+      no: 2,
+      name: 'Malaysia',
+    },
   ];
   return (
     <section>

@@ -33,11 +33,11 @@ export default function PartnerContent({ data }: { data: any[] }) {
           <CarouselContent className="">
             {data?.map((patner: any, index: number) => (
               <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">
-                <div className="p-5 bg-white shadow border border-1 flex items-center">
-                  <Link href={'http://localhost:3000/travel/name-travel'} target="_blank">
-                    <Image src={patner.img_url} className=" rounded transition border-black w-[150px] h-auto" alt="Galeri " width={1000} height={1000} />
-                  </Link>
-                </div>
+                <Link href={'http://localhost:3000/travel/name-travel'} className='h-full' target="_blank">
+                  <div className="p-5 bg-white shadow border border-1 flex items-center h-full">
+                    <Image src={patner.img_url} className=" rounded transition border-black w-[150px] object-cover" alt="Galeri " width={1000} height={1000} />
+                  </div>
+                </Link>
               </CarouselItem>
             ))}
           </CarouselContent>

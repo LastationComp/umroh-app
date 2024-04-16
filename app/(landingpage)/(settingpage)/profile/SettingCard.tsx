@@ -22,19 +22,19 @@ export default function SettingCard({ children }: SettingProps) {
 
   const active = (url: string) => {
     const newUrl = `/profile` + url;
-    if (pathname === newUrl && (url === '' || url === '/')) return 'bg-accent text-accent-foreground';
+    if (pathname === newUrl && (url === '' || url === '/' || url === '/travel')) return 'bg-accent text-accent-foreground';
 
-    if (pathname.startsWith(newUrl) && !(url === '' || url === '/')) return 'bg-accent text-accent-foreground';
+    if (pathname.startsWith(newUrl) && !(url === '' || url === '/' || url === '/travel')) return 'bg-accent text-accent-foreground';
 
     return '';
   };
   const GenerateMenu = ({ url, title, children }: { url: string; title: string; children?: React.ReactNode }) => {
     const newUrl = `/profile` + url;
     return (
-      <Button variant={'ghost'} className={cn('flex justify-start max-md:justify-center gap-3', active(url))} asChild>
+      <Button variant={'ghost'} className={cn('flex justify-start max-lg:justify-center gap-3', active(url))} asChild>
         <Link href={newUrl}>
           {children}
-          <span className="hidden md:flex">{title}</span>
+          <span className="hidden lg:flex">{title}</span>
         </Link>
       </Button>
     );
@@ -63,7 +63,7 @@ export default function SettingCard({ children }: SettingProps) {
           </GenerateMenu>
           <span className="text-sm max-md:hidden">Travel</span>
           <Separator />
-          <GenerateMenu url="/travel/profile" title="Profil">
+          <GenerateMenu url="/travel" title="Profil">
             <BiSolidPlaneAlt />
           </GenerateMenu>
           <GenerateMenu url="/travel/settings" title="Pengaturan">

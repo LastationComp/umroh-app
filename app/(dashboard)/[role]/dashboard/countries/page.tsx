@@ -1,27 +1,23 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { Metadata } from 'next';
-import React, { useState } from 'react';
-import { IoAddOutline } from 'react-icons/io5';
-import CountryForm from './CountryForm';
+import React from 'react';
 import CountryTable from './CountryTable';
+import FormBuilder from '@/components/builder/FormBuilder';
 
 export default function CountriesPage() {
-  const [open, setOpen] = useState(false);
-
-  const handleOpenFormAdd = () => {
-    setOpen(!open);
-  };
   return (
     <section className="flex flex-col gap-3">
       <div className="flex justify-between">
         <span className="font-bold">Data Negara</span>
-        <Button className="flex items-center gap-3" onClick={handleOpenFormAdd}>
-          <IoAddOutline />
-          Tambah Data
-        </Button>
+        <FormBuilder
+          endpoint="api.example.com"
+          forms={[
+            {
+              name: 'negara',
+              type: 'text',
+              placeholder: 'Masukkan Nama Negara...',
+            },
+          ]}
+        />
       </div>
-      <CountryForm open={open} onOpenChange={setOpen} />
       <CountryTable />
     </section>
   );

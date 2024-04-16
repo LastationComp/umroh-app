@@ -8,7 +8,6 @@ export default async function SearchContent() {
   const data = await getPaketUmroh(1);
   return (
     <section>
-      <SearchEngine />
       <PacketContent data={data} />
     </section>
   );
