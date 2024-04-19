@@ -71,7 +71,7 @@ export const AuthOptions: NextAuthOptions = {
         if (xsrfToken) {
           headers.append('X-XSRF-TOKEN', xsrfToken);
         }
-        const res = await fetch('http://127.0.0.1:8000/api/auth', {
+        const res = await fetch(process.env.NEXT_PUBLIC_URL_API + '/api/auth', {
           method: 'POST',
           //   cache: "no-store",
           credentials: 'include',
