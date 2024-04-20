@@ -50,9 +50,8 @@ export default function CompareButton({ id }: CompareProps) {
       <Dialog open={openDialog} onOpenChange={setOpenDialog} key={id}>
         <DialogContent className="max-w-lg scale-90 flex flex-col justify-center items-center">
           <DialogHeader className="flex flex-col items-center">
-            <DialogTitle>Berhasil Ditambahkan!</DialogTitle>
-            <p className="line-clamp-1 font-bold">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, veritatis.</p>
-            <DialogDescription>Paket berhasil ditambahkan</DialogDescription>
+            <DialogTitle>Paket Berhasil Ditambahkan!</DialogTitle>
+            <p className="line-clamp-1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, veritatis.</p>
           </DialogHeader>
           <div className="flex gap-3">
             <Button onClick={handleCloseDialog}>Lanjut Mencari Paket</Button>
@@ -65,9 +64,8 @@ export default function CompareButton({ id }: CompareProps) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant={'secondary'} onClick={handleButton}>
-              {!isCompared && <FontAwesomeIcon icon={faRightLeft} />}
-              {isCompared && <FaCheck />}
+            <Button variant={isCompared ? 'secondary' : 'outline'} onClick={handleButton}>
+              <FontAwesomeIcon icon={faRightLeft} />
             </Button>
           </TooltipTrigger>
           <TooltipContent className="bg-blue-dark">

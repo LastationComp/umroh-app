@@ -36,9 +36,8 @@ export default function Favorites({ title }: FavoriteProps) {
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="max-w-lg scale-90 flex flex-col justify-center items-center">
           <DialogHeader className="flex flex-col items-center">
-            <DialogTitle>Berhasil Ditambahkan!</DialogTitle>
-            <p className="line-clamp-1 font-bold">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, veritatis.</p>
-            <DialogDescription>Paket berhasil ditambahkan</DialogDescription>
+            <DialogTitle>Paket Berhasil Ditambahkan!</DialogTitle>
+            <p className="line-clamp-1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, veritatis.</p>
           </DialogHeader>
           <div className="flex gap-3">
             <Button onClick={handleCloseDialog}>Lanjut Mencari Paket</Button>

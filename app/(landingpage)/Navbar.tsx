@@ -2,33 +2,25 @@
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Separator } from '@/components/ui/separator';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
-import Image from 'next/image';
-import avatar from '@/public/profile/avatar.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
-import { Logout } from './action';
 import { delay } from '@/lib/Promise/Delay';
 import { usePathname } from 'next/navigation';
 import { BiSolidMapPin } from 'react-icons/bi';
 import ProfileMenu from '@/components/users/profile-menu';
-export default function Navbar({ auth }: { auth: boolean }) {
-  const [authenticated, setAuthenticated] = useState(auth);
+export default function Navbar({ session }: { session: any }) {
+  const auth = !session === false;
   const pathname = usePathname();
-  const handleLogout = async () => {
-    await delay(500);
-    window.location.reload();
-  };
   return (
     <nav className="h-[4rem] shadow-md fixed top-0 z-50 bg-blue-dark w-full ">
-      <section className="container mx-auto flex items-center justify-between h-full">
+      <section className="md:container md:mx-auto max-md:mx-3 flex items-center justify-between h-full">
         <div className="flex md:hidden items-center gap-3">
           <Sheet>
-            <SheetTrigger className="my-3 -ml-3">
+            <SheetTrigger className="my-3">
               <span className="text-white flex my-auto items-center">
                 <FaBars className="text-md" />
               </span>
@@ -115,7 +107,7 @@ export default function Navbar({ auth }: { auth: boolean }) {
             </NavigationMenu>
           </div>
         </div>
-        {!authenticated && (
+        {!auth && (
           <div className="flex items-center gap-3">
             <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
               <Link href={'/masuk?redirect=/perbandingan'}>
@@ -134,8 +126,8 @@ export default function Navbar({ auth }: { auth: boolean }) {
             </Button>
           </div>
         )}
-        {authenticated && (
-          <div className="flex items-center gap-3 mr-3">
+        {auth && (
+          <div className="flex items-center gap-3">
             <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
               <Link href={'/perbandingan'}>
                 <FontAwesomeIcon icon={faRightLeft} />
@@ -149,7 +141,7 @@ export default function Navbar({ auth }: { auth: boolean }) {
                 <BiSolidMapPin />
               </Link>
             </Button>
-            <ProfileMenu />
+            <ProfileMenu session={session} />
           </div>
         )}
       </section>

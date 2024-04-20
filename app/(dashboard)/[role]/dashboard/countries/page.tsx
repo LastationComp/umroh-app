@@ -1,6 +1,7 @@
 import React from 'react';
 import CountryTable from './CountryTable';
 import FormBuilder from '@/components/builder/FormBuilder';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 export default function CountriesPage() {
   return (
@@ -18,7 +19,10 @@ export default function CountriesPage() {
           ]}
         />
       </div>
-      <CountryTable />
+      <ScrollArea>
+        <CountryTable />
+        <ScrollBar orientation={'horizontal'} />
+      </ScrollArea>
     </section>
   );
 }

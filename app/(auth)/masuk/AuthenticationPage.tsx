@@ -2,29 +2,45 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { IoLogoGoogle } from 'react-icons/io5';
-import { auth } from './action';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import nProgress from 'nprogress';
+import SubmitButton from '@/components/builder/SubmitButton';
+import { signIn } from 'next-auth/react';
+import Alert from '@/components/callback/Alert';
+import { delay } from '@/lib/Promise/Delay';
 
 export default function AuthenticationPage() {
+  const [errMsg, setErrMsg] = useState('');
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname()
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    nProgress.start();
-    await auth(searchParams.get('redirect') ?? '');
+  const pathname = usePathname();
+  const handleSubmit = async (formData: FormData) => {
+    const res = await signIn('credentials', {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      redirect: false,
+    });
+
+    if (!res?.ok || res.status !== 200) return setErrMsg('Email or Password is wrong! please try again');
+
+    router.refresh();
+    await delay(1000);
+
+    ('use server');
+    redirect(searchParams.get('redirect') ?? '/');
   };
   return (
     <section className="flex flex-col gap-5 items-center">
       <span className="text-2xl font-bold">Masuk Umroh.ai</span>
-      <span className="text-sm text-center">Masukkan username dan password untuk login ke umroh.ai {pathname}</span>
-      <form onSubmit={handleSubmit} method="post" className="w-full flex flex-col gap-3">
+      <span className="text-sm text-center">Masukkan username dan password untuk login ke umroh.ai</span>
+      <div className="flex w-full">{errMsg !== '' && <Alert variant={'error'} message={errMsg} />}</div>
+      <form action={handleSubmit} onSubmit={() => setErrMsg('')} className="w-full flex flex-col gap-3">
         {/* <Input type="text" name="name" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Nama Anda..." /> */}
-        <Input type="email" name="email" value={'demo@gmail.com'} readOnly className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
-        <Input type="password" name="password" value={'demopassword'} readOnly className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
-        <Button>Masuk</Button>
+        <Input type="email" name="email" defaultValue={'admin@gmail.com'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
+        <Input type="password" name="password" defaultValue={'12345678'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
+        <SubmitButton>Masuk</SubmitButton>
       </form>
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center">

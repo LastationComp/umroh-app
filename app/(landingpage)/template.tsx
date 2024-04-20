@@ -2,14 +2,19 @@ import { cookies } from 'next/headers';
 import ContactContent from './ContactContent';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import { getServerSession } from 'next-auth';
+import { AuthOptions } from '../api/auth/AuthOptions';
+import Provider from '@/components/Provider';
 
 export default async function Template({ children }: { children: React.ReactNode }) {
-  const data = cookies().get('auth');
-
+  // const data = cookies().get('auth');
+  const session = await getServerSession(AuthOptions);
   return (
     <section className="min-h-screen flex flex-col w-screen">
       <section className="mb-[5rem]">
-        <Navbar auth={data?.value === 'true'} />
+        <Provider session={session}>
+          <Navbar session={session} />
+        </Provider>
       </section>
       {children}
       <section className=" mt-auto">

@@ -64,7 +64,7 @@ export default function FormBuilder({ forms, endpoint = '', type = 'Add' }: Form
       {type === 'Edit' && (
         <Button variant={'outline'} className="flex items-center gap-3" onClick={handleOpenCloseFormAdd}>
           <IoPencilOutline />
-          <span className="lg:flex hidden">Ubah Data</span>
+          <span className="lg:flex hidden">Ubah</span>
         </Button>
       )}
       <Dialog open={open} onOpenChange={setOpen}>
