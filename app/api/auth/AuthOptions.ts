@@ -73,7 +73,7 @@ export const AuthOptions: NextAuthOptions = {
         }
         const res = await fetch(process.env.NEXT_PUBLIC_URL_API + '/api/auth', {
           method: 'POST',
-          //   cache: "no-store",
+          cache: 'no-store',
           credentials: 'include',
           headers: headers,
           body: JSON.stringify({

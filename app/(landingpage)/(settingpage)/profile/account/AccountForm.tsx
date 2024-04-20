@@ -13,8 +13,6 @@ import { useSession } from 'next-auth/react';
 import Alert from '@/components/callback/Alert';
 import { useRouter } from 'next/navigation';
 import { io } from 'socket.io-client';
-import { socket } from '@/lib/Services/socket';
-// import { socket } from '@/lib/Services/socket';
 
 const initialState = {
   type: 'success',
@@ -54,10 +52,10 @@ export default function AccountForm({ data }: { data: any }) {
         image: result.image,
         picture: result.image,
       };
-      socket.emit('change-image', {
-        id: session?.user.id,
-        image: result.image
-      })
+      // socket.emit('change-image', {
+      //   id: session?.user.id,
+      //   image: result.image,
+      // });
     }
 
     update(data);
@@ -71,11 +69,6 @@ export default function AccountForm({ data }: { data: any }) {
     return 'Yah, Belum Bos';
   };
 
-  useEffect(() => {
-    if (socket.connected) {
-      setConnected(true);
-    }
-  }, []);
   return (
     <section>
       <div className="flex">{state?.message && <Alert variant={state?.type} message={state.message} />}</div>

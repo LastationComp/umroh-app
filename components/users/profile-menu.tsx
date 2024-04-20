@@ -7,7 +7,8 @@ import avatar from '@/public/profile/avatar.png';
 import { Logout } from './action';
 import { signOut, useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
-import { socket } from '@/lib/Services/socket';
+import { getPusherUser, pusher } from '@/lib/Services/pusher';
+// import { pusher } from '@/lib/Services/pusher';
 
 export default function ProfileMenu({ session }: { session: Session }) {
   const [urlImage, setUrlImage] = useState(session.user.image);
@@ -24,12 +25,20 @@ export default function ProfileMenu({ session }: { session: Session }) {
   };
 
   useEffect(() => {
-    socket.on('account-' + session.user.id, (data: any) => {
+    const privateChannel = pusher.subscribe('profile-' + session.user.id);
+    if (!privateChannel.subscribed) console.log('tidak terhubung lho');
+
+    // socket.on('account-' + session.user.id, (data: any) => {
+    //   console.log(data);
+    //   setUrlImage(data);
+    // });
+    privateChannel.bind('change-image', (data: any) => {
       console.log(data);
-      setUrlImage(data);
     });
+    if (privateChannel.subscribed) console.log('terhubung lho');
     return () => {
-      socket.off('account-' + session.user.id);
+      // socket.off('account-' + session.user.id);
+      pusher.unsubscribe('profile-' + session.user.id);
     };
   }, [session]);
 

@@ -36,8 +36,8 @@ const nextConfig = {
         pathname: '/storage/**',
       },
       {
-        protocol: 'http',
-        hostname: 'umroh-ai-api.test',
+        protocol: 'https',
+        hostname: 'umroh-ai-api.000webhostapp.com',
       },
     ],
   },
