@@ -49,9 +49,9 @@ export function DataTable<TData, TValue>({ columns, data, children }: DataTableP
           )}
         </TableBody>
       </Table>
-      <div className="my-3">
+      {/* <div className="my-3">
         <DataTablePagination table={table} />
-      </div>
+      </div> */}
     </div>
   );
 }

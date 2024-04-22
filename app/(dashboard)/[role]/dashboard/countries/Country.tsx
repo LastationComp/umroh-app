@@ -33,7 +33,7 @@ export const columns: ColumnDef<Country>[] = [
         <section className="flex gap-3">
           <FormBuilder
             type="Edit"
-            endpoint="api.example.com"
+            endpoint={'/api/admin/countries'}
             forms={[
               {
                 name: 'negara',

@@ -2,7 +2,7 @@ import { DataTable } from '@/components/ui/data-table';
 import React from 'react';
 import { columns } from './Country';
 
-export default function CountryTable() {
+export default async function CountryTable() {
   const data = [
     {
       id: 1,

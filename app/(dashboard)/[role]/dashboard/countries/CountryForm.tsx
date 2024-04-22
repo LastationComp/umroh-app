@@ -1,3 +1,4 @@
+import SubmitButton from '@/components/builder/SubmitButton';
 import Alert from '@/components/callback/Alert';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
@@ -26,7 +27,7 @@ export default function CountryForm({ open, onOpenChange }: CountryFormProps) {
             <Input name="name" id="name" placeholder="Masukkan Nama Negara" autoFocus />
           </div>
           <div className="flex justify-end gap-3">
-            <Button type={'button'}>Tambah</Button>
+            <SubmitButton>Simpan</SubmitButton>
             <Button type="reset" variant={'outline'} onClick={handleClose}>
               Batal
             </Button>

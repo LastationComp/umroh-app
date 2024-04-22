@@ -43,6 +43,11 @@ const nextConfig = {
         protocol: 'http',
         hostname: 'umroh-ai-api.test',
       },
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+        port: '8000',
+      },
     ],
   },
   compiler: {
