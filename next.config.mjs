@@ -53,6 +53,10 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  generateBuildId: async () => {
+    // This could be anything, using the latest git hash
+    return process.env.APP_KEY;
+  },
 };
 
 export default nextConfig;
