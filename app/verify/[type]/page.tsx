@@ -11,7 +11,7 @@ export default async function VerificationPage({ params }: { params: { type: str
   const session = await getServerSession(AuthOptions);
   return (
     <section className="w-screen h-screen flex justify-center items-center">
-      <Card className="text-center">
+      <Card className="text-center mx-3">
         <CardHeader className="capitalize">Verifikasi {params.type} sudah dikirim!</CardHeader>
         <CardContent>
           <span className="text-black/70">Silahkan masukkan kode verifikasi yang sudah dikirim lewat email kamu.</span>

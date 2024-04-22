@@ -12,7 +12,6 @@ import { updateAccount } from './action';
 import { useSession } from 'next-auth/react';
 import Alert from '@/components/callback/Alert';
 import { useRouter } from 'next/navigation';
-import { io } from 'socket.io-client';
 
 const initialState = {
   type: 'success',
@@ -22,7 +21,6 @@ const initialState = {
 };
 export default function AccountForm({ data }: { data: any }) {
   const [urlImage, setUrlImage] = useState(data.image);
-  const [connected, setConnected] = useState(false);
   const [state, setState]: any = useState(initialState);
   const router = useRouter();
   const { data: session, update } = useSession();
@@ -41,6 +39,8 @@ export default function AccountForm({ data }: { data: any }) {
     const result = await updateAccount(formData);
     setState(result);
 
+    if (!result.success) return;
+
     let data: any = {
       isEmailVerified: result.is_email_verified,
       isPhoneVerified: result.is_phone_verified,
@@ -52,32 +52,28 @@ export default function AccountForm({ data }: { data: any }) {
         image: result.image,
         picture: result.image,
       };
-      // socket.emit('change-image', {
-      //   id: session?.user.id,
-      //   image: result.image,
-      // });
     }
+    if (!result.is_email_verified)
+      setState({
+        ...state,
+        message: 'Kamu Mengubah Email, akan segera diarahkan ke halaman verifikasi',
+      });
 
-    update(data);
+    await update(data);
 
+    if (!result.is_email_verified) return router.push('/');
     return router.refresh();
-  };
-
-  const getConnected = () => {
-    if (connected) return 'Terhubung Bos';
-
-    return 'Yah, Belum Bos';
   };
 
   return (
     <section>
-      <div className="flex">{state?.message && <Alert variant={state?.type} message={state.message} />}</div>
-      <form action={handleSubmit} className="flex gap-3 md:divide-x w-auto max-md:flex-col max-md:flex-col-reverse place-content-stretch">
+      {state?.message && <Alert variant={state?.type} message={state.message} />}
+      <form action={handleSubmit} onSubmit={() => setState(initialState)} className="flex gap-3 md:divide-x w-auto max-md:flex-col max-md:flex-col-reverse place-content-stretch">
         <div className="grid w-full max-md:gap-3 h-auto">
           <div className="grid items-center max-md:gap-1.5 w-full">
-            <Label htmlFor="email">Email {getConnected()}</Label>
+            <Label htmlFor="email">Email</Label>
             <Input id="email" type={'email'} name="email" defaultValue={data.email} placeholder="Masukkan Email anda..." />
-            {data.is_email_verified && (
+            {data.is_email_verified === 1 && (
               <span className="text-sm md:-mt-3 text-green-600 flex items-center gap-1.5">
                 <FaCheck />
                 Terverifikasi

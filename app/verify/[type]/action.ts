@@ -2,7 +2,6 @@
 import { AuthOptions } from '@/app/api/auth/AuthOptions';
 import { apiFetch } from '@/lib/Fetcher';
 import { getServerSession } from 'next-auth';
-import { Result } from 'postcss';
 
 export async function sendVerificationNotification(type: string) {
   const session = await getServerSession(AuthOptions);
@@ -19,7 +18,7 @@ export async function sendVerificationNotification(type: string) {
     return {
       type: 'success',
       message: result.message,
-      hash: result.data.hash,
+      hash: result?.data?.hash ?? '',
     };
   }
 }

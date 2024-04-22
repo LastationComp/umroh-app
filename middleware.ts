@@ -18,29 +18,45 @@ export async function middleware(req: NextRequest) {
   // const callbackUrl = process.env.NODE_ENV === 'development' ? 'next-auth.callback-url' : '__Secure-next-auth.callback-url';
   // const companyUrl = '/companies/dashboard';
   // const employeeUrl = '/employee/dashboard';
-  const token = await getToken({ req: req, cookieName: cookieName, secret: process.env.NEXTAUTH_SECRET, secureCookie: true });
-
-  if (pathname === '/masuk' && !token) {
-    return NextResponse.next();
-  }
-
-  if (pathname === '/daftar' && !token) return NextResponse.next();
+  const token = await getToken({ req: req, cookieName: process.env.NEXT_PUBLIC_COOKIES, secret: process.env.NEXTAUTH_SECRET, secureCookie: true });
 
   if (token) {
-    if (pathname === '/' && !token.isEmailVerified) return redirect('/verify/email');
+    if (pathname.startsWith('/verify/email')) {
+      if (token.isEmailVerified) return redirect('/');
+    } else {
+      if (!token.isEmailVerified) return redirect('/verify/email');
+    }
 
-    if (pathname.startsWith('/verify') && token?.isEmailVerified) return redirect('/');
+    if (pathname.startsWith('/verify/reset-password')) return redirect('/');
 
-    if (pathname === '/') return NextResponse.next();
+    if (pathname === '/masuk') return redirect('/');
 
-    if (pathname.startsWith('/profile')) return NextResponse.next();
-  } else {
-    if (pathname === '/') return NextResponse.next();
+    if (pathname === '/daftar') return redirect('/');
 
-    return redirect('/');
+    // if (pathname.startsWith('/verify') && token?.isEmailVerified) return redirect('/');
   }
+
+  if (!token) {
+    if (pathname.startsWith('/profile')) return redirect('/');
+    if (pathname.startsWith('/verify/email')) return redirect('/');
+  }
+
+  return NextResponse.next();
+  // if (token) {
+  //   if (pathname === '/' && !token.isEmailVerified) return redirect('/verify/email');
+
+  //   if (pathname.startsWith('/verify') && token?.isEmailVerified) return redirect('/');
+
+  //   if (pathname === '/') return NextResponse.next();
+
+  //   if (pathname.startsWith('/profile')) return NextResponse.next();
+  // } else {
+  //   if (pathname === '/') return NextResponse.next();
+
+  //   return redirect('/');
+  // }
 }
 
 export const config = {
-  matcher: ['/masuk', '/daftar', '/profile/:path*', '/', '/verify/:path*'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

@@ -39,6 +39,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'umroh-ai-api.000webhostapp.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'umroh-ai-api.test',
+      },
     ],
   },
   compiler: {
