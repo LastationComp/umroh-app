@@ -12,6 +12,7 @@ import { updateAccount } from './action';
 import { useSession } from 'next-auth/react';
 import Alert from '@/components/callback/Alert';
 import { useRouter } from 'next/navigation';
+import { socket } from '@/lib/Services/socket';
 
 const initialState = {
   type: 'success',
@@ -52,6 +53,11 @@ export default function AccountForm({ data }: { data: any }) {
         image: result.image,
         picture: result.image,
       };
+
+      socket.emit('change-image', {
+        id: session?.user.id,
+        image: result.image,
+      });
     }
     if (!result.is_email_verified)
       setState({
@@ -64,6 +70,8 @@ export default function AccountForm({ data }: { data: any }) {
     if (!result.is_email_verified) return router.push('/');
     return router.refresh();
   };
+
+ 
 
   return (
     <section>

@@ -23,7 +23,7 @@ type FormBuilderForms = {
 
 interface FormBuilderProps {
   forms: FormBuilderForms[];
-  endpoint: string;
+  endpoint?: string
   type?: 'Edit' | 'Add';
 }
 
@@ -33,7 +33,7 @@ const initialState = {
   message: '',
 };
 
-export default function FormBuilder({ forms, endpoint = '', type = 'Add' }: FormBuilderProps) {
+export default function FormBuilder({ forms, endpoint, type = 'Add' }: FormBuilderProps) {
   const [open, setOpen] = useState(false);
   const handleOpenCloseFormAdd = () => {
     setOpen(!open);
@@ -42,7 +42,7 @@ export default function FormBuilder({ forms, endpoint = '', type = 'Add' }: Form
   const [state, setState]: any = useState(initialState);
 
   const handleFormAction = async (formData: FormData) => {
-    const response = await handleSubmit(state, formData);
+    const response = await handleSubmit(state, formData, endpoint);
     setState(response);
     if (response.success) {
       setState(initialState);
@@ -72,7 +72,7 @@ export default function FormBuilder({ forms, endpoint = '', type = 'Add' }: Form
           <DialogHeader>{getHeaderType()} Data</DialogHeader>
           <Separator />
           {state?.message && <Alert variant={state.type} message={state?.message} />}
-          <form action={handleFormAction} method="post" className="grid gap-3">
+          <form action={handleFormAction} className="grid gap-3">
             {forms.map((form, index) => {
               const data = form.selectData;
 
