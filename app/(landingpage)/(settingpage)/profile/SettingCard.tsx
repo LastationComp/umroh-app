@@ -5,6 +5,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import ProfileMenu from '@/components/users/profile-menu';
 import { cn } from '@/lib/utils';
+import { Session } from 'next-auth';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -16,8 +17,9 @@ import { PiGearFill } from 'react-icons/pi';
 
 interface SettingProps {
   children?: React.ReactNode;
+  session: Session | null;
 }
-export default function SettingCard({ children }: SettingProps) {
+export default function SettingCard({ children, session }: SettingProps) {
   const pathname = usePathname();
 
   const active = (url: string) => {
@@ -61,14 +63,18 @@ export default function SettingCard({ children }: SettingProps) {
           <GenerateMenu url="/change-password" title="Ubah Password">
             <IoMdLock />
           </GenerateMenu>
-          <span className="text-sm max-md:hidden">Travel</span>
-          <Separator />
-          <GenerateMenu url="/travel" title="Profil">
-            <BiSolidPlaneAlt />
-          </GenerateMenu>
-          <GenerateMenu url="/travel/settings" title="Pengaturan">
-            <PiGearFill />
-          </GenerateMenu>
+          {session?.user.role === 'travel' && (
+            <section>
+              <span className="text-sm max-md:hidden">Travel</span>
+              <Separator />
+              <GenerateMenu url="/travel" title="Profil">
+                <BiSolidPlaneAlt />
+              </GenerateMenu>
+              <GenerateMenu url="/travel/settings" title="Pengaturan">
+                <PiGearFill />
+              </GenerateMenu>
+            </section>
+          )}
         </div>
         <div className="col-span-10">{children}</div>
       </section>

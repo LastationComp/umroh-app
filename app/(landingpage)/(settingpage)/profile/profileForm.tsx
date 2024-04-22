@@ -9,6 +9,7 @@ import { useFormState } from 'react-dom';
 import { updateProfile } from '../action';
 import Alert from '@/components/callback/Alert';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 const initialState = {
   type: 'success',
   message: '',
@@ -16,6 +17,7 @@ const initialState = {
 export default function ProfileForm({ data }: { data: any }) {
   const [state, setState]: any = useState(initialState);
   const { data: session, update } = useSession();
+  const router = useRouter();
   //   const [state, formAction] = useFormState(updateProfile, initialState);
   const formAction = async (formData: FormData) => {
     const res = await updateProfile(formData);
@@ -26,6 +28,8 @@ export default function ProfileForm({ data }: { data: any }) {
     await update({
       name: formData.get('name'),
     });
+
+    return router.refresh();
   };
   return (
     <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-3 w-auto">

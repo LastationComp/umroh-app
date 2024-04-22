@@ -10,6 +10,7 @@ import SubmitButton from '@/components/builder/SubmitButton';
 import { signIn } from 'next-auth/react';
 import Alert from '@/components/callback/Alert';
 import { delay } from '@/lib/Promise/Delay';
+import Link from 'next/link';
 
 export default function AuthenticationPage() {
   const [errMsg, setErrMsg] = useState('');
@@ -42,6 +43,9 @@ export default function AuthenticationPage() {
         <Input type="password" name="password" defaultValue={'12345678'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
         <SubmitButton>Masuk</SubmitButton>
       </form>
+      <span className="text-sm text-muted-foreground">
+        Lupa password kamu? <Link href="/verify/reset-password" className='text-blue-600'>Klik disini</Link>
+      </span>
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center">
           <Separator className="w-full" />

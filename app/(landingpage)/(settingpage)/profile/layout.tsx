@@ -13,7 +13,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <Provider session={session}>
       <section className="w-screen h-auto flex justify-center p-3 container">
-        <SettingCard>{children}</SettingCard>
+        <SettingCard session={session}>{children}</SettingCard>
       </section>
     </Provider>
   );

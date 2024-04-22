@@ -5,15 +5,16 @@ import SubmitButton from '@/components/builder/SubmitButton';
 import { verify } from './action';
 import Alert from '@/components/callback/Alert';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { delay } from '@/lib/Promise/Delay';
 
-const initialState = {
+const initialState: any = {
   type: 'success',
   message: '',
 };
 export default function VerificationEmail({ hash }: { hash: string }) {
   const [state, setState]: any = useState(initialState);
+  const router = useRouter();
   const { update } = useSession();
   const verifyAction = async (formData: FormData) => {
     setState(initialState);
@@ -25,8 +26,9 @@ export default function VerificationEmail({ hash }: { hash: string }) {
       update({
         isEmailVerified: true,
       });
-      await delay(1000);
+      router.refresh();
 
+      await delay(1000);
       ('use server');
       redirect('/');
     }

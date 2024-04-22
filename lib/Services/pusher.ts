@@ -16,7 +16,7 @@ export const getPusherUser = async (csrf: string) => {
     // authEndpoint: process.env.NEXT_PUBLIC_URL_API + '/broadcasting/auth',
   });
 };
-export const pusher = new Pusher('784ea64deb74a59a06aa', {
-  cluster: 'ap1',
+export const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? '', {
+  cluster: process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'ap1',
   forceTLS: true,
 });

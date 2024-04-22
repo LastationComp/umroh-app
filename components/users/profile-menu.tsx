@@ -5,10 +5,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import Image from 'next/image';
 import avatar from '@/public/profile/avatar.png';
 import { Logout } from './action';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { Session } from 'next-auth';
-import { getPusherUser, pusher } from '@/lib/Services/pusher';
-// import { pusher } from '@/lib/Services/pusher';
+import { pusher } from '@/lib/Services/pusher';
 
 export default function ProfileMenu({ session }: { session: Session }) {
   const [urlImage, setUrlImage] = useState(session.user.image);
@@ -34,6 +33,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
     // });
     privateChannel.bind('change-image', (data: any) => {
       console.log(data);
+      setUrlImage(data.image_url);
     });
     if (privateChannel.subscribed) console.log('terhubung lho');
     return () => {
@@ -59,20 +59,29 @@ export default function ProfileMenu({ session }: { session: Session }) {
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link href={'/admin/dashboard'}>Dashboard Saya</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={'/favorit'}>Favorit Saya</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={'/favorit'}>Pesanan Saya</Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuLabel>Travel Saya</DropdownMenuLabel>
-        <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={'/profile'}>Profil</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={'/profile'}>Pengaturan</Link>
-        </DropdownMenuItem>
+        {session.user.role === 'subscriber' && (
+          <section>
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href={'/favorit'}>Favorit Saya</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href={'/favorit'}>Pesanan Saya</Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </section>
+        )}
+        {session.user.role === 'travel' && (
+          <section>
+            <DropdownMenuLabel>Travel Saya</DropdownMenuLabel>
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href={'/profile'}>Profil</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild className="cursor-pointer">
+              <Link href={'/profile'}>Pengaturan</Link>
+            </DropdownMenuItem>
+          </section>
+        )}
+
         <DropdownMenuSeparator />
         <form action={handleLogout}>
           <button type="submit" className="w-full">
