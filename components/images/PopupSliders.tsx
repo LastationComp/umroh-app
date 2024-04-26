@@ -18,7 +18,7 @@ export default function PopupSliders({ data, open, onOpenChange, currentSlide = 
         <DialogClose className="fixed top-8 right-8 z-30">
           <Button className="rounded-full uppercase opacity-50">x</Button>
         </DialogClose>
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           <ImageGallery lazyLoad showFullscreenButton={false} startIndex={currentSlide} showPlayButton={false} additionalClass="max-w-sm md:max-w-md w-full lg:max-w-lg object-cover" items={data} />
         </div>
       </DialogContent>

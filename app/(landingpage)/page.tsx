@@ -5,7 +5,6 @@ import CoverContent from './CoverContent';
 import FAQContent from './FAQContent';
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
-import MainContent from './SearchContent';
 import LoadingUI from '@/components/Suspense/Loading';
 import Search from './Search';
 import Partner from './Partner';
@@ -15,8 +14,6 @@ const importDynamic = (url: string) => {
   return dynamic(() => import('@/app/(landingpage)/' + url), { ssr: false });
 };
 
-// const MainContent = importDynamic('MainContent');
-const PartnerContent = importDynamic('PartnerContent');
 
 export default async function Home() {
   return (

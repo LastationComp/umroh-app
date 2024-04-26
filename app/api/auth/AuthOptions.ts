@@ -93,6 +93,7 @@ export const AuthOptions: NextAuthOptions = {
           isPhoneVerified: result.data.is_phone_verified,
           role: result.data.role,
           tokenApi: result.token,
+          expires_token: result.expires_at,
         };
         return user;
       },

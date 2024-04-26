@@ -10,34 +10,29 @@ export default function CitiesPage() {
       <div className="flex justify-between">
         <span className="font-bold">Data Kota</span>
         <FormBuilder
-          endpoint="api.example.com"
+          endpoint="/api/dashboard/cities"
+          refreshEndpoint="/api/dashboard/cities"
           forms={[
             {
               name: 'country_id',
               label: 'Negara',
               type: 'select',
               placeholder: 'Pilih Negara...',
-              selectData: [
-                {
-                  id: '235234213',
-                  name: 'Indonesia',
-                },
-              ],
+              dataType: 'api',
+              apiData: '/api/dashboard/countries',
             },
             {
               name: 'province_id',
               label: 'Provinsi',
               type: 'select',
               placeholder: 'Pilih Provinsi...',
-              selectData: [
-                {
-                  id: '343223',
-                  name: 'Jawa Timur',
-                },
-              ],
+              dataType: 'api',
+              needFilter: true,
+              filterWith: 'country_id',
+              apiData: '/api/dashboard/province',
             },
             {
-              name: 'city',
+              name: 'name',
               label: 'Kota',
               type: 'text',
               placeholder: 'Masukkan Nama Kota...',

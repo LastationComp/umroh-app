@@ -2,4 +2,4 @@
 
 import { io } from 'socket.io-client';
 
-export const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL ?? 'http://127.0.0.1:4000');
+export const socket = process.env.APP_ENV === 'production' ? io() : io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:4000');

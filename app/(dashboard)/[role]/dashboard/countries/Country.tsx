@@ -9,20 +9,27 @@ import { ColumnDef } from '@tanstack/react-table';
 // You can use a Zod schema here if you want.
 export type Country = {
   id: number;
-  no: number;
   name: string;
+  user_created: {
+    name: string;
+  };
 };
 
 export const columns: ColumnDef<Country>[] = [
   {
     accessorKey: 'no',
     header: () => <div className="text-center">NO</div>,
-    cell: ({ row }) => <div className="text-center">{row.original.id}</div>,
+    cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
     enableHiding: false,
   },
   {
     accessorKey: 'name',
     header: 'Name',
+  },
+  {
+    accessorKey: 'user_created',
+    header: 'Created By',
+    cell: ({ row }) => row.original.user_created.name,
   },
   {
     id: 'actions',
@@ -33,17 +40,19 @@ export const columns: ColumnDef<Country>[] = [
         <section className="flex gap-3">
           <FormBuilder
             type="Edit"
-            endpoint={'/api/admin/countries'}
+            endpoint={'/api/dashboard/countries/' + country.id}
+            refreshEndpoint="/api/dashboard/countries"
             forms={[
               {
-                name: 'negara',
+                name: 'name',
+                label: 'Negara',
                 type: 'text',
                 placeholder: 'Masukkan Nama Negara...',
                 currentValue: country.name,
               },
             ]}
           />
-          <DeleteButton endpoint="api.example.com/delete" />
+          <DeleteButton endpoint={'/api/dashboard/countries/' + country.id} refreshEndpoint="/api/dashboard/countries" />
         </section>
       );
     },

@@ -1,4 +1,4 @@
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { SWRProvider } from '@/components/provider/swr-component';
 import { Metadata } from 'next';
 import React from 'react';
 
@@ -7,7 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <ScrollArea className='max-h-screen'>
-    {children}
-  </ScrollArea>
+  return <SWRProvider>{children}</SWRProvider>;
 }
