@@ -1,4 +1,5 @@
 'use client';
+import DataTableBuilder from '@/components/builder/DataTableBuilder';
 import FormBuilder from '@/components/builder/FormBuilder';
 import DeleteButton from '@/components/dashboard/DeleteButton';
 import { DataTable } from '@/components/ui/data-table';
@@ -7,77 +8,73 @@ import React from 'react';
 type Province = {
   id: string | number;
   country: {
-    country_id: string | number;
-    country_name: string;
+    id: string | number;
+    name: string;
   };
   name: string;
+  user_created: {
+    id: string;
+    name: string;
+  };
 };
 export default function ProvinceTable() {
   const columns: ColumnDef<Province>[] = [
     {
       accessorKey: 'no',
       header: () => <div className="text-center">NO</div>,
-      cell: ({ row }) => <div className="text-center">{row.original.id}</div>,
+      cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
       enableHiding: false,
     },
     {
       accessorKey: 'country',
       header: 'Negara',
-      accessorFn: (row) => row.country.country_name,
+      cell: ({ row }) => row.original.country.name,
     },
     {
       accessorKey: 'name',
       header: 'Nama',
     },
-
+    {
+      accessorKey: 'user_created',
+      header: 'Created By',
+      cell: ({ row }) => row.original.user_created.name,
+    },
     {
       id: 'actions',
       cell: ({ row }) => {
-        const country = row.original;
+        const province = row.original;
 
         return (
           <section className="flex gap-3">
             <FormBuilder
               type="Edit"
-              endpoint="api.example.com"
+              refreshEndpoint="/api/dashboard/province"
+              endpoint={'/api/dashboard/provinces/' + province.id}
               forms={[
                 {
-                  name: 'negara',
+                  name: 'country_id',
+                  label: 'Negara',
                   type: 'select',
                   placeholder: 'Masukkan Nama Negara...',
-                  currentValue: '1',
-                  selectData: [
-                    {
-                      id: 1,
-                      name: country.country.country_name,
-                    },
-                  ],
+                  currentValue: String(province.country.id),
+                  dataType: 'api',
+                  apiData: '/api/dashboard/countries',
                 },
                 {
-                  name: 'province',
+                  name: 'name',
+                  label: 'Provinsi',
                   type: 'text',
                   placeholder: 'Masukkan Nama Provinsi...',
-                  currentValue: country.name,
+                  currentValue: province.name,
                 },
               ]}
             />
-            <DeleteButton endpoint="api.example.com/delete" />
+            <DeleteButton endpoint={'/api/dashboard/provinces/' + province.id} refreshEndpoint="/api/dashboard/province" />
           </section>
         );
       },
     },
   ];
 
-  const data = [
-    {
-      id: 1,
-      no: 1,
-      country: {
-        country_id: 1,
-        country_name: 'Indonesia',
-      },
-      name: 'Jawa Timur',
-    },
-  ];
-  return <DataTable columns={columns} data={data} />;
+  return <DataTableBuilder columns={columns} endpoint={'/api/dashboard/province'} />;
 }

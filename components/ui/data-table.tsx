@@ -4,14 +4,16 @@ import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DataTablePagination } from './data-table-pagination';
+import LoadingUI from '../Suspense/Loading';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   children?: React.ReactNode;
+  suspense?: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, data, children }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, children, suspense = false }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -30,8 +32,8 @@ export function DataTable<TData, TValue>({ columns, data, children }: DataTableP
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
+        <TableBody className="relative">
+          {table.getRowModel().rows?.length && !suspense ? (
             table.getRowModel().rows.map((row) => (
               <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                 {row.getVisibleCells().map((cell) => (
@@ -44,6 +46,13 @@ export function DataTable<TData, TValue>({ columns, data, children }: DataTableP
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
+              </TableCell>
+            </TableRow>
+          )}
+          {suspense && (
+            <TableRow className="absolute top-0 flex justify-center hover:bg-black/30 bg-black/30 w-full">
+              <TableCell colSpan={columns.length} className="h-24 text-center text-white">
+                <LoadingUI />
               </TableCell>
             </TableRow>
           )}

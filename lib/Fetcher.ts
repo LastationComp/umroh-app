@@ -1,4 +1,6 @@
+
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 
 export const apiFetch = (url: string, token: string = '', method: string = 'GET', body: any = {}, headers: any = {}) => {
   if (method === 'POST')

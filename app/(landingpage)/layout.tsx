@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import ContactContent from './ContactContent';
 import Footer from './Footer';
 import Navbar from './Navbar';
@@ -6,8 +5,7 @@ import { getServerSession } from 'next-auth';
 import { AuthOptions } from '../api/auth/AuthOptions';
 import Provider from '@/components/Provider';
 
-export default async function Template({ children }: { children: React.ReactNode }) {
-  // const data = cookies().get('auth');
+export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(AuthOptions);
   return (
     <section className="min-h-screen flex flex-col w-screen">

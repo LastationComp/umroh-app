@@ -7,11 +7,7 @@ import { getServerSession } from 'next-auth';
 
 export async function handleSubmit(prevState: any, formData: FormData, endpoint: any) {
   const session = await getServerSession(AuthOptions);
-  await delay(1000);
-
   const res = await apiFetch(endpoint ?? '', session?.user.tokenApi ?? '', 'POST', formData);
-  const random = Math.floor(Math.random() * 2);
-
   const result = await res.json();
 
   if (!res.ok || res.status !== 200)
@@ -27,7 +23,6 @@ export async function handleSubmit(prevState: any, formData: FormData, endpoint:
   };
 }
 
-
 export async function getDataApi(apis: any[]) {
   const resultFinal = apis.map(async (api) => {
     const name = api.apiFor;
@@ -39,4 +34,11 @@ export async function getDataApi(apis: any[]) {
   });
 
   return resultFinal;
+}
+
+export async function getApiData(url: string) {
+  const session = await getServerSession(AuthOptions);
+
+  const res = await apiFetch(url, session?.user.tokenApi ?? '');
+  return res.json();
 }

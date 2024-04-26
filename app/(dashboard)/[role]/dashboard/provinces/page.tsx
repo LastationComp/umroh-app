@@ -9,22 +9,19 @@ export default function ProvincesPage() {
       <div className="flex justify-between">
         <span className="font-bold">Data Provinsi</span>
         <FormBuilder
-          endpoint="api.example.com"
+          endpoint="/api/dashboard/provinces"
+          refreshEndpoint="/api/dashboard/province"
           forms={[
             {
               name: 'country_id',
               label: 'Negara',
               type: 'select',
               placeholder: 'Pilih Negara...',
-              selectData: [
-                {
-                  id: '235234213',
-                  name: 'Indonesia',
-                },
-              ],
+              dataType: 'api',
+              apiData: '/api/dashboard/countries',
             },
             {
-              name: 'province',
+              name: 'name',
               label: 'Provinsi',
               type: 'text',
               placeholder: 'Masukkan Nama Provinsi...',

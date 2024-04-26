@@ -1,5 +1,6 @@
 import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
+import { dashboardMiddleware } from './lib/Middleware/dashboard';
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
@@ -21,6 +22,11 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req: req, cookieName: process.env.NEXT_PUBLIC_COOKIES, secret: process.env.NEXTAUTH_SECRET, secureCookie: true });
 
   if (token) {
+    if (new Date(token.expires_token) < new Date()) {
+      const response = NextResponse.redirect(new URL('/', req.url));
+      response.cookies.delete(cookieName);
+      return response;
+    }
     if (pathname.startsWith('/verify/email')) {
       if (token.isEmailVerified) return redirect('/');
     } else {
@@ -33,28 +39,26 @@ export async function middleware(req: NextRequest) {
 
     if (pathname === '/daftar') return redirect('/');
 
-    // if (pathname.startsWith('/verify') && token?.isEmailVerified) return redirect('/');
+    if (pathname.startsWith(`/${token.role}/dashboard`)) {
+      if (pathname === `/${token.role}/dashboard`) return;
+      if (token.role === 'admin') {
+        const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels|staffs', 'g');
+        if (!pattern.test(pathname)) return redirect('/');
+      }
+      if (token.role === 'staff') {
+        const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels', 'g');
+        if (!pattern.test(pathname)) return redirect('/');
+      }
+    }
   }
 
   if (!token) {
     if (pathname.startsWith('/profile')) return redirect('/');
     if (pathname.startsWith('/verify/email')) return redirect('/');
+    if (pathname.startsWith('/admin')) return redirect('/');
   }
 
   return NextResponse.next();
-  // if (token) {
-  //   if (pathname === '/' && !token.isEmailVerified) return redirect('/verify/email');
-
-  //   if (pathname.startsWith('/verify') && token?.isEmailVerified) return redirect('/');
-
-  //   if (pathname === '/') return NextResponse.next();
-
-  //   if (pathname.startsWith('/profile')) return NextResponse.next();
-  // } else {
-  //   if (pathname === '/') return NextResponse.next();
-
-  //   return redirect('/');
-  // }
 }
 
 export const config = {

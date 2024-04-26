@@ -9,9 +9,12 @@ import { signOut } from 'next-auth/react';
 import { Session } from 'next-auth';
 // import { pusher } from '@/lib/Services/pusher';
 import { socket } from '@/lib/Services/socket';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function ProfileMenu({ session }: { session: Session }) {
   const [urlImage, setUrlImage] = useState(session.user.image);
+  const pathname = usePathname();
+  const router = useRouter();
   const handleLogout = async (formData: FormData) => {
     const res = await Logout(formData);
     if (!res) return;
@@ -24,6 +27,10 @@ export default function ProfileMenu({ session }: { session: Session }) {
     return urlImage;
   };
 
+  useEffect(() => {
+    const url = pathname;
+    if (url === '/') router.refresh();
+  }, [pathname]);
   // useEffect(() => {
   //   const privateChannel = pusher.subscribe('profile-' + session.user.id);
   //   if (!privateChannel.subscribed) console.log('tidak terhubung lho');
@@ -47,7 +54,6 @@ export default function ProfileMenu({ session }: { session: Session }) {
     socket.on('profile-' + session?.user.id, (image) => {
       setUrlImage(image);
     });
-
     return () => {
       socket.off('profile-' + session?.user.id);
     };
@@ -68,7 +74,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
           <Link href={'/profile'}>Profil Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={'/admin/dashboard'}>Dashboard Saya</Link>
+          <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>
         </DropdownMenuItem>
         {session.user.role === 'subscriber' && (
           <section>

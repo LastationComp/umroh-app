@@ -7,8 +7,10 @@ import React, { useState } from 'react';
 import { handleSubmit } from './action';
 import SubmitButton from './SubmitButton';
 import { IoTrashBinOutline } from 'react-icons/io5';
+import { useSWRConfig } from 'swr';
 interface FormBuilderProps {
   endpoint: string;
+  refreshEndpoint?: string;
 }
 
 const initialState = {
@@ -17,8 +19,9 @@ const initialState = {
   message: '',
 };
 
-export default function DeleteButton({ endpoint = '' }: FormBuilderProps) {
+export default function DeleteButton({ endpoint = '', refreshEndpoint }: FormBuilderProps) {
   const [open, setOpen] = useState(false);
+  const { mutate } = useSWRConfig();
   const handleOpenCloseFormAdd = () => {
     setOpen(!open);
   };
@@ -26,10 +29,11 @@ export default function DeleteButton({ endpoint = '' }: FormBuilderProps) {
   const [state, setState]: any = useState(initialState);
 
   const handleFormAction = async (formData: FormData) => {
-    const response = await handleSubmit(state, formData);
+    const response = await handleSubmit(state, formData, endpoint);
     setState(response);
     if (response.success) {
       setState(initialState);
+      await mutate((key) => Array.isArray(key) && key[0] === refreshEndpoint);
       return setOpen(!open);
     }
   };

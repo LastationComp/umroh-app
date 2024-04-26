@@ -5,26 +5,40 @@ import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import React, { useState } from 'react';
+import React, { Children, useEffect, useState } from 'react';
 import { IoAddOutline, IoPencilOutline } from 'react-icons/io5';
 import SubmitButton from './SubmitButton';
 import { handleSubmit } from './action';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { useRouter } from 'next/navigation';
+import useSWR, { useSWRConfig } from 'swr';
+import { fetcher } from '@/lib/Fetcher';
+import { cn } from '@/lib/utils';
+import { Textarea } from '../ui/textarea';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import FormGenerator from './FormGenerator';
 
-type FormBuilderForms = {
+export type FormBuilderForms = {
   name: string;
   label?: string | undefined;
-  type?: React.HTMLInputTypeAttribute | undefined | 'select';
+  type?: React.HTMLInputTypeAttribute | undefined | 'select' | 'textarea';
   placeholder?: string | undefined;
   selectData?: any[];
+  dataType?: 'api' | 'data';
   currentValue?: string;
   apiData?: string;
+  needFilter?: boolean;
+  filterWith?: string;
+  required?: boolean;
+  children?: React.ReactNode;
 };
 
-interface FormBuilderProps {
+export interface FormBuilderProps {
   forms: FormBuilderForms[];
-  endpoint?: string
+  endpoint?: string;
   type?: 'Edit' | 'Add';
+  refreshEndpoint?: string;
+  refreshServer?: boolean;
 }
 
 const initialState = {
@@ -33,8 +47,11 @@ const initialState = {
   message: '',
 };
 
-export default function FormBuilder({ forms, endpoint, type = 'Add' }: FormBuilderProps) {
+export default function FormBuilder({ forms, endpoint, type = 'Add', refreshEndpoint = '', refreshServer = false }: FormBuilderProps) {
   const [open, setOpen] = useState(false);
+  const [allSelectData, setAllSelectData]: any = useState([]);
+  const router = useRouter();
+  const { mutate } = useSWRConfig();
   const handleOpenCloseFormAdd = () => {
     setOpen(!open);
   };
@@ -42,16 +59,40 @@ export default function FormBuilder({ forms, endpoint, type = 'Add' }: FormBuild
   const [state, setState]: any = useState(initialState);
 
   const handleFormAction = async (formData: FormData) => {
+    forms.forEach((form) => {
+      if (form.type === 'file') {
+        const image = formData.get(form.name) as File;
+        if (image.size === 0) return formData.delete(form.name);
+      }
+    });
     const response = await handleSubmit(state, formData, endpoint);
     setState(response);
     if (response.success) {
       setState(initialState);
+      if (!refreshServer) await mutate((key) => Array.isArray(key) && key[0] === refreshEndpoint);
+      if (refreshServer) router.refresh();
       return setOpen(!open);
     }
   };
+
   const getHeaderType = () => {
     if (type === 'Edit') return 'Ubah';
     if (type === 'Add') return 'Tambah';
+  };
+
+  const setSelectData = (name: string, value: string) => {
+    if (!value) return;
+    const getData = [...allSelectData];
+
+    let data = {
+      name: name,
+      value: value,
+    };
+    const findExistsData = getData.find((data) => data.name === name);
+    const dataWithoutExists = getData.filter((data) => data.name !== name);
+    if (!findExistsData) return setAllSelectData((prev: any) => [...prev, data]);
+
+    return setAllSelectData([...dataWithoutExists, data]);
   };
   return (
     <section>
@@ -73,35 +114,15 @@ export default function FormBuilder({ forms, endpoint, type = 'Add' }: FormBuild
           <Separator />
           {state?.message && <Alert variant={state.type} message={state?.message} />}
           <form action={handleFormAction} className="grid gap-3">
-            {forms.map((form, index) => {
-              const data = form.selectData;
+            <ScrollArea className="max-h-full p-1">
+              <section className="max-h-96 py-3 px-1 grid gap-3">
+                {forms.map((form, index) => (
+                  <FormGenerator form={form} key={index} index={index} allSelectData={allSelectData} setSelectData={setSelectData} />
+                ))}
+              </section>
 
-              return (
-                <div className="flex flex-col gap-1" key={index}>
-                  <Label htmlFor={'input-' + form.name} className="capitalize">
-                    {form.label ?? form.name}
-                  </Label>
-                  {form.type !== 'select' && (
-                    <Input defaultValue={form.currentValue} required name={form.name} type={form.type ?? 'text'} id={'input-' + form.name} placeholder={form.placeholder ?? 'Ketik disini...'} autoFocus={index === 0} />
-                  )}
-                  {form.type === 'select' && (
-                    <Select name={form.name} defaultValue={form.currentValue} required>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder={form.placeholder ?? 'Pilih salah satu...'} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {data &&
-                          data.map((select, index) => (
-                            <SelectItem key={'select-' + index} value={String(select?.id)}>
-                              {select.name}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                </div>
-              );
-            })}
+              <ScrollBar />
+            </ScrollArea>
             <div className="flex justify-end gap-3">
               <SubmitButton>{getHeaderType()}</SubmitButton>
               <Button type="reset" variant={'outline'} onClick={handleOpenCloseFormAdd}>

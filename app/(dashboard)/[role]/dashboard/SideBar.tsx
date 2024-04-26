@@ -4,10 +4,13 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IoMdHome } from 'react-icons/io';
-import { FaCity } from 'react-icons/fa';
+import { FaCity, FaHotel } from 'react-icons/fa';
 import { Separator } from '@/components/ui/separator';
 import { IoGlobeOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
+import { SiChinaeasternairlines } from 'react-icons/si';
+import { BiCategory } from 'react-icons/bi';
+import { MdHotelClass, MdManageAccounts } from 'react-icons/md';
 export default function SideBar({ role }: { role: string }) {
   const pathname = usePathname();
   const GenerateBar = ({ url, title, children }: { url: string; title: string; children?: React.ReactNode }) => {
@@ -48,6 +51,25 @@ export default function SideBar({ role }: { role: string }) {
         </GenerateBar>
         <GenerateBar url="/cities" title="Kota">
           <FaCity />
+        </GenerateBar>
+        <GenerateBar url="/categories" title="Kategori">
+          <BiCategory />
+        </GenerateBar>
+        <GenerateBar url="/airlines" title="Penerbangan">
+          <SiChinaeasternairlines />
+        </GenerateBar>
+        <GenerateBar url="/facilities" title="Fasilitas">
+          <MdHotelClass />
+        </GenerateBar>
+        <GenerateBar url="/hotels" title="Hotel">
+          <FaHotel />
+        </GenerateBar>
+        <div className="flex flex-col max-md:hidden">
+          <span className="text-sm">Master Akun</span>
+          <Separator />
+        </div>
+        <GenerateBar url="/staffs" title="Staff">
+          <MdManageAccounts />
         </GenerateBar>
       </div>
     </aside>

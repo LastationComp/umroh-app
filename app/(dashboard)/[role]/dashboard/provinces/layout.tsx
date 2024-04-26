@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <ScrollArea className="max-h-screen">{children}</ScrollArea>;
+  return children
 }

@@ -1,44 +1,53 @@
 'use client';
+import DataTableBuilder from '@/components/builder/DataTableBuilder';
 import FormBuilder from '@/components/builder/FormBuilder';
 import DeleteButton from '@/components/dashboard/DeleteButton';
 import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
 import React from 'react';
-type Province = {
+type City = {
   id: string | number;
   country: {
-    country_id: string | number;
-    country_name: string;
+    id: string | number;
+    name: string;
   };
   province: {
     id: string | number;
     name: string;
   };
-  name: string;
+  city_name: string;
+  user_created: {
+    id: string,
+    name: string
+  }
 };
 export default function CitiesTable() {
-  const columns: ColumnDef<Province>[] = [
+  const columns: ColumnDef<City>[] = [
     {
       accessorKey: 'no',
       header: () => <div className="text-center">NO</div>,
-      cell: ({ row }) => <div className="text-center">{row.original.id}</div>,
+      cell: ({ row }) => <div className="text-center">{row.index + 1}</div>,
       enableHiding: false,
     },
     {
       accessorKey: 'country',
       header: 'Negara',
-      accessorFn: (row) => row.country.country_name,
+      cell: ({ row }) => row.original.country.name,
     },
     {
       accessorKey: 'province',
       header: 'Provinsi',
-      accessorFn: (row) => row.province.name,
+      cell: ({ row }) => row.original.province.name,
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'city_name',
       header: 'Nama',
     },
-
+    {
+      accessorKey: 'user_created',
+      header: 'Created By',
+      cell: ({row}) => row.original.user_created.name
+    },
     {
       id: 'actions',
       cell: ({ row }) => {
@@ -48,64 +57,44 @@ export default function CitiesTable() {
           <section className="flex gap-3">
             <FormBuilder
               type="Edit"
-              endpoint="api.example.com"
+              endpoint={'/api/dashboard/cities/' + city.id}
+              refreshEndpoint="/api/dashboard/cities"
               forms={[
                 {
                   name: 'country_id',
                   label: 'Negara',
                   type: 'select',
                   placeholder: 'Pilih Negara...',
-                  currentValue: '235234213',
-                  selectData: [
-                    {
-                      id: '235234213',
-                      name: 'Indonesia',
-                    },
-                  ],
+                  dataType: 'api',
+                  currentValue: String(city.country.id),
+                  apiData: '/api/dashboard/countries',
                 },
                 {
                   name: 'province_id',
                   label: 'Provinsi',
                   type: 'select',
                   placeholder: 'Pilih Provinsi...',
-                  currentValue: '343223',
-                  selectData: [
-                    {
-                      id: '343223',
-                      name: 'Jawa Timur',
-                    },
-                  ],
+                  dataType: 'api',
+                  needFilter: true,
+                  currentValue: String(city.province.id),
+                  filterWith: 'country_id',
+                  apiData: '/api/dashboard/province',
                 },
                 {
-                  name: 'city',
+                  name: 'name',
                   label: 'Kota',
                   type: 'text',
-                  currentValue: city.name,
+                  currentValue: city.city_name,
                   placeholder: 'Masukkan Nama Kota...',
                 },
               ]}
             />
-            <DeleteButton endpoint="api.example.com/delete" />
+            <DeleteButton endpoint={'/api/dashboard/cities/' + city.id} refreshEndpoint="/api/dashboard/cities" />
           </section>
         );
       },
     },
   ];
 
-  const data = [
-    {
-      id: 1,
-      no: 1,
-      country: {
-        country_id: 1,
-        country_name: 'Indonesia',
-      },
-      province: {
-        id: 1,
-        name: 'Jawa Timur',
-      },
-      name: 'Lamongan',
-    },
-  ];
-  return <DataTable columns={columns} data={data} />;
+  return <DataTableBuilder columns={columns} endpoint={'/api/dashboard/cities'} />;
 }

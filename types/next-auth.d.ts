@@ -29,5 +29,6 @@ declare module 'next-auth/jwt' {
     isPhoneVerified: boolean;
     role: 'admin' | 'travel' | 'staff' | 'subscriber';
     name: string;
+    expires_token: Date;
   }
 }

@@ -9,7 +9,8 @@ export default function CountriesPage() {
       <div className="flex justify-between">
         <span className="font-bold">Data Negara</span>
         <FormBuilder
-          endpoint="/api/admin/countries"
+          endpoint="/api/dashboard/countries"
+          refreshEndpoint="/api/dashboard/countries"
           forms={[
             {
               name: 'name',
