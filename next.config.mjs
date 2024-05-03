@@ -48,6 +48,10 @@ const nextConfig = {
         hostname: '127.0.0.1',
         port: '8000',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
     ],
   },
   compiler: {

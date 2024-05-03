@@ -53,7 +53,7 @@ export default function ContactContent() {
           </div>
           <div className="flex flex-col gap-5">
             <span className="text-xl font-bold">Travel Partner</span>
-            <Link href={''} className="text-black/70 hover:underline">
+            <Link href={'daftar/travel'} className="text-black/70 hover:underline">
               Gabung Travel Partner
             </Link>
           </div>

@@ -21,7 +21,7 @@ export default function VerificationEmail({ hash }: { hash: string }) {
     const result = await verify(formData, 'email');
 
     setState(result);
-
+    
     if (result?.type === 'success') {
       update({
         isEmailVerified: true,

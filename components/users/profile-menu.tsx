@@ -74,12 +74,14 @@ export default function ProfileMenu({ session }: { session: Session }) {
           <Link href={'/profile'}>Profil Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>
+          {session.user.role !== 'subscriber' && <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>}
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+
         {session.user.role === 'subscriber' && (
           <section>
             <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href={'/favorit'}>Favorit Saya</Link>
+              <Link href={'/favorit'}>Favorit Saya </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild className="cursor-pointer">
               <Link href={'/favorit'}>Pesanan Saya</Link>
@@ -99,7 +101,6 @@ export default function ProfileMenu({ session }: { session: Session }) {
           </section>
         )}
 
-        <DropdownMenuSeparator />
         <form action={handleLogout}>
           <button type="submit" className="w-full">
             <DropdownMenuItem className="text-red-400 cursor-pointer">Keluar</DropdownMenuItem>

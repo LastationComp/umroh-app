@@ -32,6 +32,11 @@ export default function AuthenticationPage() {
     ('use server');
     redirect(searchParams.get('redirect') ?? '/');
   };
+
+  const continueWithGooglo = async () => {
+    nProgress.start();
+    await signIn('google', { redirect: false });
+  };
   return (
     <section className="flex flex-col gap-5 items-center">
       <span className="text-2xl font-bold">Masuk Umroh.ai</span>
@@ -44,7 +49,10 @@ export default function AuthenticationPage() {
         <SubmitButton>Masuk</SubmitButton>
       </form>
       <span className="text-sm text-muted-foreground">
-        Lupa password kamu? <Link href="/verify/reset-password" className='text-blue-600'>Klik disini</Link>
+        Lupa password kamu?{' '}
+        <Link href="/verify/reset-password" className="text-blue-600">
+          Klik disini
+        </Link>
       </span>
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center">
@@ -55,9 +63,9 @@ export default function AuthenticationPage() {
         </div>
       </div>
       <div className="w-full">
-        <Button className="text-sm w-full flex gap-3 items-center" variant={'outline'}>
+        <Button onClick={continueWithGooglo} className="text-sm w-full flex gap-3 items-center" variant={'outline'}>
           <IoLogoGoogle />
-          Masuk dengan Google
+          Lanjutkan dengan Google
         </Button>
       </div>
     </section>
