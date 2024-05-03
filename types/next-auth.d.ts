@@ -13,7 +13,25 @@ declare module 'next-auth' {
       isEmailVerified: boolean;
       isPhoneVerified: boolean;
       role: 'admin' | 'travel' | 'staff' | 'subscriber';
+      state: number;
     } & DefaultSession['user'];
+  }
+
+  interface User {
+    id: string;
+    idToken?: string;
+    tokenApi: string;
+    image: string;
+    isEmailVerified: boolean;
+    isPhoneVerified: boolean;
+    role: 'admin' | 'travel' | 'staff' | 'subscriber';
+    name: string;
+    state: number;
+    expires_token: Date;
+  }
+
+  interface Profile {
+    email_verified: string
   }
 }
 
@@ -29,6 +47,7 @@ declare module 'next-auth/jwt' {
     isPhoneVerified: boolean;
     role: 'admin' | 'travel' | 'staff' | 'subscriber';
     name: string;
+    state: number;
     expires_token: Date;
   }
 }
