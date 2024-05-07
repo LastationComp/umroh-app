@@ -20,7 +20,6 @@ export async function middleware(req: NextRequest) {
   // const companyUrl = '/companies/dashboard';
   // const employeeUrl = '/employee/dashboard';
   const token = await getToken({ req: req, cookieName: process.env.NEXT_PUBLIC_COOKIES, secret: process.env.NEXTAUTH_SECRET, secureCookie: true });
-
   if (token) {
     if (new Date(token.expires_token) < new Date()) {
       const response = NextResponse.redirect(new URL('/', req.url));
