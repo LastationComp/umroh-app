@@ -10,7 +10,7 @@ import { IoGlobeOutline } from 'react-icons/io5';
 import { LiaMapMarkedAltSolid } from 'react-icons/lia';
 import { SiChinaeasternairlines } from 'react-icons/si';
 import { BiCategory } from 'react-icons/bi';
-import { MdHotelClass, MdManageAccounts } from 'react-icons/md';
+import { MdDomainVerification, MdHotelClass, MdManageAccounts } from 'react-icons/md';
 export default function SideBar({ role }: { role: string }) {
   const pathname = usePathname();
   const GenerateBar = ({ url, title, children }: { url: string; title: string; children?: React.ReactNode }) => {
@@ -26,9 +26,9 @@ export default function SideBar({ role }: { role: string }) {
 
     return (
       <Button variant={variant()} asChild className="flex justify-start">
-        <Link href={newUrl} className="flex items-center gap-3">
+        <Link href={newUrl} className="flex items-center max-lg:justify-center gap-3">
           {children}
-          <span className="max-md:hidden">{title}</span>
+          <span className="max-lg:hidden line-clamp-1">{title}</span>
         </Link>
       </Button>
     );
@@ -70,6 +70,13 @@ export default function SideBar({ role }: { role: string }) {
         </div>
         <GenerateBar url="/staffs" title="Staff">
           <MdManageAccounts />
+        </GenerateBar>
+        <div className="flex flex-col max-md:hidden">
+          <span className="text-sm">Travel</span>
+          <Separator />
+        </div>
+        <GenerateBar url="/travel-verification" title="Verifikasi Travel">
+          <MdDomainVerification />
         </GenerateBar>
       </div>
     </aside>

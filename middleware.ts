@@ -57,7 +57,7 @@ export async function middleware(req: NextRequest) {
       if (token.role === 'subscriber') return redirect('/');
       if (pathname === `/${token.role}/dashboard`) return;
       if (token.role === 'admin') {
-        const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels|staffs', 'g');
+        const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels|staffs|travel-verification', 'g');
         if (!pattern.test(pathname)) return redirect('/');
       }
       if (token.role === 'staff') {
