@@ -14,7 +14,7 @@ export default function Layout({ children, params }: { children: React.ReactNode
     <section className="h-screen flex flex-col w-screen bg-white">
       <DashboardNavbar role={params.role} />
       <Separator />
-      <div className="grid grid-cols-12 divide-x h-full">
+      <div className="grid grid-cols-12 divide-x h-full mt-[60px]">
         <SideBar role={params.role} />
         <div className="col-span-10 md:p-3 p-1">{children}</div>
       </div>

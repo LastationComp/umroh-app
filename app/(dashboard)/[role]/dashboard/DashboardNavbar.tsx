@@ -11,7 +11,7 @@ interface DashboardProps {
 export default async function DashboardNavbar({ role }: DashboardProps) {
   const session = await getServerSession(AuthOptions);
   return (
-    <nav className="py-3 flex justify-between items-center gap-3 px-5 shadow-md">
+    <nav className="py-3 flex justify-between fixed w-full bg-white items-center gap-3 px-5 shadow-md">
       <div className="flex items-center gap-3">
         <span className="text-lg font-bold">Umroh.ai Dashboard</span>
         {/* <Separator orientation={'vertical'} className="h-[30px]" /> */}

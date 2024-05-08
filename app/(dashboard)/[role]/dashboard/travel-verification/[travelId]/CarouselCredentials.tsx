@@ -36,7 +36,7 @@ export default function CarouselCredentials({ data }: { data: any[] }) {
                 <Image
                   alt={travel_legality.name}
                   width={500}
-                  className="w-full max-h-50 object-cover cursor-pointer"
+                  className="w-full max-h-[300px] object-cover cursor-pointer"
                   height={1000}
                   quality={50}
                   src={travel_legality.credentials}

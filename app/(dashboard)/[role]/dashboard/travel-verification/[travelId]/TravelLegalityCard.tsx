@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/carousel";
 import { DateToString } from "@/lib/String/ParsingDate";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
 import CarouselCredentials from "./CarouselCredentials";
 import { Button } from "@/components/ui/button";
+import SAlertContext from "@/components/context/ShadAlert";
 
 export default function TravelLegalityCard({ data }: { data: any[] }) {
   return (
