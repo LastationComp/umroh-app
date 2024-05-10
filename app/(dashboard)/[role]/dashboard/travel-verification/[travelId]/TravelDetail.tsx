@@ -14,13 +14,14 @@ import TravelLegalityCard from "./TravelLegalityCard";
 import { Button } from "@/components/ui/button";
 import SAlertContext, { SAlert } from "@/components/context/ShadAlert";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cancelTravel } from "./action";
+import { approveTravel, cancelTravel } from "./action";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 export default function TravelDetail({ travel }: { travel: any }) {
   const SAlert = useContext(SAlertContext);
   const { toast } = useToast();
+
   const router = useRouter();
   const cancel = () => {
     SAlert.trigger({
@@ -34,6 +35,27 @@ export default function TravelDetail({ travel }: { travel: any }) {
           router.refresh();
           return toast({
             title: "Berhasil Ditolak",
+            className: "bg-green-600 text-white",
+          });
+        }
+      },
+    });
+  };
+
+  const approve = () => {
+    SAlert.trigger({
+      title: "Apakah Kamu Yakin Ingin Menyetujui?",
+      text: "Dengan ini Travel dapat melakukan akses penuh sebagai travel.",
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      icon: "success",
+      async onSuccess() {
+        const result = await approveTravel(travel.id);
+        if (result.success) {
+          router.refresh();
+          return toast({
+            title: "Berhasil Disetujui",
+            className: "bg-green-600 text-white",
           });
         }
       },
@@ -46,13 +68,14 @@ export default function TravelDetail({ travel }: { travel: any }) {
           <CardTitle>Travel Detail</CardTitle>
         </CardHeader>
         <CardContent>
-          <ScrollArea className="h-[600px]">
-            <div className="flex items-center gap-3">
+          <ScrollArea className="h-[600px] ">
+            <div className="flex items-center gap-3 mb-3">
               {travel.logo && (
                 <Image
                   alt={travel.name}
                   width={100}
                   height={100}
+                  className="rounded-full w-10 h-10 object-cover"
                   src={travel.logo}
                 />
               )}
@@ -110,9 +133,12 @@ export default function TravelDetail({ travel }: { travel: any }) {
             <TravelLegalityCard data={travel.travel_legalities} />
           </ScrollArea>
         </CardContent>
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-between">
+          <Button variant={"outline"} onClick={() => router.back()}>
+            Kembali
+          </Button>
           <div className="flex items-center gap-3">
-            <Button>Setujui</Button>
+            <Button onClick={approve}>Setujui</Button>
             <Button variant={"destructive"} onClick={cancel}>
               Tolak
             </Button>

@@ -4,6 +4,7 @@ import DashboardNavbar from './DashboardNavbar';
 import { Separator } from '@/components/ui/separator';
 import SideBar from './SideBar';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Dashboard | Umroh.ai',
@@ -18,6 +19,7 @@ export default function Layout({ children, params }: { children: React.ReactNode
         <SideBar role={params.role} />
         <div className="col-span-10 md:p-3 p-1">{children}</div>
       </div>
+      <Toaster />
     </section>
   );
 }
