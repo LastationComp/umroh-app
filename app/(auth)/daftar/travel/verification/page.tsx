@@ -1,12 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React from 'react';
-import Verification from './verification';
-import { checkTravel } from '../action';
-import { redirect } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+import Verification from "./verification";
+import { checkTravel, getTravelState } from "../action";
+import { redirect } from "next/navigation";
+import { SAlert } from "@/components/context/ShadAlert";
+import Provider from "@/components/Provider";
+import { getServerSession } from "next-auth";
+import { AuthOptions } from "@/app/api/auth/AuthOptions";
 
 export default async function page() {
   const checkRegistered = await checkTravel();
-  if (checkRegistered === true) return redirect('/daftar/travel');
+  const travel = await getTravelState();
+  const session = await getServerSession(AuthOptions);
+  if (checkRegistered === true) return redirect("/daftar/travel");
   return (
     <section className="">
       <Card>
@@ -14,7 +20,11 @@ export default async function page() {
           <CardTitle>Verifikasi Travel</CardTitle>
         </CardHeader>
         <CardContent>
-          <Verification />
+          <SAlert>
+            <Provider session={session}>
+              <Verification state={travel?.state ?? 0} />
+            </Provider>
+          </SAlert>
         </CardContent>
       </Card>
     </section>

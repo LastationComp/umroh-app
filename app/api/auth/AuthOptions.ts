@@ -7,8 +7,8 @@ const getLaravelCsrf = async () => {
     credentials: 'include',
   });
 
-  const cookies = csrf.headers.getSetCookie();
-
+  const cookies = csrf.headers
+  // console.log(cookies.get('Set-Cookie'))
   let sessionKey;
   let xsrfToken;
   cookies.forEach((cookie: string) => {
@@ -149,6 +149,7 @@ export const AuthOptions: NextAuthOptions = {
           state: result.data.state,
           expires_token: result.expires_at,
         };
+        console.log(user)
         return user;
       },
     }),
