@@ -5,7 +5,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { IoCloseCircle } from 'react-icons/io5';
 
 interface AlertProps {
-  variant?: 'success' | 'error' | 'warning';
+  variant?: 'success' | 'error' | 'warning' | undefined;
   message?: string;
   description?: string;
 }
