@@ -54,7 +54,7 @@ const showAlert = ({
     html: `<span class="text-black/50 text-sm font-small">${
       text ?? ""
     }</button`,
-    icon: icon,
+    icon: icon ?? "error",
     showConfirmButton: confirmButtonText !== null,
     showCancelButton: cancelButtonText !== null,
     confirmButtonText: confirmButtonText ?? "",

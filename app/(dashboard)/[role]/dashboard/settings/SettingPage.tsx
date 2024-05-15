@@ -14,7 +14,6 @@ import { useToast } from "@/components/ui/use-toast";
 import SubmitButton from "@/components/builder/SubmitButton";
 export default function SettingPage({ setting }: { setting: any }) {
   const { toast } = useToast();
-
   const save = async (formData: FormData) => {
     const result = await saveSettings(formData);
     if (!result.success)
@@ -23,6 +22,7 @@ export default function SettingPage({ setting }: { setting: any }) {
         className: "bg-red-600 text-white",
       });
 
+    // router.refresh();
     return toast({
       title: result.message,
       className: "bg-green-600 text-white",

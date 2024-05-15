@@ -60,8 +60,11 @@ export async function middleware(req: NextRequest) {
 
     if (pathname === "/daftar") return redirect("/");
 
-    if (!pathname.startsWith(`/${token.role}/dashboard`))
-      return redirect(`/${token.role}/dashboard`);
+    if (pathname.includes("dashboard")) {
+      if (!pathname.startsWith(`/${token.role}/dashboard`))
+        return redirect(`/${token.role}/dashboard`);
+    }
+
     if (pathname.startsWith(`/${token.role}/dashboard`)) {
       if (token.role === "subscriber") return redirect("/");
       if (pathname === `/${token.role}/dashboard`) return;

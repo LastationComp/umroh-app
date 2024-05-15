@@ -10,3 +10,4 @@ export const initialMessage = {
   type: 'error',
   message: '',
 };
+

@@ -12,5 +12,5 @@ export async function GET(req: NextRequest) {
   const res = await apiFetch('/api/dashboard/categories?page=' + page + '&paginate=' + paginate, session?.user?.tokenApi ?? '');
   const result = await res.json();
 
-  return Response.json(result?.message);
+  return Response.json(result?.data);
 }

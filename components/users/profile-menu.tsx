@@ -62,7 +62,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Image src={getAvatarUser()} alt={session.user.name} className="object-cover rounded-full w-[35px] h-[35px] cursor-pointer" width={35} height={25} />
+        <Image src={getAvatarUser()} alt={session.user.name} className="object-cover rounded-full w-[35px] h-[35px] z-40 cursor-pointer" width={35} height={25} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align={'end'} sticky={'always'}>
         <DropdownMenuItem asChild className="cursor-pointer">

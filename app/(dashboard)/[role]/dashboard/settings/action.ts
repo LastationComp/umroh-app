@@ -1,8 +1,9 @@
 "use server";
 
 import { AuthOptions } from "@/app/api/auth/AuthOptions";
-import { apiFetch } from "@/lib/Fetcher";
+import { apiFetch, newApiFetch } from "@/lib/Fetcher";
 import { getServerSession } from "next-auth";
+import { revalidateTag } from "next/cache";
 
 export async function saveSettings(formData: FormData) {
   const session = await getServerSession(AuthOptions);
@@ -17,17 +18,20 @@ export async function saveSettings(formData: FormData) {
     "POST",
     formData
   );
-
+  revalidateTag("travel-settings");
   return res.json();
 }
 
 export async function getSettings() {
   const session = await getServerSession(AuthOptions);
 
-  const res = await apiFetch(
-    "/api/travel/settings",
-    session?.user.tokenApi ?? ""
-  );
+  const res = await newApiFetch({
+    url: "/api/travel/settings",
+    token: session?.user.tokenApi ?? "",
+    options: {
+      tag: ["travel-settings"],
+    },
+  });
 
   if (!res.ok && res.status !== 200) return false;
 
