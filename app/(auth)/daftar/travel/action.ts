@@ -1,7 +1,7 @@
 "use server";
 
 import { AuthOptions } from "@/app/api/auth/AuthOptions";
-import { apiFetch } from "@/lib/Fetcher";
+import { apiFetch, newApiFetch } from "@/lib/Fetcher";
 import { delay } from "@/lib/Promise/Delay";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";

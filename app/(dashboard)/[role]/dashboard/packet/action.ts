@@ -24,6 +24,21 @@ export async function getPacket(id: string) {
   return result.data;
 }
 
+export async function getCities() {
+  const session = await getServerSession(AuthOptions);
+  const res = await newApiFetch({
+    url: "/api/data/cities",
+    token: session?.user.tokenApi ?? "",
+    options: {
+      tag: ["travel-cities"],
+    },
+  });
+
+  const result = await res.json();
+
+  return result.data;
+}
+
 export async function createPacket() {
   const session = await getServerSession(AuthOptions);
   const formData = new FormData();

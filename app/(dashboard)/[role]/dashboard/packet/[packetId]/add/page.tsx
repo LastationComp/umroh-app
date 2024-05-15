@@ -1,10 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import PacketForm from "./PacketForm";
-import { getPacket, getPacketGalleries } from "../../action";
+import { getCities, getPacket, getPacketGalleries } from "../../action";
 import PacketGalleries from "./PacketGalleries";
 import FacilitiesForm from "./FacilitiesForm";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import DepartingForm from "./DepartingForm";
 export default async function AddPacketPage({
   params,
 }: {
@@ -12,6 +12,7 @@ export default async function AddPacketPage({
 }) {
   const packet = await getPacket(params.packetId);
   const galleries = await getPacketGalleries(params.packetId);
+  const cities = await getCities();
   return (
     <Card>
       <CardHeader>
@@ -25,6 +26,9 @@ export default async function AddPacketPage({
           <PacketGalleries images={galleries} packetId={params.packetId} />
         }
         packetFacilities={<FacilitiesForm facilities={packet.facilities} />}
+        packetDeparting={
+          <DepartingForm cities={cities} departings={packet.departings} />
+        }
       />
     </Card>
   );
