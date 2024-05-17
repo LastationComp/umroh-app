@@ -130,6 +130,7 @@ export default function PacketGalleries({
               <Button
                 role="button"
                 type="button"
+                aria-label="Upload Gambar"
                 onClick={openImage}
                 disabled={uploading}
                 className="flex items-center gap-3"

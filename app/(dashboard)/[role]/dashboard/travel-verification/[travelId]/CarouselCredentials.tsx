@@ -13,6 +13,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { GoDownload } from "react-icons/go";
 import { downloadCredentialTravel } from "./action";
+import { getImageClient } from "@/lib/Parser/ImageClient";
 
 export default function CarouselCredentials({ data }: { data: any[] }) {
   const [open, setOpen] = useState(false);

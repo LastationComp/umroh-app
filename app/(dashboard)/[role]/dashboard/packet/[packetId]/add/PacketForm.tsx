@@ -28,12 +28,14 @@ export default function PacketForm({
   packetGalleries,
   packetFacilities,
   packetDeparting,
+  packetHotels,
 }: {
   packet: any;
   packetId: string;
   packetGalleries: React.ReactNode;
   packetFacilities: React.ReactNode;
   packetDeparting: React.ReactNode;
+  packetHotels: React.ReactNode;
 }) {
   const [state, setState]: any = useState(initialMessage);
   const [slug, setSlug] = useState("");
@@ -76,11 +78,6 @@ export default function PacketForm({
                 placeholder="Masukkan Nama Paket Disini..."
                 onChange={(e) => onSlug(e.target.value)}
               />
-              <Input
-                type="hidden"
-                name="slug"
-                value={slug === "" ? packet.slug : slug}
-              />
               <CardDescription>
                 Slug : {slug === "" ? packet.slug : slug}
               </CardDescription>
@@ -100,7 +97,9 @@ export default function PacketForm({
               <Input
                 id="departure_time"
                 name="departure_time"
-                defaultValue={packet.departure_time ?? new Date()}
+                defaultValue={
+                  packet.departure_time ?? new Date().toDateString()
+                }
                 type="date"
               />
             </div>
@@ -108,7 +107,7 @@ export default function PacketForm({
               <Label htmlFor="category">Kategori Paket</Label>
               <Select
                 name="category_id"
-                defaultValue={packet?.category.id ?? ""}
+                defaultValue={packet?.category?.id ?? ""}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Pilih Kategori" />
@@ -145,9 +144,8 @@ export default function PacketForm({
                 <span>Fasilitas</span>
                 {packetFacilities}
               </section>
-              <section className="md:col-span-2">
-                {packetDeparting}
-              </section>
+              <section className="md:col-span-2">{packetDeparting}</section>
+              <section className="md:col-span-2">{packetHotels}</section>
             </div>
           </section>
         </ScrollArea>

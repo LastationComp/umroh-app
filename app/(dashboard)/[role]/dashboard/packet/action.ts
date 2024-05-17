@@ -39,6 +39,23 @@ export async function getCities() {
   return result.data;
 }
 
+export async function getHotels(id: string) {
+  const session = await getServerSession(AuthOptions);
+
+  const res = await newApiFetch({
+    url: "/api/travel/travel-packets/" + id + "/hotels",
+    token: session?.user.tokenApi ?? "",
+    options: {
+      cache: true,
+      tag: ["travel-packet-hotels"],
+    },
+  });
+
+  const result = await res.json();
+
+  return result.data;
+}
+
 export async function createPacket() {
   const session = await getServerSession(AuthOptions);
   const formData = new FormData();
@@ -70,6 +87,22 @@ export async function draftPacket(id: string, formData: FormData) {
   const result = await res.json();
 
   revalidateTag("travel-packet");
+  return result;
+}
+
+export async function createPacketHotel(id: string, formData: FormData) {
+  const session = await getServerSession(AuthOptions);
+
+  const res = await newApiFetch({
+    url: `/api/travel/travel-packets/${id}/hotels`,
+    token: session?.user.tokenApi ?? "",
+    method: "POST",
+    body: formData,
+  });
+
+  const result = await res.json();
+
+  revalidateTag("travel-packet-hotels");
   return result;
 }
 

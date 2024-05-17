@@ -1,6 +1,7 @@
 "use client";
 import DepartingInput from "@/components/packet/DepartingInput";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -43,44 +44,55 @@ export default function DepartingForm({
     setDepartingData(data);
   };
   return (
-    <section className="grid gap-3 w-1/2 mb-3">
+    <section className="grid gap-3 md:w-1/2 mb-3">
+      <div className="flex gap-3 items-center justify-between">
+        <span className="w-full">Kota Keberangkatan</span>
+        <span className="w-full">Harga</span>
+      </div>
       {departingData.map((departing: any, index: number) => (
-        <div key={index} className="flex gap-3 items-center justify-between">
-          <div className="grid gap-1.5 w-full">
-            <Label htmlFor="cities">Kota Keberangkatan</Label>
-            <Select name="cities_id[]" defaultValue={departing.id ?? ""}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Pilih Kota" />
-              </SelectTrigger>
-              <SelectContent id="cities">
-                <SelectGroup>
-                  <SelectLabel>Pilih Kota</SelectLabel>
-                  {cities.map((city, index) => (
-                    <SelectItem key={index} value={city.id}>
-                      {city.city_name}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+        <Card className="rounded-sm p-3" key={index}>
+          <div key={index} className="flex gap-3 items-center justify-between">
+            <div className="grid gap-1.5 w-full">
+              <Select
+                name="cities_id[]"
+                required
+                defaultValue={departing.id ?? ""}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Pilih Kota" />
+                </SelectTrigger>
+                <SelectContent id="cities">
+                  <SelectGroup>
+                    <SelectLabel>Pilih Kota</SelectLabel>
+                    {cities.map((city, index) => (
+                      <SelectItem key={index} value={city.id}>
+                        {city.city_name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-1.5 w-full">
+              <Input
+                id="price_departing"
+                name="price_departing[]"
+                type="number"
+                required
+                defaultValue={Number(departing?.pivot?.price ?? 0)}
+                placeholder="Masukkan Harga Keberangkatan"
+              />
+            </div>
           </div>
-          <div className="grid gap-1.5 w-full">
-            <Label htmlFor="price_departing">Harga</Label>
-            <Input
-              id="price_departing"
-              name="price_departing[]"
-              type="number"
-              defaultValue={departing?.pivot.price ?? 0}
-              placeholder="Masukkan Harga Keberangkatan"
-            />
-          </div>
-        </div>
+        </Card>
       ))}
-      {cities.length !== 1 && (
-        <div className="flex gap-1.5 items-center">
+      <div className="flex gap-1.5 items-center">
+        {cities.length !== 1 && cities.length !== departingData.length && (
           <Button type="button" onClick={addDeparting}>
             Tambah
           </Button>
+        )}
+        {departingData.length !== 1 && (
           <Button
             type="button"
             onClick={removeDeparting}
@@ -88,8 +100,8 @@ export default function DepartingForm({
           >
             Hapus
           </Button>
-        </div>
-      )}
+        )}
+      </div>
     </section>
   );
 }

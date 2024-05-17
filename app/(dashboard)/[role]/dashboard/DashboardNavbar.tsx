@@ -14,7 +14,7 @@ export default async function DashboardNavbar({ role }: DashboardProps) {
   return (
     <nav className="py-3 z-40 flex justify-between fixed w-full bg-white items-center gap-3 px-5 shadow-md">
       <div className="flex items-center gap-3">
-        <span className="text-lg font-bold">Umroh.ai Dashboard</span>
+        <span className="text-lg font-bold">Dashboard</span>
         {session?.user.role === "travel" && (
           <section className="flex gap-3 items-center">
             <Separator orientation={"vertical"} className="h-5" />

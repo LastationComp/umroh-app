@@ -2,23 +2,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { DateToString } from "@/lib/String/ParsingDate";
-import Image from "next/image";
 import React, { useContext } from "react";
 import CarouselCredentials from "./CarouselCredentials";
-import { Button } from "@/components/ui/button";
-import SAlertContext from "@/components/context/ShadAlert";
 
 export default function TravelLegalityCard({ data }: { data: any[] }) {
   return (
@@ -46,28 +35,6 @@ export default function TravelLegalityCard({ data }: { data: any[] }) {
             </div>
             <section className="flex flex-col gap-3 my-3">
               <span className="font-bold">Kredensial</span>
-              {/* <Carousel className="w-full ">
-                <CarouselContent>
-                  {legality.legality_credentials.map(
-                    (travel_legality: any, index: number) => (
-                      <CarouselItem key={index}>
-                        <div className="p-1">
-                          <Image
-                            alt={travel_legality.name}
-                            width={500}
-                            className="w-full max-h-50 object-cover"
-                            height={1000}
-                            quality={50}
-                            src={travel_legality.credentials}
-                          />
-                        </div>
-                      </CarouselItem>
-                    )
-                  )}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel> */}
               <CarouselCredentials data={legality.legality_credentials} />
             </section>
           </CardContent>
