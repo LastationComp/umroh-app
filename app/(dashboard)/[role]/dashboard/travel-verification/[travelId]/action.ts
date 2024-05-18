@@ -44,8 +44,9 @@ export async function cancelTravel(id: string) {
 }
 
 export async function downloadCredentialTravel(url: string, title: string) {
-  return process.env.APP_URL + "/api/download/image?url=" + url;
+  return process.env.NEXT_PUBLIC_URL_API + "/api/download/image?url=" + url;
 }
+
 
 export async function approveTravel(id: string) {
   const session = await getServerSession(AuthOptions);

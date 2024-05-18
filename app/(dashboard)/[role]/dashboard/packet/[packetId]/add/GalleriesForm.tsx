@@ -33,11 +33,8 @@ export default function GalleriesForm({
   const [slide, setSlide] = useState(0);
   const [openGallery, setOpenGallery] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const router = useRouter();
-  const { toast } = useToast();
   const fileImage = createRef<HTMLInputElement>();
   const form = createRef<HTMLFormElement>();
-  const button = createRef<HTMLButtonElement>();
   const imagesData = images.map((image) => {
     return {
       original: image.image_url,

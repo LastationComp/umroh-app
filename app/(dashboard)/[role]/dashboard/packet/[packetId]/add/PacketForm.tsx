@@ -27,15 +27,19 @@ export default function PacketForm({
   packetId,
   packetGalleries,
   packetFacilities,
+  packetDeparting,
+  packetHotels,
 }: {
   packet: any;
   packetId: string;
   packetGalleries: React.ReactNode;
   packetFacilities: React.ReactNode;
+  packetDeparting: React.ReactNode;
+  packetHotels: React.ReactNode;
 }) {
   const [state, setState]: any = useState(initialMessage);
   const [slug, setSlug] = useState("");
-
+  const [cities, setCities] = useState("");
   const onSlug = (string: string) => {
     setSlug(Slug(string));
   };
@@ -70,11 +74,13 @@ export default function PacketForm({
                 id="title"
                 type="text"
                 name="title"
+                defaultValue={packet.title ?? ""}
                 placeholder="Masukkan Nama Paket Disini..."
                 onChange={(e) => onSlug(e.target.value)}
               />
-              <Input type="hidden" value={slug} />
-              <CardDescription>Slug : {slug ?? "-"}</CardDescription>
+              <CardDescription>
+                Slug : {slug === "" ? packet.slug : slug}
+              </CardDescription>
             </div>
             <div className="grid gap-1.5 mb-auto">
               <Label htmlFor="quota">Kuota Paket</Label>
@@ -83,15 +89,26 @@ export default function PacketForm({
                 type="number"
                 placeholder="Masukkan Kuota Paket Disini..."
                 name="quota"
+                defaultValue={packet.quota ?? 0}
               />
             </div>
             <div className="grid gap-1.5 mb-auto">
               <Label htmlFor="departure_time">Waktu Keberangkatan</Label>
-              <Input id="departure_time" name="departure_time" type="date" />
+              <Input
+                id="departure_time"
+                name="departure_time"
+                defaultValue={
+                  packet.departure_time ?? new Date().toDateString()
+                }
+                type="date"
+              />
             </div>
             <div className="grid gap-1.5 mb-auto relative">
               <Label htmlFor="category">Kategori Paket</Label>
-              <Select name="category">
+              <Select
+                name="category_id"
+                defaultValue={packet?.category?.id ?? ""}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Pilih Kategori" />
                 </SelectTrigger>
@@ -110,8 +127,8 @@ export default function PacketForm({
               <Textarea
                 id="description"
                 name="description"
-                onChange={(e) => console.log(e.target.value.split("\n"))}
-                placeholder="Masukkan Deskripsi Travel Kamu..."
+                defaultValue={packet.description}
+                placeholder="Masukkan Deskripsi Paket Kamu..."
                 rows={4}
               ></Textarea>
             </div>
@@ -127,6 +144,8 @@ export default function PacketForm({
                 <span>Fasilitas</span>
                 {packetFacilities}
               </section>
+              <section className="md:col-span-2">{packetDeparting}</section>
+              <section className="md:col-span-2">{packetHotels}</section>
             </div>
           </section>
         </ScrollArea>

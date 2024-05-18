@@ -3,22 +3,18 @@
 import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
 import { AuthOptions } from "../../auth/AuthOptions";
-import { apiFetch } from "@/lib/Fetcher";
-import {
-  responseData,
-  responseError,
-  responseSuccess,
-} from "@/lib/Handling/response";
+import { newApiFetch } from "@/lib/Fetcher";
+import { responseData } from "@/lib/Handling/response";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(AuthOptions);
   const searchParams = req.nextUrl.searchParams;
-  const res = await apiFetch(
-    `/api/data/cities?${searchParams.toString()}`,
-    session?.user.tokenApi ?? ""
-  );
+  const res = await newApiFetch({
+    url: "/api/data/hotels?" + searchParams.toString(),
+    token: session?.user.tokenApi ?? "",
+  });
+
   const result = await res.json();
-  if (!res.ok) return responseError(result?.message);
 
   return responseData(result.data);
 }
