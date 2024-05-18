@@ -9,6 +9,7 @@ import DeleteButton from '@/components/global/DeleteButton';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { uploadGallery } from '../../action';
 import { toast } from '@/components/ui/use-toast';
+import imageCompression from 'browser-image-compression';
 
 export default function GalleriesForm({ images, packetId }: { images: any[]; packetId: string }) {
   const [slide, setSlide] = useState(0);
@@ -31,8 +32,18 @@ export default function GalleriesForm({ images, packetId }: { images: any[]; pac
   const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files)
       startTransition(async () => {
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        };
+        if (!e.target.files) return;
+        let finalImage = await imageCompression(e.target.files[0], options);
         let formData = new FormData();
-        if (e.target.files) formData.set('image', e.target.files[0] as File);
+        const final = new File([finalImage], e.target.files[0].name, {
+          type: e.target.files[0].type,
+        });
+        if (e.target.files) formData.set('image', final as File);
         const result = await uploadGallery(packetId, formData);
         if (result.type === 'error') return;
         toast({

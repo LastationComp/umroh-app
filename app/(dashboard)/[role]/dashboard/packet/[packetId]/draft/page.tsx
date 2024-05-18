@@ -13,7 +13,7 @@ export default async function AddPacketPage({ params }: { params: { packetId: st
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tambah Paket</CardTitle>
+        <CardTitle>Draft Paket</CardTitle>
       </CardHeader>
 
       <PacketForm

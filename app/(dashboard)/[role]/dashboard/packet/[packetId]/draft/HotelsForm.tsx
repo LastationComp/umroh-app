@@ -56,6 +56,35 @@ export default function HotelsForm({ hotels, packetId }: { hotels: any[]; packet
   return (
     <div className="grid gap-3 md:w-1/2">
       <span>Hotel</span>
+
+      <section className="grid gap-3 w-full">
+        {dataHotels.map((hotel, index) => {
+          return (
+            <Card className="rounded-sm p-3" key={index}>
+              <div key={index} className="flex gap-3 items-center justify-between">
+                <div className="grid gap-1.5 w-full">
+                  <div className="flex items-center gap-3">
+                    <span>{hotel.name}</span>
+                    <Separator orientation={'vertical'} />
+                    <GetStar value={hotel.class} />
+                  </div>
+                  <CardDescription>{hotel.location}</CardDescription>
+                  <Input type="hidden" name="hotel_id[]" value={hotel.id} />
+                </div>
+                <div className="flex items-center gap-3 w-full">
+                  <div className="grid gap-1.5 w-full">
+                    <Label htmlFor="price_hotel">Harga</Label>
+                    <Input id="price_hotel" name="price_hotel[]" type="number" required defaultValue={Number(hotel?.pivot?.price ?? 0)} placeholder="Masukkan Harga Tambah..." />
+                  </div>
+                  <Button type="button" variant={'destructive'} onClick={() => deleteHotel(hotel.id)}>
+                    Hapus
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      </section>
       <section className="flex">
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
@@ -110,34 +139,6 @@ export default function HotelsForm({ hotels, packetId }: { hotels: any[]; packet
             </DialogFooter>
           </DialogContent>
         </Dialog>
-      </section>
-      <section className="grid gap-3 w-full">
-        {dataHotels.map((hotel, index) => {
-          return (
-            <Card className="rounded-sm p-3" key={index}>
-              <div key={index} className="flex gap-3 items-center justify-between">
-                <div className="grid gap-1.5 w-full">
-                  <div className="flex items-center gap-3">
-                    <span>{hotel.name}</span>
-                    <Separator orientation={'vertical'} />
-                    <GetStar value={hotel.class} />
-                  </div>
-                  <CardDescription>{hotel.location}</CardDescription>
-                  <Input type="hidden" name="hotel_id[]" value={hotel.id} />
-                </div>
-                <div className="flex items-center gap-3 w-full">
-                  <div className="grid gap-1.5 w-full">
-                    <Label htmlFor="price_hotel">Harga</Label>
-                    <Input autoFocus id="price_hotel" name="price_hotel[]" type="number" required defaultValue={Number(hotel?.pivot?.price ?? 0)} placeholder="Masukkan Harga Tambah..." />
-                  </div>
-                  <Button type="button" variant={'destructive'} onClick={() => deleteHotel(hotel.id)}>
-                    Hapus
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          );
-        })}
       </section>
     </div>
   );
