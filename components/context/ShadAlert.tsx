@@ -1,24 +1,16 @@
-"use client";
-import { createContext, useState } from "react";
-import Swal from "sweetalert2";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { cn } from "@/lib/utils";
-import { delay } from "@/lib/Promise/Delay";
+'use client';
+import { createContext, useState, useTransition } from 'react';
+import Swal from 'sweetalert2';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { cn } from '@/lib/utils';
+import { delay } from '@/lib/Promise/Delay';
+import { Button } from '../ui/button';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 type alertProps = {
   title?: string | null;
   text?: string | null;
-  icon?: "error" | "success" | "warning" | "question" | null;
+  icon?: 'error' | 'success' | 'warning' | 'question' | null;
   confirmButtonText?: string | null;
   cancelButtonText?: string | null;
   onSuccess?: () => void;
@@ -39,28 +31,18 @@ const SAlertContext = createContext({
   onSuccess: async () => {},
 });
 
-const showAlert = ({
-  title = "Apakah anda yakin?",
-  text,
-  icon = "error",
-  confirmButtonText = "Oke",
-  cancelButtonText = null,
-  onSuccess,
-  onCancel,
-}: alertProps) => {
+const showAlert = ({ title = 'Apakah anda yakin?', text, icon = 'error', confirmButtonText = 'Oke', cancelButtonText = null, onSuccess, onCancel }: alertProps) => {
   return Swal.fire({
-    title: `<span class="text-lg">${title ?? ""}</button`,
-    text: text ?? "",
-    html: `<span class="text-black/50 text-sm font-small">${
-      text ?? ""
-    }</button`,
-    icon: icon ?? "error",
+    title: `<span class="text-lg">${title ?? ''}</button`,
+    text: text ?? '',
+    html: `<span class="text-black/50 text-sm font-small">${text ?? ''}</button`,
+    icon: icon ?? 'error',
     showConfirmButton: confirmButtonText !== null,
     showCancelButton: cancelButtonText !== null,
-    confirmButtonText: confirmButtonText ?? "",
-    cancelButtonText: cancelButtonText ?? "",
-    confirmButtonColor: "#2c3442",
-    cancelButtonColor: "#747576",
+    confirmButtonText: confirmButtonText ?? '',
+    cancelButtonText: cancelButtonText ?? '',
+    confirmButtonColor: '#2c3442',
+    cancelButtonColor: '#747576',
     buttonsStyling: true,
   }).then((result) => {
     if (result.isConfirmed) return onSuccess ? onSuccess() : null;
@@ -70,51 +52,48 @@ const showAlert = ({
 };
 
 const SAlert = ({ children }: { children: React.ReactNode }) => {
+  const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const [icon, setIcon] = useState("");
-  const [confirmText, setConfirmText] = useState("");
-  const [cancelText, setCancelText] = useState("");
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
+  const [icon, setIcon] = useState('');
+  const [confirmText, setConfirmText] = useState('');
+  const [cancelText, setCancelText] = useState('');
   const [actions, setActions]: any = useState({
     success: async () => {},
     cancel: async () => {},
   });
-  const trigger = ({
-    title = "Apakah anda yakin?",
-    text,
-    icon = "error",
-    confirmButtonText = "Ya",
-    cancelButtonText = null,
-    onSuccess,
-    onCancel,
-  }: alertProps) => {
+  const trigger = ({ title = 'Apakah anda yakin?', text, icon = 'error', confirmButtonText = 'Ya', cancelButtonText = null, onSuccess, onCancel }: alertProps) => {
     setOpen(true);
-    setTitle(title ?? "");
-    setText(text ?? "");
-    setIcon(icon ?? "warning");
-    setConfirmText(confirmButtonText ?? "Ya");
-    setCancelText(cancelButtonText ?? "");
+    setTitle(title ?? '');
+    setText(text ?? '');
+    setIcon(icon ?? 'warning');
+    setConfirmText(confirmButtonText ?? 'Ya');
+    setCancelText(cancelButtonText ?? '');
     setActions({
       success: onSuccess,
       cancel: onCancel,
     });
   };
 
-  const getColor = (variant: string = "warning") => {
-    const outline = "outline outline-1";
-    let final = "";
-    if (variant === "warning") final = "outline-yellow-600 text-yellow-600";
+  const getColor = (variant: string = 'warning') => {
+    const outline = 'outline outline-1';
+    let final = '';
+    if (variant === 'warning') final = 'outline-yellow-600 text-yellow-600';
 
-    if (variant === "error") final = "outline-red-600";
+    if (variant === 'error') final = 'outline-red-600';
 
-    if (variant === "success") final = "outline-green-600 text-green-600";
+    if (variant === 'success') final = 'outline-green-600 text-green-600';
 
     return cn(outline, final);
   };
 
   const onSuccess = async () => {
-    await actions.success();
+    if (!actions.success) return;
+    startTransition(async () => {
+      await actions.success();
+      setOpen(!open);
+    });
   };
 
   const cancel = async () => {
@@ -133,12 +112,14 @@ const SAlert = ({ children }: { children: React.ReactNode }) => {
           <AlertDialogFooter>
             {cancelText && (
               <AlertDialogCancel onClick={cancel} className="text-black">
-                {cancelText ?? "Batal"}
+                {cancelText ?? 'Batal'}
               </AlertDialogCancel>
             )}
-            <AlertDialogAction onClick={onSuccess}>
+            <Button type="button" className="flex items-center gap-3" onClick={onSuccess} disabled={isPending}>
+              {isPending && <AiOutlineLoading3Quarters className={isPending ? 'animate-spin' : ''} />}
+
               {confirmText}
-            </AlertDialogAction>
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

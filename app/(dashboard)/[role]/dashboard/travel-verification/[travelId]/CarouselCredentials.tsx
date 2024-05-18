@@ -1,19 +1,13 @@
-"use client";
+'use client';
 
-import PopupSliders from "@/components/images/PopupSliders";
-import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Image from "next/image";
-import React, { useState } from "react";
-import { GoDownload } from "react-icons/go";
-import { downloadCredentialTravel } from "./action";
-import { getImageClient } from "@/lib/Parser/ImageClient";
+import PopupSliders from '@/components/images/PopupSliders';
+import { Button } from '@/components/ui/button';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { GoDownload } from 'react-icons/go';
+import { downloadCredentialTravel } from './action';
+import { getImageClient } from '@/lib/Parser/ImageClient';
 
 export default function CarouselCredentials({ data }: { data: any[] }) {
   const [open, setOpen] = useState(false);
@@ -36,7 +30,7 @@ export default function CarouselCredentials({ data }: { data: any[] }) {
 
     if (!result) return;
 
-    const aElement = document.createElement("a");
+    const aElement = document.createElement('a');
     aElement.href = result;
     aElement.download = title;
     aElement.click();
@@ -48,24 +42,8 @@ export default function CarouselCredentials({ data }: { data: any[] }) {
           {data.map((travel_legality: any, index: number) => (
             <CarouselItem key={index}>
               <div className="p-1 relative trigger-tooltip-image">
-                <Image
-                  alt={travel_legality.name}
-                  width={500}
-                  className="w-full max-h-[300px] object-cover cursor-pointer"
-                  height={1000}
-                  quality={50}
-                  src={travel_legality.credentials}
-                  onClick={() => openImage(index)}
-                />
-                <Button
-                  onClick={() =>
-                    downloadImage(
-                      travel_legality.credentials,
-                      travel_legality.name
-                    )
-                  }
-                  className="absolute tooltip-image top-5 right-5 bg-blue-600 hover:bg-blue-400"
-                >
+                <Image alt={travel_legality.name} width={500} className="w-full max-h-[300px] object-cover cursor-pointer" height={1000} quality={50} src={travel_legality.credentials} onClick={() => openImage(index)} />
+                <Button onClick={() => downloadImage(travel_legality.credentials, travel_legality.name)} className="absolute tooltip-image top-5 right-5 bg-blue-600 hover:bg-blue-400">
                   <GoDownload />
                 </Button>
               </div>
@@ -75,12 +53,7 @@ export default function CarouselCredentials({ data }: { data: any[] }) {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <PopupSliders
-        data={imagesData}
-        open={open}
-        onOpenChange={setOpen}
-        currentSlide={slide}
-      />
+      <PopupSliders data={imagesData} open={open} onOpenChange={setOpen} currentSlide={slide} />
     </section>
   );
 }

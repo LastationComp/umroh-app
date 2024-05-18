@@ -1,15 +1,9 @@
 'use client';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@radix-ui/react-separator';
-import { Controls, MediaPlayEvent, MediaPlayFailEvent, MediaPlayRequestEvent, MediaPlayer, MediaPlayerInstance, MediaProvider, MediaProviderAdapter, PlayButton, isYouTubeProvider } from '@vidstack/react';
-import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
-import Lightbox from 'yet-another-react-lightbox';
-import Video from 'yet-another-react-lightbox/plugins/video';
+import React from 'react';
 import 'yet-another-react-lightbox/styles.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BlogCard from '@/components/blogs/BlogCard';
 export default function StoryContent() {
   const blogs = [1, 2, 3];

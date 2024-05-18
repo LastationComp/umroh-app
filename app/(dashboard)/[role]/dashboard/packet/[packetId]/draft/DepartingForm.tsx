@@ -1,9 +1,7 @@
 "use client";
-import DepartingInput from "@/components/packet/DepartingInput";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -26,11 +24,6 @@ export default function DepartingForm({
     departings.length === 0 ? [{}] : departings
   );
 
-  const [selectedCity, setSelectedCity] = useState([]);
-
-  const filteringSameCities = (city: any) => {
-    return;
-  };
 
   const addDeparting = () => {
     let data: any[] = [...departingData];

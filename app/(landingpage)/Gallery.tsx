@@ -3,7 +3,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import Image from 'next/image';
 import React, { useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import PopupSingleImage from '@/components/images/PopupSingleImage';
 import PopupSliders from '@/components/images/PopupSliders';
 
 export default function Gallery() {

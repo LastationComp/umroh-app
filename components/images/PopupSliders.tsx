@@ -1,25 +1,21 @@
-import React from "react";
-import "react-multi-carousel/lib/styles.css";
-import { Dialog, DialogClose, DialogContent } from "../ui/dialog";
-import { Button } from "../ui/button";
-import ImageGallery from "react-image-gallery";
-import { getImageClient } from "@/lib/Parser/ImageClient";
+import React from 'react';
+import 'react-multi-carousel/lib/styles.css';
+import { Dialog, DialogClose, DialogContent } from '../ui/dialog';
+import { Button } from '../ui/button';
+import ImageGallery from 'react-image-gallery';
+import { getImageClient } from '@/lib/Parser/ImageClient';
 interface PopupSliders {
   data: any[];
   open: boolean;
   onOpenChange: any;
   currentSlide?: number;
 }
-export default function PopupSliders({
-  data,
-  open,
-  onOpenChange,
-  currentSlide = 0,
-}: PopupSliders) {
+export default function PopupSliders({ data, open, onOpenChange, currentSlide = 0 }: PopupSliders) {
   const imagesData = data.map((image) => {
     return {
       original: getImageClient(image.original),
       thumbnail: getImageClient(image.original),
+      originalClass: image?.originalClass ?? 'max-h-[36rem]',
     };
   });
   return (
@@ -29,14 +25,7 @@ export default function PopupSliders({
           <Button className="rounded-full uppercase opacity-50">x</Button>
         </DialogClose>
         <div className="flex justify-center ">
-          <ImageGallery
-            lazyLoad
-            showFullscreenButton={false}
-            startIndex={currentSlide}
-            showPlayButton={false}
-            additionalClass="max-w-sm md:max-w-md w-full lg:max-w-lg object-cover"
-            items={imagesData}
-          />
+          <ImageGallery lazyLoad showFullscreenButton={false} startIndex={currentSlide} showPlayButton={false} additionalClass="max-w-sm md:max-w-md w-full lg:max-w-lg object-cover" items={imagesData} />
         </div>
       </DialogContent>
     </Dialog>

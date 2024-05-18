@@ -1,11 +1,8 @@
 'use client';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Button } from '@/components/ui/button';
-import { MediaPlayer, MediaProvider } from '@vidstack/react';
 export default function CoverContent() {
   return (
     <>
