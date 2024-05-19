@@ -42,19 +42,21 @@ export async function middleware(req: NextRequest) {
   //     }
   //   );
 
-  const ip = req.headers.get('x-forwarded-for') || req.ip || '127.0.0.1';
-  const limit = 60; // Limiting requests to 5 per minute per IP
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || req.ip || '127.0.0.1';
+  const userAgent = req.headers.get('user-agent');
+  const finalDevice = ip + ':' + userAgent;
+  // console.log(finalDevice);
+  const limit = 100; // Limiting requests to 5 per minute per IP
   const windowMs = 60 * 1000; // 1 minute
   if (process.env.APP_ENV === 'production') {
-    if (!rateLimitMap.has(ip)) {
-      rateLimitMap.set(ip, {
+    if (!rateLimitMap.has(finalDevice)) {
+      rateLimitMap.set(finalDevice, {
         count: 0,
         lastReset: Date.now(),
       });
     }
 
-    const ipData = rateLimitMap.get(ip);
-
+    const ipData = rateLimitMap.get(finalDevice);
     if (Date.now() - ipData.lastReset > windowMs) {
       ipData.count = 0;
       ipData.lastReset = Date.now();
@@ -62,8 +64,9 @@ export async function middleware(req: NextRequest) {
 
     if (ipData.count >= limit) {
       return responseError('Too Many Request', 429);
+    } else {
+      ipData.count += 1;
     }
-    ipData.count += 1;
   }
 
   // const cookieName = process.env.NODE_ENV === 'development' ? 'next-auth.session-token' : '__Secure-next-auth.session-token';
