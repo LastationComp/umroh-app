@@ -52,6 +52,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
       },
+      {
+        protocol: 'http',
+        hostname: '192.168.100.6',
+        port: '8000',
+      },
     ],
   },
   compiler: {
@@ -61,7 +66,6 @@ const nextConfig = {
     // This could be anything, using the latest git hash
     return process.env.APP_KEY;
   },
-  
 };
 
 export default nextConfig;
