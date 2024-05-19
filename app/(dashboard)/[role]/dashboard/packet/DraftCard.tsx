@@ -1,6 +1,6 @@
 'use client';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import React, { useContext } from 'react';
+import React, { Attributes, useContext } from 'react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { CiMenuKebab } from 'react-icons/ci';
@@ -10,7 +10,7 @@ import SAlertContext from '@/components/context/ShadAlert';
 import { cancelDraft } from './action';
 import { toast } from '@/components/ui/use-toast';
 import { useSWRConfig } from 'swr';
-export default function DraftCard({ data, index }: { data: any; index?: number }) {
+export default function DraftCard({ data, index }: { data: any; index?: React.Key }) {
   const SAlert = useContext(SAlertContext);
   const { mutate } = useSWRConfig();
   const deletePacket = (id: string) => {
