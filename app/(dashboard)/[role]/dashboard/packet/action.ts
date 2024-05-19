@@ -24,6 +24,8 @@ export async function getPacket(id: string) {
   return result.data;
 }
 
+export async function getPackets() {}
+
 export async function getCities() {
   const session = await getServerSession(AuthOptions);
   const res = await newApiFetch({
@@ -144,5 +146,6 @@ export async function cancelDraft(id: string) {
 
   if (!res.ok || res.status !== 200) return false;
 
+  revalidateTag('travel-packet-drafts');
   return true;
 }
