@@ -57,6 +57,11 @@ const nextConfig = {
         hostname: '192.168.100.6',
         port: '8000',
       },
+      {
+        protocol: 'http',
+        hostname: '139.99.68.206',
+        port: '8000',
+      },
     ],
   },
   compiler: {
