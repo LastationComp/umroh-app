@@ -74,6 +74,7 @@ const nextConfig = {
   experimental: {
     webpackBuildWorker: true,
   },
+
   output: 'export',
 };
 
