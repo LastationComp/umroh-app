@@ -70,6 +70,7 @@ export const AuthOptions: NextAuthOptions = {
           isPhoneVerified: result?.data?.is_phone_verified,
           ...result.data,
           travel: {},
+          expires_token: result?.expires_at,
         };
 
         user = result.data;

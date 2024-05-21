@@ -71,6 +71,9 @@ const nextConfig = {
     // This could be anything, using the latest git hash
     return process.env.APP_KEY;
   },
+  experimental: {
+    webpackBuildWorker: true,
+  },
 };
 
 export default nextConfig;

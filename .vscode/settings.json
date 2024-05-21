@@ -1,0 +1,19 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "Umroh",
+      "group": "MySQL",
+      "database": "umrohai_dev",
+      "username": "root",
+      "password": ""
+    }
+  ]
+}

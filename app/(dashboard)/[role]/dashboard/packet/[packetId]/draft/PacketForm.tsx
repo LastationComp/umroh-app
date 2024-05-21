@@ -5,11 +5,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { fetcher } from '@/lib/Fetcher';
 import { Slug } from '@/lib/String/Packet';
 import Link from 'next/link';
 import React, { Suspense, useContext, useState, useTransition } from 'react';
-import useSWR from 'swr';
 import { RiDraftLine } from 'react-icons/ri';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { initialMessage } from '@/lib/utils';
@@ -24,20 +22,22 @@ import { toast } from '@/components/ui/use-toast';
 import { useRouter } from 'next/navigation';
 export default function PacketForm({
   packet,
-  categories,
   packetId,
   packetGalleries,
   packetFacilities,
   packetDeparting,
   packetHotels,
+  packetCategories,
+  packetAirlines,
 }: {
   packet: any;
-  categories: any[];
   packetId: string;
   packetGalleries: React.ReactNode;
   packetFacilities: React.ReactNode;
   packetDeparting: React.ReactNode;
   packetHotels: React.ReactNode;
+  packetCategories: React.ReactNode;
+  packetAirlines: React.ReactNode;
 }) {
   const [suspense, startTransition] = useTransition();
   const SATrigger = useContext(SAlertContext);
@@ -100,19 +100,7 @@ export default function PacketForm({
             </div>
             <div className="grid gap-1.5 mb-auto relative">
               <Label htmlFor="category">Kategori Paket</Label>
-              <Select name="category_id" defaultValue={packet?.category?.id ?? ''}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Pilih Kategori" />
-                </SelectTrigger>
-                <SelectContent id="category">
-                  {categories &&
-                    categories.map((category: any, index: number) => (
-                      <SelectItem value={category.id} key={index}>
-                        {category.category_name}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
+              <Suspense fallback={<LoadingUI />}>{packetCategories}</Suspense>
             </div>
             <div className="grid gap-1.5 mb-auto relative">
               <Label htmlFor="description">Description</Label>
@@ -135,6 +123,9 @@ export default function PacketForm({
               </section>
               <section className="md:col-span-2">
                 <Suspense fallback={<LoadingUI />}>{packetHotels}</Suspense>
+              </section>
+              <section className="md:col-span-2">
+                <Suspense fallback={<LoadingUI />}>{packetAirlines}</Suspense>
               </section>
             </div>
           </section>

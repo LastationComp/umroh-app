@@ -70,6 +70,18 @@ export async function getCategories() {
   return result.data;
 }
 
+export async function getAirlines() {
+  const session = await getServerSession(AuthOptions);
+  const res = await newApiFetch({
+    url: '/api/data/airlines',
+    token: session?.user.tokenApi ?? '',
+  });
+
+  const result = await res.json();
+
+  return result.data;
+}
+
 export async function createPacket() {
   const session = await getServerSession(AuthOptions);
   const formData = new FormData();
