@@ -1,30 +1,33 @@
-import { Metadata } from "next";
-import React from "react";
-import DashboardNavbar from "./DashboardNavbar";
-import { Separator } from "@/components/ui/separator";
-import SideBar from "./SideBar";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Toaster } from "@/components/ui/toaster";
-
+import { Metadata } from 'next';
+import React from 'react';
+import DashboardNavbar from './DashboardNavbar';
+import { Separator } from '@/components/ui/separator';
+import SideBar from './SideBar';
 export const metadata: Metadata = {
-  title: "Dashboard | Umroh.ai",
+  title: 'Dashboard | Umroh.ai',
 };
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+export default function Layout({ children, params }: { children: React.ReactNode; params: { role: string } }) {
+  // return (
+  //   <section className="flex relative bg-white">
+  //     <DashboardNavbar role={params.role} />
+  //     <Separator />
+  //     <div className="grid grid-cols-12 h-auto divide-x">
+  //       <SideBar role={params.role} />
+  //       <div className="col-span-10 md:p-3 p-1">{children}</div>
+  //     </div>
+  //   </section>
+  // );
 
-export default function Layout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { role: string };
-}) {
   return (
-    <section className="h-screen flex flex-col w-screen bg-white">
-      <DashboardNavbar role={params.role} />
-      <Separator />
-      <div className="grid grid-cols-12 divide-x h-full mt-[60px]">
-        <SideBar role={params.role} />
-        <div className="col-span-10 md:p-3 p-1">{children}</div>
+    <section className="flex items-stretch relative divide-x h-100vh">
+      <SideBar role={params.role} />
+      <div className="flex flex-col relative w-full">
+        <DashboardNavbar role={params.role}>{children}</DashboardNavbar>
+        {/* {children} */}
       </div>
+      <ToastContainer position={'top-center'} theme="colored" />
     </section>
   );
 }

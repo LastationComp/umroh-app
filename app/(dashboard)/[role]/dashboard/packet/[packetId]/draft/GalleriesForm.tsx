@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button';
 import DeleteButton from '@/components/global/DeleteButton';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { uploadGallery } from '../../action';
-import { toast } from '@/components/ui/use-toast';
 import imageCompression from 'browser-image-compression';
+import { toast } from 'react-toastify';
 
 export default function GalleriesForm({ images, packetId }: { images: any[]; packetId: string }) {
   const [slide, setSlide] = useState(0);
@@ -46,17 +46,14 @@ export default function GalleriesForm({ images, packetId }: { images: any[]; pac
         if (e.target.files) formData.set('image', final as File);
         const result = await uploadGallery(packetId, formData);
         if (result.type === 'error') return;
-        toast({
-          title: 'Gambar Berhasil Diupload',
-          className: 'bg-green-600 text-white',
-        });
+        toast.success('Gambar Berhasil Diupload!');
       });
     // form.current?.requestSubmit();
   };
 
   return (
     <form ref={form}>
-      <section className="w-auto">
+      <section className="w-full">
         <PopupSliders open={openGallery} onOpenChange={setOpenGallery} currentSlide={slide} data={imagesData} />
         <Carousel
           plugins={[
