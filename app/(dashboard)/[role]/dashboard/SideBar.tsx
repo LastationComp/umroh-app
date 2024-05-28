@@ -15,7 +15,9 @@ import {
   MdHotelClass,
   MdManageAccounts,
 } from "react-icons/md";
-import { FaGear } from "react-icons/fa6";
+import { FaGear
+  , FaPerson
+ } from "react-icons/fa6";
 export default function SideBar({ role }: { role: string }) {
   const pathname = usePathname();
   const GenerateBar = ({
@@ -119,6 +121,9 @@ export default function SideBar({ role }: { role: string }) {
             </div>
             <GenerateBar url="/packet" title="Paket">
               <MdDomainVerification />
+            </GenerateBar>
+            <GenerateBar url="/travels/staffs" title="Staff">
+            <FaPerson/>
             </GenerateBar>
             <GenerateBar url="/settings" title="Pengaturan">
               <FaGear />

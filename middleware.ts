@@ -128,7 +128,7 @@ export async function middleware(req: NextRequest) {
         if (!pattern.test(pathname)) return redirect('/');
       }
       if (token.role === 'travel') {
-        const pattern = new RegExp('packet|settings', 'g');
+        const pattern = new RegExp('packet|settings|travels/staffs', 'g');
         if (!pattern.test(pathname)) return redirect('/');
       }
     }

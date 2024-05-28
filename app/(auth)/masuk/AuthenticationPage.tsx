@@ -11,26 +11,38 @@ import { signIn } from 'next-auth/react';
 import Alert from '@/components/callback/Alert';
 import { delay } from '@/lib/Promise/Delay';
 import Link from 'next/link';
+import ReCAPTCHA from 'react-google-recaptcha'
 
 export default function AuthenticationPage() {
   const [errMsg, setErrMsg] = useState('');
+  const [recaptcha, setRecaptcha] = useState<string | null> ();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const recaptchaRef = React.useRef<ReCAPTCHA>(null);
   const handleSubmit = async (formData: FormData) => {
-    const res = await signIn('credentials', {
-      email: formData.get('email'),
-      password: formData.get('password'),
-      redirect: false,
-    });
-
-    if (!res?.ok || res.status !== 200) return setErrMsg('Email or Password is wrong! please try again');
-
-    router.refresh();
-    await delay(1000);
-
-    ('use server');
-    redirect(searchParams.get('redirect') ?? '/');
+    if(recaptcha){
+      const res = await signIn('credentials', {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        redirect: false,
+      });
+  
+      if (!res?.ok || res.status !== 200) 
+        {
+          
+          setRecaptcha(null);
+          recaptchaRef.current?.reset();
+          return setErrMsg('Email or Password is wrong! please try again');
+        }
+  
+      router.refresh();
+      await delay(1000);
+  
+      ('use server');
+      redirect(searchParams.get('redirect') ?? '/');
+    }
+    
   };
 
   const continueWithGooglo = async () => {
@@ -46,7 +58,11 @@ export default function AuthenticationPage() {
         {/* <Input type="text" name="name" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Nama Anda..." /> */}
         <Input type="email" name="email" defaultValue={'admin@gmail.com'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
         <Input type="password" name="password" defaultValue={'12345678'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
-        <SubmitButton>Masuk</SubmitButton>
+        <div className='w-full'><ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} ref={recaptchaRef}  className="w-full" onChange={setRecaptcha}/></div>
+        {!recaptcha && <Button disabled>Masuk</Button>}
+        {recaptcha && <SubmitButton >Masuk</SubmitButton>}
+        
+        
       </form>
       <span className="text-sm text-muted-foreground">
         Lupa password kamu?{' '}
