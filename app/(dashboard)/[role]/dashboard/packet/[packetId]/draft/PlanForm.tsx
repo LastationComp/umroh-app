@@ -1,42 +1,30 @@
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import React, { useEffect, useReducer } from 'react';
-
-function PlanReducer(state: any, action: any) {
-  switch (action.type) {
-    case 'add': {
-      return [...state, action?.data ?? {}];
-    }
-    case 'remove': {
-      let array = [...state];
-      array.pop();
-      return array;
-    }
-
-    case 'reFetch': {
-      return action.data;
-    }
-  }
-}
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { arrayReducer } from "@/lib/Handling/reducer";
+import React, { useMemo, useReducer } from "react";
 
 export default function PlanForm({ data }: { data?: any[] }) {
-  const [plans, dispatch] = useReducer(PlanReducer, data ?? [{}]);
+  const [plans, dispatch] = useReducer(
+    arrayReducer,
+    data?.length === 0 ? [{}] : data
+  );
 
   const addPlan = () => {
-    dispatch({ type: 'add' });
+    dispatch({ type: "add" });
   };
 
   const removePlan = () => {
-    dispatch({ type: 'remove' });
+    dispatch({ type: "remove" });
   };
 
-  useEffect(() => {
-    dispatch({
-      type: 'reFetch',
-      data: data,
-    });
+  useMemo(() => {
+    if (data?.length !== 0)
+      dispatch({
+        type: "reFetch",
+        data: data,
+      });
   }, [data]);
   return (
     <section className="grid gap-3 md:w-1/2">
@@ -46,9 +34,17 @@ export default function PlanForm({ data }: { data?: any[] }) {
         {plans &&
           plans.map((plan: any, index: number) => (
             <div className="grid gap-1.5" key={index}>
-              <Label htmlFor="description_travel_packet_plan">Hari ke {index + 1}</Label>
-              <Textarea id="description_travel_packet_plan" defaultValue={plan?.description ?? ''} className="w-full" name="description_travel_packet_plan[]" placeholder="Masukkan Deskripsi Disini..." />
-              <input type="hidden" name="plan_ids[]" value={plan?.id ?? ''} />
+              <Label htmlFor="description_travel_packet_plan">
+                Hari ke {index + 1}
+              </Label>
+              <Textarea
+                id="description_travel_packet_plan"
+                defaultValue={plan?.description ?? ""}
+                className="w-full"
+                name="description_travel_packet_plan[]"
+                placeholder="Masukkan Deskripsi Disini..."
+              />
+              <input type="hidden" name="plan_ids[]" value={plan?.id ?? ""} />
             </div>
           ))}
 
@@ -57,7 +53,7 @@ export default function PlanForm({ data }: { data?: any[] }) {
             Tambah
           </Button>
           {plans && plans?.length > 1 && (
-            <Button type="button" variant={'destructive'} onClick={removePlan}>
+            <Button type="button" variant={"destructive"} onClick={removePlan}>
               Hapus
             </Button>
           )}

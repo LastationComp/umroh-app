@@ -3,22 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { arrayReducer } from '@/lib/Handling/reducer';
 import React, { useReducer, useState } from 'react';
-function departingReducer(state: any, action: any) {
-  switch (action.type) {
-    case 'add': {
-      return [...state, action?.data ?? {}];
-    }
-    case 'remove': {
-      let array = [...state];
-      array.pop();
-      return array;
-    }
-  }
-}
 
 export default function DepartingForm({ departings, cities }: { departings: any[]; cities: any[] }) {
-  const [departingData, dispatch] = useReducer(departingReducer, departings.length === 0 ? [{}] : departings);
+  const [departingData, dispatch] = useReducer(arrayReducer, departings.length === 0 ? [{}] : departings);
 
   const addDeparting = () => {
     dispatch({ type: 'add' });
