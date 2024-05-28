@@ -10,20 +10,24 @@ import { updateProfile } from '../action';
 import Alert from '@/components/callback/Alert';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 const initialState = {
   type: 'success',
   message: '',
 };
 export default function ProfileForm({ data }: { data: any }) {
-  const [state, setState]: any = useState(initialState);
+  
   const { data: session, update } = useSession();
   const router = useRouter();
   //   const [state, formAction] = useFormState(updateProfile, initialState);
   const formAction = async (formData: FormData) => {
     const res = await updateProfile(formData);
 
-    setState(res);
-    if (res.type !== 'success') return;
+    if (res.type !== 'success') return toast.error(res.message);
+    if(res.type == 'success')
+      {
+        toast.success(res.message)
+      }
 
     await update({
       name: formData.get('name'),
@@ -33,7 +37,7 @@ export default function ProfileForm({ data }: { data: any }) {
   };
   return (
     <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-3 w-auto">
-      <div className="md:col-span-2">{state?.message && <Alert variant={state?.type ?? 'success'} message={state?.message} />}</div>
+      
       <div className="grid items-center gap-1.5">
         <Label htmlFor="name">Nama</Label>
         <Input id="name" required name="name" placeholder="Masukkan nama anda..." defaultValue={data.name} />

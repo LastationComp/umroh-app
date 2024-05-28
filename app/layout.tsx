@@ -6,6 +6,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import NextTopLoader from 'nextjs-toploader';
 import { faWifi, fas } from '@fortawesome/free-solid-svg-icons';
 import { Toaster } from '@/components/ui/toaster';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 config.autoAddCss = false;
 const inter = Poppins({ subsets: ['latin-ext'], weight: '400' });
 
@@ -26,6 +28,7 @@ export default function RootLayout({
       <body className={inter.className + ' bg-tacao'}>
         <NextTopLoader showSpinner={false} initialPosition={0.3} />
         {children}
+        <ToastContainer position={'top-center'} theme="colored" />
         <Toaster />
       </body>
     </html>

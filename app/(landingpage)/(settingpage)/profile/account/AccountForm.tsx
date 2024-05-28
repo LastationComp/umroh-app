@@ -14,6 +14,7 @@ import Alert from '@/components/callback/Alert';
 import { useRouter } from 'next/navigation';
 import { socket } from '@/lib/Services/socket';
 import imageCompression from 'browser-image-compression';
+import { toast } from 'react-toastify';
 
 const initialState = {
   type: 'success',
@@ -45,14 +46,22 @@ export default function AccountForm({ data }: { data: any }) {
     };
 
     const imageFile = formData.get('image') as File;
-    const compressedFile = await imageCompression(imageFile, options);
-    formData.set('image', compressedFile as File);
+    if (imageFile.size !== 0) {
+      const compressedFile = await imageCompression(imageFile, options);
+      formData.set('image', compressedFile as File);
+    }
+
 
     await delay(1000);
     const result = await updateAccount(formData);
     setState(result);
 
-    if (!result.success) return;
+    if (!result.success) return toast.error(result.message);
+
+    if (result.success) 
+      {
+        toast.success(result.message);
+      }
 
     let data: any = {
       isEmailVerified: result.is_email_verified,
@@ -85,7 +94,6 @@ export default function AccountForm({ data }: { data: any }) {
 
   return (
     <section>
-      {state?.message && <Alert variant={state?.type} message={state.message} />}
       <form action={handleSubmit} onSubmit={() => setState(initialState)} className="flex gap-3 md:divide-x w-auto max-md:flex-col max-md:flex-col-reverse place-content-stretch">
         <div className="grid w-full max-md:gap-3 h-auto">
           <div className="grid items-center max-md:gap-1.5 w-full">
