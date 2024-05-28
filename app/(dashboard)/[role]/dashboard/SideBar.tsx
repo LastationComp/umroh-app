@@ -1,17 +1,23 @@
-'use client';
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { IoMdHome } from 'react-icons/io';
-import { FaCity, FaHotel } from 'react-icons/fa';
-import { Separator } from '@/components/ui/separator';
-import { IoGlobeOutline } from 'react-icons/io5';
-import { LiaMapMarkedAltSolid } from 'react-icons/lia';
-import { SiChinaeasternairlines } from 'react-icons/si';
-import { BiCategory } from 'react-icons/bi';
-import { MdDomainVerification, MdHotelClass, MdManageAccounts } from 'react-icons/md';
-import { FaGear } from 'react-icons/fa6';
+"use client";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { IoMdHome } from "react-icons/io";
+import { FaCity, FaHotel } from "react-icons/fa";
+import { Separator } from "@/components/ui/separator";
+import { IoGlobeOutline } from "react-icons/io5";
+import { LiaMapMarkedAltSolid } from "react-icons/lia";
+import { SiChinaeasternairlines } from "react-icons/si";
+import { BiCategory } from "react-icons/bi";
+import {
+  MdDomainVerification,
+  MdHotelClass,
+  MdManageAccounts,
+} from "react-icons/md";
+import { FaGear
+  , FaPerson
+ } from "react-icons/fa6";
 export default function SideBar({ role }: { role: string }) {
   const pathname = usePathname();
   const GenerateBar = ({ url, title, children }: { url: string; title: string; children?: React.ReactNode }) => {
@@ -98,22 +104,24 @@ export default function SideBar({ role }: { role: string }) {
             </section>
           )}
 
-          {role === 'travel' && (
-            <section className="flex flex-col gap-3">
-              <div className="flex flex-col max-md:hidden">
-                <span className="text-sm">Travel</span>
-                <Separator />
-              </div>
-              <GenerateBar url="/packet" title="Paket">
-                <MdDomainVerification />
-              </GenerateBar>
-              <GenerateBar url="/settings" title="Pengaturan">
-                <FaGear />
-              </GenerateBar>
-            </section>
-          )}
-        </div>
-      </aside>
-    </section>
+        {role === "travel" && (
+          <section className="flex flex-col gap-3">
+            <div className="flex flex-col max-md:hidden">
+              <span className="text-sm">Travel</span>
+              <Separator />
+            </div>
+            <GenerateBar url="/packet" title="Paket">
+              <MdDomainVerification />
+            </GenerateBar>
+            <GenerateBar url="/travels/staffs" title="Staff">
+            <FaPerson/>
+            </GenerateBar>
+            <GenerateBar url="/settings" title="Pengaturan">
+              <FaGear />
+            </GenerateBar>
+          </section>
+        )}
+      </div>
+    </aside>
   );
 }
