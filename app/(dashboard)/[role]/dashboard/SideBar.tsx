@@ -15,24 +15,34 @@ import {
   MdHotelClass,
   MdManageAccounts,
 } from "react-icons/md";
-import { FaGear
-  , FaPerson
- } from "react-icons/fa6";
+import { FaGear, FaPerson } from "react-icons/fa6";
 export default function SideBar({ role }: { role: string }) {
   const pathname = usePathname();
-  const GenerateBar = ({ url, title, children }: { url: string; title: string; children?: React.ReactNode }) => {
+  const GenerateBar = ({
+    url,
+    title,
+    children,
+  }: {
+    url: string;
+    title: string;
+    children?: React.ReactNode;
+  }) => {
     const newUrl = `/${role}/dashboard` + url;
     const variant = () => {
-      if (pathname === newUrl && (url === '' || url === '/')) return 'default';
+      if (pathname === newUrl && (url === "" || url === "/")) return "default";
 
-      if (pathname.startsWith(newUrl) && !(url === '' || url === '/')) return 'default';
+      if (pathname.startsWith(newUrl) && !(url === "" || url === "/"))
+        return "default";
 
-      return 'ghost';
+      return "ghost";
     };
 
     return (
       <Button variant={variant()} asChild className="flex justify-start">
-        <Link href={newUrl} className="flex items-center max-lg:justify-center gap-3">
+        <Link
+          href={newUrl}
+          className="flex items-center max-lg:justify-center gap-3"
+        >
           {children}
           <span className="max-lg:hidden line-clamp-1">{title}</span>
         </Link>
@@ -48,7 +58,7 @@ export default function SideBar({ role }: { role: string }) {
           <GenerateBar url="" title="Dashboard">
             <IoMdHome />
           </GenerateBar>
-          {role === 'admin' && (
+          {role === "admin" && (
             <section className="flex flex-col gap-3">
               <div className="flex flex-col max-md:hidden">
                 <span className="text-sm">Master Data</span>
@@ -92,7 +102,7 @@ export default function SideBar({ role }: { role: string }) {
             </section>
           )}
 
-          {role === 'staff' && (
+          {role === "staff" && (
             <section className="flex flex-col gap-3">
               <div className="flex flex-col max-md:hidden">
                 <span className="text-sm">Travel</span>
@@ -104,24 +114,25 @@ export default function SideBar({ role }: { role: string }) {
             </section>
           )}
 
-        {role === "travel" && (
-          <section className="flex flex-col gap-3">
-            <div className="flex flex-col max-md:hidden">
-              <span className="text-sm">Travel</span>
-              <Separator />
-            </div>
-            <GenerateBar url="/packet" title="Paket">
-              <MdDomainVerification />
-            </GenerateBar>
-            <GenerateBar url="/travels/staffs" title="Staff">
-            <FaPerson/>
-            </GenerateBar>
-            <GenerateBar url="/settings" title="Pengaturan">
-              <FaGear />
-            </GenerateBar>
-          </section>
-        )}
-      </div>
-    </aside>
+          {role === "travel" && (
+            <section className="flex flex-col gap-3">
+              <div className="flex flex-col max-md:hidden">
+                <span className="text-sm">Travel</span>
+                <Separator />
+              </div>
+              <GenerateBar url="/packet" title="Paket">
+                <MdDomainVerification />
+              </GenerateBar>
+              <GenerateBar url="/travels/staffs" title="Staff">
+                <FaPerson />
+              </GenerateBar>
+              <GenerateBar url="/settings" title="Pengaturan">
+                <FaGear />
+              </GenerateBar>
+            </section>
+          )}
+        </div>
+      </aside>
+    </section>
   );
 }

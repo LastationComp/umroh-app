@@ -20,7 +20,7 @@ export default function AuthenticationPage() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const recaptchaRef = React.useRef<ReCAPTCHA>(null);
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit: any = async (formData: FormData) => {
     if(recaptcha){
       const res = await signIn('credentials', {
         email: formData.get('email'),
