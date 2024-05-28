@@ -29,7 +29,7 @@ export default function StaffTable() {
       id: 'actions',
       cell: ({ row }) => {
         const staff = row.original;
-
+        console.log(staff.id);
         return (
           <section className="flex gap-3">
             <FormBuilder

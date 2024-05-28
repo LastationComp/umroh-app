@@ -7,6 +7,7 @@ import { Session } from 'next-auth';
 import React, { useState } from 'react';
 import { sendResetPassword } from './action';
 import { delay } from '@/lib/Promise/Delay';
+import ReCAPTCHA from 'react-google-recaptcha'
 
 const initialState: any = {
   type: 'error',
@@ -14,11 +15,18 @@ const initialState: any = {
 };
 export default function ResetPasswordForm() {
   const [state, setState] = useState(initialState);
+  const [recaptcha, setRecaptcha] = useState<string | null> ();
+  const recaptchaRef = React.useRef<ReCAPTCHA>(null);
 
   const handleSubmit = async (formData: FormData) => {
-    const result = await sendResetPassword(formData);
+    const result : any = await sendResetPassword(formData);
     await delay(1000);
     setState(result);
+    if(!result.success)
+      {
+        setRecaptcha(null);
+        recaptchaRef.current?.reset();
+      }
   };
   if (state.type !== 'success')
     return (
@@ -32,6 +40,7 @@ export default function ResetPasswordForm() {
           </Label>
           <Input type="email" name="email" required id="email" placeholder="Masukkan email anda..." />
         </div>
+        <div className='w-full'><ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} ref={recaptchaRef}  className="w-full" onChange={setRecaptcha}/></div>
         <SubmitButton>Kirim</SubmitButton>
       </form>
     );
