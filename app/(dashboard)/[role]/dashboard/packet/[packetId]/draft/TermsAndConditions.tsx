@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 
-function PlanReducer(state: any, action: any) {
+function TACReducer(state: any, action: any) {
   switch (action.type) {
     case 'add': {
       return [...state, action?.data ?? {}];
@@ -14,15 +15,11 @@ function PlanReducer(state: any, action: any) {
       array.pop();
       return array;
     }
-
-    case 'reFetch': {
-      return action.data;
-    }
   }
 }
 
-export default function PlanForm({ data }: { data?: any[] }) {
-  const [plans, dispatch] = useReducer(PlanReducer, data ?? [{}]);
+export default function TermsAndConditions({ data = [] }: { data?: any[] }) {
+  const [tacs, dispatch] = useReducer(TACReducer, data ?? [{}]);
 
   const addPlan = () => {
     dispatch({ type: 'add' });
@@ -31,24 +28,16 @@ export default function PlanForm({ data }: { data?: any[] }) {
   const removePlan = () => {
     dispatch({ type: 'remove' });
   };
-
-  useEffect(() => {
-    dispatch({
-      type: 'reFetch',
-      data: data,
-    });
-  }, [data]);
   return (
     <section className="grid gap-3 md:w-1/2">
-      <span>Rencana Perjalanan</span>
+      <span>Syarat & Ketentuan</span>
 
       <Card className="flex flex-col p-3 gap-1.5">
-        {plans &&
-          plans.map((plan: any, index: number) => (
+        {tacs &&
+          tacs.map((tac, index) => (
             <div className="grid gap-1.5" key={index}>
-              <Label htmlFor="description_travel_packet_plan">Hari ke {index + 1}</Label>
-              <Textarea id="description_travel_packet_plan" defaultValue={plan?.description ?? ''} className="w-full" name="description_travel_packet_plan[]" placeholder="Masukkan Deskripsi Disini..." />
-              <input type="hidden" name="plan_ids[]" value={plan?.id ?? ''} />
+              <Input id="description_terms_and_condition" defaultValue={tac?.description ?? ''} className="w-full" name="description_terms_and_condition[]" placeholder="Ketik Disini..." />
+              <input type="hidden" name="tac_ids[]" value={tac?.id ?? ''} />
             </div>
           ))}
 
@@ -56,7 +45,7 @@ export default function PlanForm({ data }: { data?: any[] }) {
           <Button type="button" onClick={addPlan}>
             Tambah
           </Button>
-          {plans && plans?.length > 1 && (
+          {tacs && tacs?.length > 1 && (
             <Button type="button" variant={'destructive'} onClick={removePlan}>
               Hapus
             </Button>

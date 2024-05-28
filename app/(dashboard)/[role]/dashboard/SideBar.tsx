@@ -34,8 +34,8 @@ export default function SideBar({ role }: { role: string }) {
     );
   };
   return (
-    <section className="col-span-2 bg-white min-h-screen pb-auto sticky inset-y-0">
-      <aside className="p-3 ">
+    <section className="bg-white min-h-svh">
+      <aside className="p-3 sticky top-0">
         <div className="flex flex-col gap-2">
           <span className="text-lg font-bold">Dashboard</span>
           <Separator />

@@ -46,6 +46,7 @@ export default function AuthenticationPage() {
         {/* <Input type="text" name="name" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Nama Anda..." /> */}
         <Input type="email" name="email" defaultValue={'admin@gmail.com'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
         <Input type="password" name="password" defaultValue={'12345678'} className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
+        
         <SubmitButton>Masuk</SubmitButton>
       </form>
       <span className="text-sm text-muted-foreground">

@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Slug } from '@/lib/String/Packet';
 import Link from 'next/link';
@@ -22,6 +21,8 @@ import { toast } from '@/components/ui/use-toast';
 import { toast as toasty } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import PlanForm from './PlanForm';
+import TermsAndConditions from './TermsAndConditions';
+import VariantsForm from './VariantsForm';
 export default function PacketForm({
   packet,
   packetId,
@@ -65,6 +66,8 @@ export default function PacketForm({
         toasty.success('Data Packet Berhasil Disimpan!', {
           position: 'top-center',
         });
+
+      // router.refresh();
     });
   };
 
@@ -141,6 +144,12 @@ export default function PacketForm({
               </section>
               <section className="md:col-span-2">
                 <PlanForm data={packet?.plans} />
+              </section>
+              <section className="md:col-span-2">
+                <TermsAndConditions data={packet?.terms_conditions} />
+              </section>
+              <section className="md:col-span-2">
+                <VariantsForm data={packet?.variants} />
               </section>
             </div>
           </section>

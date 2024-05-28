@@ -21,11 +21,11 @@ export default function Layout({ children, params }: { children: React.ReactNode
   // );
 
   return (
-    <section className="flex items-stretch relative divide-x h-100vh">
+    <section className="flex items-stretch justify-stretch relative divide-x">
       <SideBar role={params.role} />
-      <div className="flex flex-col relative w-full">
-        <DashboardNavbar role={params.role}>{children}</DashboardNavbar>
-        {/* {children} */}
+      <div className="flex-1 flex-col relative w-full">
+        <DashboardNavbar role={params.role} />
+        <section className="p-3">{children}</section>
       </div>
       <ToastContainer position={'top-center'} theme="colored" />
     </section>

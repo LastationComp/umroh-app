@@ -4,8 +4,9 @@ import { AuthOptions } from '@/app/api/auth/AuthOptions';
 import { apiFetch, newApiFetch } from '@/lib/Fetcher';
 import { responseData } from '@/lib/Handling/response';
 import { getServerSession } from 'next-auth';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { NextResponse } from 'next/server';
 
 export async function getPacket(id: string) {
   const session = await getServerSession(AuthOptions);
@@ -14,7 +15,7 @@ export async function getPacket(id: string) {
     url: '/api/travel/travel-packets/' + id,
     token: session?.user.tokenApi ?? '',
     options: {
-      cache: true,
+      // cache: true,
       tag: ['travel-packet'],
     },
   });
@@ -103,6 +104,7 @@ export async function draftPacket(id: string, formData: FormData) {
   const result = await res.json();
 
   revalidateTag('travel-packet');
+  revalidatePath('/(dashboard)/[role]/dashboard/packet/[packetId]/draft', 'page');
   return result;
 }
 
