@@ -2,9 +2,8 @@
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import React, { useReducer, useState } from 'react';
-
 function departingReducer(state: any, action: any) {
   switch (action.type) {
     case 'add': {
@@ -36,7 +35,7 @@ export default function DepartingForm({ departings, cities }: { departings: any[
       </div>
       {departingData &&
         departingData.map((departing: any, index: number) => (
-          <Card className="rounded-sm p-3" key={index}>
+          <Card className="rounded-sm p-3 relative" key={index}>
             <div key={index} className="flex gap-3 items-center justify-between">
               <div className="grid gap-1.5 w-full">
                 <Select name="cities_id[]" defaultValue={departing.id}>

@@ -1,4 +1,5 @@
 import { SAlert } from '@/components/context/ShadAlert';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Metadata } from 'next';
 import React from 'react';
 

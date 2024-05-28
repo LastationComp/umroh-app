@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Slug } from '@/lib/String/Packet';
 import Link from 'next/link';
@@ -19,7 +18,11 @@ import CardLoading from '@/components/Suspense/CardLoading';
 import SAlertContext from '@/components/context/ShadAlert';
 import { delay } from '@/lib/Promise/Delay';
 import { toast } from '@/components/ui/use-toast';
+import { toast as toasty } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import PlanForm from './PlanForm';
+import TermsAndConditions from './TermsAndConditions';
+import VariantsForm from './VariantsForm';
 export default function PacketForm({
   packet,
   packetId,
@@ -52,7 +55,19 @@ export default function PacketForm({
   const handleSubmit = (formData: FormData) => {
     startTransition(async () => {
       const result = await draftPacket(packetId, formData);
-      setState(result);
+      // setState(result);
+
+      if (!result.success)
+        toasty.error(result.message, {
+          position: 'top-center',
+        });
+
+      if (result.success)
+        toasty.success('Data Packet Berhasil Disimpan!', {
+          position: 'top-center',
+        });
+
+      // router.refresh();
     });
   };
 
@@ -81,7 +96,7 @@ export default function PacketForm({
       <form action={handleSubmit}>
         <div className="mb-3">{state.message && !suspense && <Alert variant={state?.type ?? 'error'} message={state.message} />}</div>
 
-        <ScrollArea className="h-[600px] relative">
+        <ScrollArea className="h-full relative">
           <CardLoading isLoading={suspense} />
 
           <section className="grid md:grid-cols-2 gap-5 mx-1">
@@ -110,7 +125,7 @@ export default function PacketForm({
           <section className="mt-5 mx-1">
             <CardTitle>Detail</CardTitle>
             <div className="grid md:grid-cols-2 gap-5 mt-5">
-              <section className="md:col-span-2">
+              <section className="md:col-span-2 col-span-1">
                 <span>Gambar Paket</span>
                 <Suspense fallback={<LoadingUI />}>{packetGalleries}</Suspense>
               </section>
@@ -126,6 +141,15 @@ export default function PacketForm({
               </section>
               <section className="md:col-span-2">
                 <Suspense fallback={<LoadingUI />}>{packetAirlines}</Suspense>
+              </section>
+              <section className="md:col-span-2">
+                <PlanForm data={packet?.plans} />
+              </section>
+              <section className="md:col-span-2">
+                <TermsAndConditions data={packet?.terms_conditions} />
+              </section>
+              <section className="md:col-span-2">
+                <VariantsForm data={packet?.variants} />
               </section>
             </div>
           </section>

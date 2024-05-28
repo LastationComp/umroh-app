@@ -54,14 +54,14 @@ export default function HotelsForm({ hotels, packetId }: { hotels: any[]; packet
     setDataHotels(hotels);
   }, [hotels]);
   return (
-    <div className="grid gap-3 md:w-1/2">
+    <div className="grid gap-3 w-auto md:w-1/2">
       <span>Hotel</span>
 
       <section className="grid gap-3 w-full">
         {dataHotels.map((hotel, index) => {
           return (
             <Card className="rounded-sm p-3" key={index}>
-              <div key={index} className="flex gap-3 items-center justify-between">
+              <div key={index} className="flex max-md:flex-col gap-3 items-center justify-between">
                 <div className="grid gap-1.5 w-full">
                   <div className="flex items-center gap-3">
                     <span>{hotel.name}</span>

@@ -29,7 +29,7 @@ export default function FacilitiesForm({ facilities }: { facilities: any[] }) {
           {facilitiesData &&
             facilitiesData.map((data: any, index: number) => (
               <section key={index}>
-                <Card className="flex justify-between items-center gap-3 p-3 rounded-sm">
+                <Card className="flex max-md:flex-col-reverse justify-between items-center gap-3 p-3 rounded-sm">
                   <Input
                     key={index}
                     name="include_facility_descriptions[]"
