@@ -4,6 +4,8 @@ import { Dialog, DialogClose, DialogContent } from '../ui/dialog';
 import { Button } from '../ui/button';
 import ImageGallery from 'react-image-gallery';
 import { getImageClient } from '@/lib/Parser/ImageClient';
+// import 'react-image-gallery/styles/css/image-gallery.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
 interface PopupSliders {
   data: any[];
   open: boolean;

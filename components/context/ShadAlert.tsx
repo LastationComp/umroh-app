@@ -110,16 +110,16 @@ const SAlert = ({ children }: { children: React.ReactNode }) => {
             <AlertDialogDescription>{text}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            {cancelText && (
-              <AlertDialogCancel onClick={cancel} className="text-black">
-                {cancelText ?? 'Batal'}
-              </AlertDialogCancel>
-            )}
             <Button type="button" className="flex items-center gap-3" onClick={onSuccess} disabled={isPending}>
               {isPending && <AiOutlineLoading3Quarters className={isPending ? 'animate-spin' : ''} />}
 
               {confirmText}
             </Button>
+            {cancelText && (
+              <AlertDialogCancel onClick={cancel} className="text-black">
+                {cancelText ?? 'Batal'}
+              </AlertDialogCancel>
+            )}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

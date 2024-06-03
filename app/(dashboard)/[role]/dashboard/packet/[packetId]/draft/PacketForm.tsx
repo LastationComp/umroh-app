@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Slug } from '@/lib/String/Packet';
 import Link from 'next/link';
-import React, { Suspense, useContext, useState, useTransition } from 'react';
+import React, { Suspense, createRef, useContext, useRef, useState, useTransition } from 'react';
 import { RiDraftLine } from 'react-icons/ri';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { initialMessage } from '@/lib/utils';
@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 import PlanForm from './PlanForm';
 import TermsAndConditions from './TermsAndConditions';
 import VariantsForm from './VariantsForm';
+import { IoMdCloudUpload } from 'react-icons/io';
 export default function PacketForm({
   packet,
   packetId,
@@ -45,9 +46,9 @@ export default function PacketForm({
   const [suspense, startTransition] = useTransition();
   const SATrigger = useContext(SAlertContext);
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
   const [state, setState]: any = useState(initialMessage);
   const [slug, setSlug] = useState('');
-  const [cities, setCities] = useState('');
   const onSlug = (string: string) => {
     setSlug(Slug(string));
   };
@@ -91,9 +92,38 @@ export default function PacketForm({
       },
     });
   };
+
+  const publishDraft = (e: any) => {
+    e.preventDefault();
+    SATrigger.trigger({
+      cancelButtonText: 'Tidak',
+      confirmButtonText: 'Ya',
+      title: 'Kamu yakin ingin mempublish Paket ini?',
+      text: 'Dengan ini paket kamu sudah bisa dicari oleh calon jamaah',
+      icon: 'warning',
+      async onSuccess() {
+        const formData = new FormData(formRef.current ?? undefined);
+
+        formData.append('publish', '');
+        const result = await draftPacket(packetId, formData);
+
+        if (!result.success)
+          toasty.error(result.message, {
+            position: 'top-center',
+          });
+
+        if (result.success) {
+          toasty.success('Data Packet Berhasil Disimpan!', {
+            position: 'top-center',
+          });
+          return router.push('/travel/dashboard/packet');
+        }
+      },
+    });
+  };
   return (
     <CardContent>
-      <form action={handleSubmit}>
+      <form action={handleSubmit} ref={formRef}>
         <div className="mb-3">{state.message && !suspense && <Alert variant={state?.type ?? 'error'} message={state.message} />}</div>
 
         <ScrollArea className="h-full relative">
@@ -143,7 +173,7 @@ export default function PacketForm({
                 <Suspense fallback={<LoadingUI />}>{packetAirlines}</Suspense>
               </section>
               <section className="md:col-span-2">
-                <PlanForm data={packet?.plans} />
+                <PlanForm data={packet?.plans ?? []} />
               </section>
               <section className="md:col-span-2">
                 <TermsAndConditions data={packet?.terms_conditions} />
@@ -159,10 +189,18 @@ export default function PacketForm({
             <Link href={'/travel/dashboard/packet'}>Kembali</Link>
           </Button>
           <div className="flex items-center gap-3">
+            {!packet?.is_draft && (
+              <Button variant={'default'} disabled={suspense} name="publish" type={'button'} onClick={publishDraft} className="flex items-center gap-3 bg-blue-600 hover:bg-blue-400">
+                <span className="max-md:hidden">Publish Draft</span>
+                <IoMdCloudUpload />
+              </Button>
+            )}
+
             <SubmitButton variant={'default'}>
               <span className="max-md:hidden">Simpan Draft</span>
               <RiDraftLine />
             </SubmitButton>
+
             <Button type="button" variant={'secondary'} onClick={cancelPacket}>
               Batal
             </Button>

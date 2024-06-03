@@ -4,24 +4,33 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { arrayReducer } from "@/lib/Handling/reducer";
+import { useMemo, useReducer } from "react";
 
 export default function FacilitiesForm({ facilities }: { facilities: any[] }) {
-  const [facilitiesCount, setFacilitiesCount] = useState(1);
-  const [nonFacilitiesCount, setNonFacilitiesCount] = useState(0);
-  const [facilitiesData, setFacilitiesData] = useState(facilities);
+  const [facilitiesData, dispatch] = useReducer(
+    arrayReducer,
+    facilities.length !== 0 ? facilities : [{}]
+  );
+
+  const tes = useMemo(() => {
+    dispatch({
+      type: "reFetch",
+      data: facilities,
+    });
+  }, [facilities]);
+
   const addData = () => {
-    setFacilitiesData((prev) => [...prev, {}]);
+    dispatch({
+      type: "add",
+    });
   };
 
   const removeData = () => {
-    const data: any[] = [...facilitiesData];
-
-    data.pop();
-
-    setFacilitiesData(data);
+    dispatch({
+      type: "remove",
+    });
   };
-
   return (
     <section className="grid md:grid-cols-2 gap-5">
       <section>
@@ -66,7 +75,7 @@ export default function FacilitiesForm({ facilities }: { facilities: any[] }) {
             <Button type="button" onClick={addData}>
               Tambah
             </Button>
-            {facilitiesData.length !== 1 && (
+            {facilitiesData.length > 1 && (
               <Button
                 type="button"
                 variant={"destructive"}

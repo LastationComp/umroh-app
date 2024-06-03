@@ -35,6 +35,8 @@ export default function DeleteButton({ endpoint = '', children, message, refresh
   const handleFormAction = async (formData: FormData) => {
     const response = await handleSubmit(state, formData, endpoint, refreshOnTag ?? '');
     setState(response);
+    if (!response.success) return toast.error(response.message);
+
     if (response.success) {
       setState(initialState);
       if (!refreshOnTag) router.refresh();
@@ -52,7 +54,7 @@ export default function DeleteButton({ endpoint = '', children, message, refresh
         <DialogContent className="max-w-lg max-md:scale-95">
           <DialogHeader>Hapus Data</DialogHeader>
           <Separator />
-          {state?.message && <Alert variant={state.type} message={state?.message} />}
+          {/* {state?.message && <Alert variant={state.type} message={state?.message} />} */}
           <form action={handleFormAction} method="post" className="grid gap-3">
             <span className="flex justify-center">{message ?? 'Anda yakin ingin menghapus data ini?'}</span>
             <div className="flex justify-end gap-3">

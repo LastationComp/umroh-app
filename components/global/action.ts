@@ -8,14 +8,15 @@ export async function handleSubmit(prevState: any, formData: FormData, endpoint:
   const session = await getServerSession(AuthOptions);
   const res = await apiFetch(endpoint, session?.user.tokenApi ?? '', 'DELETE');
   // console.log(res);
+
+  const result = await res.json();
+
   if (!res.ok || res.status !== 200)
     return {
       type: 'error',
       success: false,
-      message: 'Error',
+      message: result.message,
     };
-
-  const result = await res.json();
 
   if (tag) revalidateTag(tag);
 

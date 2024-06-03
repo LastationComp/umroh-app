@@ -10,10 +10,6 @@ import Search from './Search';
 import Partner from './Partner';
 import Gallery from './Gallery';
 
-const importDynamic = (url: string) => {
-  return dynamic(() => import('@/app/(landingpage)/' + url), { ssr: false });
-};
-
 
 export default async function Home() {
   return (
