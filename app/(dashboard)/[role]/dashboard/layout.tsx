@@ -22,7 +22,7 @@ export default async function Layout({ children, params }: { children: React.Rea
         <DashboardNavbar role={params.role} session={session} />
         <section className="p-3">{children}</section>
       </div>
-      <ToastContainer position={'top-center'} theme="colored" />
+      {/* <ToastContainer position={'top-center'} theme="colored" /> */}
     </section>
   );
 }
