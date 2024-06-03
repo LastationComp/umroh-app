@@ -8,6 +8,7 @@ import { handleSubmit } from './action';
 import SubmitButton from './SubmitButton';
 import { IoTrashBinOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
+import { toast } from 'react-toastify';
 interface FormBuilderProps {
   endpoint: string;
   refreshEndpoint?: string;
@@ -34,6 +35,7 @@ export default function DeleteButton({ endpoint = '', refreshEndpoint }: FormBui
     if (response.success) {
       setState(initialState);
       await mutate((key) => Array.isArray(key) && key[0] === refreshEndpoint);
+      toast.success(response.success);
       return setOpen(!open);
     }
   };

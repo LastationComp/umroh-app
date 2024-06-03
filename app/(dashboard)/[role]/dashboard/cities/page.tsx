@@ -2,11 +2,13 @@ import React from 'react';
 import FormBuilder from '@/components/builder/FormBuilder';
 import CitiesTable from './CitiesTable';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 // import ProvinceTable from './ProvinceTable';
 
 export default function CitiesPage() {
   return (
-    <section className="flex flex-col gap-3">
+    <Card className="flex flex-col gap-3 bg-white">
+      <CardHeader>
       <div className="flex justify-between">
         <span className="font-bold">Data Kota</span>
         <FormBuilder
@@ -40,10 +42,13 @@ export default function CitiesPage() {
           ]}
         />
       </div>
+      </CardHeader>
+      <CardContent>
       <ScrollArea>
         <CitiesTable />
         <ScrollBar orientation={'horizontal'} />
       </ScrollArea>
-    </section>
+      </CardContent>
+    </Card>
   );
 }

@@ -2,12 +2,14 @@ import FormBuilder from "@/components/builder/FormBuilder";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import React from "react";
 import TravelStaffTable from "./TravelStaffTable";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default function page() {
   return (
-    <section className="flex flex-col gap-3">
-      <div className="flex justify-between">
-        <span className="font-bold">Data Travel Staff</span>
+    <Card className="flex flex-col gap-3">
+      <CardHeader>
+        <div className="flex justify-between">
+          <span className="font-bold">Data Travel Staff</span>
           <FormBuilder
             endpoint="/api/travel/staff"
             refreshEndpoint=""
@@ -49,27 +51,30 @@ export default function page() {
                 placeholder: "Masukkan Tempat Kelahiran Staff...",
               },
               {
-                name: 'gender',
-                label: 'Jenis Kelamin',
-                type: 'select',
+                name: "gender",
+                label: "Jenis Kelamin",
+                type: "select",
                 selectData: [
                   {
-                    id: 'Male',
-                    name: 'Laki-laki',
+                    id: "Male",
+                    name: "Laki-laki",
                   },
                   {
-                    id: 'Female',
-                    name: 'Perempuan',
+                    id: "Female",
+                    name: "Perempuan",
                   },
                 ],
-              }
+              },
             ]}
           />
-      </div>
-      <ScrollArea>
-        <TravelStaffTable/>
-        <ScrollBar orientation={'horizontal'}/>
-      </ScrollArea>
-    </section>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea>
+          <TravelStaffTable />
+          <ScrollBar orientation={"horizontal"} />
+        </ScrollArea>
+      </CardContent>
+    </Card>
   );
 }
