@@ -7,6 +7,7 @@ import Alert from '@/components/callback/Alert';
 import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
 import { delay } from '@/lib/Promise/Delay';
+import { toast  } from 'react-toastify';
 
 const initialState: any = {
   type: 'success',
@@ -22,20 +23,28 @@ export default function VerificationEmail({ hash }: { hash: string }) {
 
     setState(result);
     
+    if (result?.type !== 'success')
+      {
+        toast.error(result?.message)
+      }
+
     if (result?.type === 'success') {
+      toast.success('Verifikasi Email Berhasil!');
+
       update({
         isEmailVerified: true,
       });
       router.refresh();
 
       await delay(1000);
-      ('use server');
-      redirect('/');
+      router.push('/')
+      // ('use server');
+      // redirect('/');
     }
   };
   return (
     <form action={verifyAction} className="flex flex-col gap-3 items-center justify-center my-3">
-      {state?.message && <Alert variant={state?.type} message={state?.message} />}
+      {/* {state?.message && <Alert variant={state?.type} message={state?.message} />} */}
       <input type="hidden" name="hash" value={hash} />
       <input type="hidden" name="type" value={'email'} />
       <InputOTP maxLength={6} name="token">
