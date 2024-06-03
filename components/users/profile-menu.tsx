@@ -22,8 +22,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
   };
   const getAvatarUser = () => {
     if (!session) return avatar;
-    if (urlImage === 'default.jpg') return avatar;
-
+    if (urlImage.includes('default')) return avatar;
     return urlImage;
   };
 
@@ -74,7 +73,8 @@ export default function ProfileMenu({ session }: { session: Session }) {
           <Link href={'/profile'}>Profil Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          {session.user.role !== 'subscriber' && <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>}
+          {(session.user.role !== 'subscriber') && <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>}
+          {/* {(session.user.role === 'travel' && session.user.travel.role === 'staff') && <Link href={`/${session.user.role}/${session.user.travel.role}/dashboard`}>Dashboard Saya</Link>} */}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
 
