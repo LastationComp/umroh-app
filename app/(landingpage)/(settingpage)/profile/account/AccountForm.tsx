@@ -13,6 +13,8 @@ import { useSession } from 'next-auth/react';
 import Alert from '@/components/callback/Alert';
 import { useRouter } from 'next/navigation';
 import { socket } from '@/lib/Services/socket';
+import imageCompression from 'browser-image-compression';
+import { toast } from 'react-toastify';
 
 const initialState = {
   type: 'success',
@@ -21,7 +23,7 @@ const initialState = {
   image: '',
 };
 export default function AccountForm({ data }: { data: any }) {
-  const [urlImage, setUrlImage] = useState(data.image);
+  const [urlImage, setUrlImage] = useState(data?.image);
   const [state, setState]: any = useState(initialState);
   const router = useRouter();
   const { data: session, update } = useSession();
@@ -36,11 +38,30 @@ export default function AccountForm({ data }: { data: any }) {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1000,
+      useWebWorker: true,
+      fileType: 'image/webp',
+    };
+
+    const imageFile = formData.get('image') as File;
+    if (imageFile.size !== 0) {
+      const compressedFile = await imageCompression(imageFile, options);
+      formData.set('image', compressedFile as File);
+    }
+
+
     await delay(1000);
     const result = await updateAccount(formData);
     setState(result);
 
-    if (!result.success) return;
+    if (!result.success) return toast.error(result.message);
+
+    if (result.success) 
+      {
+        toast.success(result.message);
+      }
 
     let data: any = {
       isEmailVerified: result.is_email_verified,
@@ -71,11 +92,8 @@ export default function AccountForm({ data }: { data: any }) {
     return router.refresh();
   };
 
- 
-
   return (
     <section>
-      {state?.message && <Alert variant={state?.type} message={state.message} />}
       <form action={handleSubmit} onSubmit={() => setState(initialState)} className="flex gap-3 md:divide-x w-auto max-md:flex-col max-md:flex-col-reverse place-content-stretch">
         <div className="grid w-full max-md:gap-3 h-auto">
           <div className="grid items-center max-md:gap-1.5 w-full">
@@ -106,7 +124,7 @@ export default function AccountForm({ data }: { data: any }) {
           <div className="flex flex-col items-center gap-3">
             <Image src={urlImage === 'default.jpg' ? avatar : urlImage} className="w-[8rem] h-[8rem] object-cover rounded-full cursor-pointer" width={1024} height={1024} alt={data.name} onClick={handleClick} />
 
-            <input type="file" ref={fileImage} onChange={handleImage} className="hidden" name="image" id="image" />
+            <input type="file" accept="image/*" ref={fileImage} onChange={handleImage} className="hidden" name="image" id="image" />
             <Button type={'button'} variant={'outline'} onClick={handleClick}>
               Pilih Gambar
             </Button>

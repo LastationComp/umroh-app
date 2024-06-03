@@ -22,7 +22,7 @@ export function DataTable<TData, TValue>({ columns, data, children, suspense = f
 
   return (
     <div className="rounded-md border">
-      <Table>
+      <Table className='table-fixed'>
         <TableHeader>
           {table.getCenterHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>

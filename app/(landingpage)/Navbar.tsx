@@ -4,11 +4,10 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaBars } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
-import { delay } from '@/lib/Promise/Delay';
 import { usePathname } from 'next/navigation';
 import { BiSolidMapPin } from 'react-icons/bi';
 import ProfileMenu from '@/components/users/profile-menu';

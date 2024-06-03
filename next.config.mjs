@@ -48,11 +48,26 @@ const nextConfig = {
         hostname: '127.0.0.1',
         port: '8000',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '192.168.100.6',
+        port: '8000',
+      },
+      {
+        protocol: 'http',
+        hostname: '139.99.68.206',
+        port: '8000',
+      },
     ],
   },
   compiler: {
     styledComponents: true,
   },
+  swcMinify: true,
   generateBuildId: async () => {
     // This could be anything, using the latest git hash
     return process.env.APP_KEY;

@@ -11,5 +11,5 @@ export async function GET(req: NextRequest) {
   const session = await getServerSession(AuthOptions);
   const res = await apiFetch('/api/dashboard/hotels?page=' + page + '&paginate=' + paginate, session?.user?.tokenApi ?? '');
   const result = await res.json();
-  return Response.json(result?.message);
+  return Response.json(result?.data);
 }
