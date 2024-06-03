@@ -90,7 +90,7 @@ export async function middleware(req: NextRequest) {
 
     // if (token.state === 0) return redirect('/daftar/step');
     const state = Number(token.state);
-
+    
     if (pathname.startsWith('/daftar/step')) {
       // console.log(token);
       if (state === 0) return NextResponse.next();
@@ -112,29 +112,43 @@ export async function middleware(req: NextRequest) {
     if (pathname === '/daftar') return redirect('/');
 
     if (pathname.includes('dashboard')) {
-      if (!pathname.startsWith(`/${token.role}/dashboard`)) return redirect(`/${token.role}/dashboard`);
+      if (!pathname.startsWith(`/${token.role}/dashboard`) && token.travel.role !== "staff") return redirect(`/${token.role}/dashboard`);
+      // if (token.travel.role === "staff") return redirect(`/${token.role}/${token.travel.role}/dashboard`);
     }
 
     if (pathname.startsWith(`/${token.role}/dashboard`)) {
       if (token.role === 'subscriber') return redirect('/');
       if (pathname === `/${token.role}/dashboard`) return;
+      
 
       if (token.role === 'admin') {
         const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels|staffs|travel-verification', 'g');
         if (!pattern.test(pathname)) return redirect('/');
       }
       if (token.role === 'staff') {
-        const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels', 'g');
+        const pattern = new RegExp('countries|cities|provinces|categories|airlines|facilities|hotels|travel-verification', 'g');
         if (!pattern.test(pathname)) return redirect('/');
       }
       if (token.role === 'travel') {
-        const pattern = new RegExp('packet|settings|travels/staffs', 'g');
+        let pattern : RegExp = new RegExp('');
+        if (token.travel.role === 'staff') 
+          {
+            pattern = new RegExp('packet', 'g');
+          }
+        if (token.travel.role === "manager")
+          {
+            pattern = new RegExp('packet|settings|travels/staffs', 'g');
+          }
         if (!pattern.test(pathname)) return redirect('/');
+        
       }
     }
+
+    
   }
 
   if (!token) {
+    if(pathname.includes('dashboard')) return redirect('/');
     if (pathname.startsWith('/profile')) return redirect('/');
     if (pathname.startsWith('/verify/email')) return redirect('/');
     if (pathname.startsWith('/admin')) return redirect('/');

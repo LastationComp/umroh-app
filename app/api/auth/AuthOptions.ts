@@ -165,6 +165,7 @@ export const AuthOptions: NextAuthOptions = {
             travel: {
               ...result.travel,
             },
+            
           };
         }
 
