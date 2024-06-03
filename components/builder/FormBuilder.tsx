@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { Textarea } from '../ui/textarea';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 import FormGenerator from './FormGenerator';
+import { toast } from 'react-toastify';
 
 export type FormBuilderForms = {
   name: string;
@@ -71,6 +72,7 @@ export default function FormBuilder({ forms, endpoint, type = 'Add', refreshEndp
       setState(initialState);
       if (!refreshServer) await mutate((key) => Array.isArray(key) && key[0] === refreshEndpoint);
       if (refreshServer) router.refresh();
+      toast.success(response.message);
       return setOpen(!open);
     }
   };
