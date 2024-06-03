@@ -189,7 +189,7 @@ export default function PacketForm({
             <Link href={'/travel/dashboard/packet'}>Kembali</Link>
           </Button>
           <div className="flex items-center gap-3">
-            {!packet?.is_draft && (
+            {!packet?.is_draft && !packet?.is_active && (
               <Button variant={'default'} disabled={suspense} name="publish" type={'button'} onClick={publishDraft} className="flex items-center gap-3 bg-blue-600 hover:bg-blue-400">
                 <span className="max-md:hidden">Publish Draft</span>
                 <IoMdCloudUpload />

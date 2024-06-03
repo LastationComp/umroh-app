@@ -15,11 +15,7 @@ export default function Page() {
         <PacketAdd />
       </section>
       <Separator />
-      <section className="flex flex-col gap-3">
-        <CardTitle>Draft</CardTitle>
-
-        <Packets />
-      </section>
+      <Packets />
     </Card>
   );
 }

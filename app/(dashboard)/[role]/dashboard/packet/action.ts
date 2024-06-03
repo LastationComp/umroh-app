@@ -121,6 +121,7 @@ export async function createPacketHotel(id: string, formData: FormData) {
   const result = await res.json();
 
   revalidateTag('travel-packet-hotels');
+  revalidateTag('travel-packet');
   return result;
 }
 
@@ -146,6 +147,8 @@ export async function uploadGallery(id: string, formData: FormData) {
   const res = await apiFetch(`/api/travel/travel-packets/${id}/galleries`, session?.user.tokenApi ?? '', 'POST', formData);
 
   revalidateTag('travel-packet-galleries');
+  revalidateTag('travel-packet');
+
   return await res.json();
 }
 
