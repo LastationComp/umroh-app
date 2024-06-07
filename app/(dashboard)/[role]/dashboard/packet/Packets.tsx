@@ -7,7 +7,8 @@ import LoadingUI from '@/components/Suspense/Loading';
 import { CardTitle } from '@/components/ui/card';
 import PublishPacket from './PublishPacket';
 
-export default function Packets() {
+export default function Packets({travel} : {travel : any}) {
+  
   const { data: drafts } = useSWR('/api/dashboard/travel/packets?is_publish=0', fetcher);
   const { data: publish } = useSWR('/api/dashboard/travel/packets?is_publish=1', fetcher);
   return (
@@ -19,7 +20,7 @@ export default function Packets() {
         {drafts &&
           drafts.data.map((packet: any, index: number) => (
             <section key={index}>
-              <DraftCard data={packet} index={index + 1} />
+              <DraftCard data={packet} index={index + 1} travel={travel} />
             </section>
           ))}
       </div>

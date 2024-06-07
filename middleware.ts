@@ -80,6 +80,7 @@ export async function middleware(req: NextRequest) {
     secureCookie: true,
   });
   if (token) {
+    
     if (new Date(token.expires_token) < new Date()) {
       const response = NextResponse.redirect(new URL('/', req.url));
       response.cookies.delete(process.env.NEXT_PUBLIC_COOKIES ?? '');
@@ -134,6 +135,11 @@ export async function middleware(req: NextRequest) {
         if (token.travel.role === 'staff') 
           {
             pattern = new RegExp('packet', 'g');
+            const staffCanUpdate = token.travel.settings[0].staff_can_update;
+            if(!staffCanUpdate && pathname.includes('draft'))
+              {
+                return redirect(`/${token.role}/dashboard/packet`);
+              }
           }
         if (token.travel.role === "manager")
           {

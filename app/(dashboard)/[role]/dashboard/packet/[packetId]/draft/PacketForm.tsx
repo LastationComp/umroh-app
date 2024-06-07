@@ -148,7 +148,7 @@ export default function PacketForm({
               <Suspense fallback={<LoadingUI />}>{packetCategories}</Suspense>
             </div>
             <div className="grid gap-1.5 mb-auto relative">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Deskripsi</Label>
               <Textarea id="description" name="description" defaultValue={packet.description} placeholder="Masukkan Deskripsi Paket Kamu..." rows={4}></Textarea>
             </div>
           </section>

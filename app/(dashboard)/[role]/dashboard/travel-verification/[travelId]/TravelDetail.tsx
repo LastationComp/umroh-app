@@ -15,12 +15,12 @@ import { Button } from "@/components/ui/button";
 import SAlertContext, { SAlert } from "@/components/context/ShadAlert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { approveTravel, cancelTravel } from "./action";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { toast as toastify  } from 'react-toastify';
 
 export default function TravelDetail({ travel }: { travel: any }) {
   const SAlert = useContext(SAlertContext);
-  const { toast } = useToast();
+
 
   const router = useRouter();
   const cancel = () => {
@@ -33,10 +33,7 @@ export default function TravelDetail({ travel }: { travel: any }) {
         const result = await cancelTravel(travel.id);
         if (result.success) {
           router.refresh();
-          return toast({
-            title: "Berhasil Ditolak",
-            className: "bg-green-600 text-white",
-          });
+          return toastify.error('Berhasil Menolak Pengajuan Travel');
         }
       },
     });
@@ -53,10 +50,7 @@ export default function TravelDetail({ travel }: { travel: any }) {
         const result = await approveTravel(travel.id);
         if (result.success) {
           router.refresh();
-          return toast({
-            title: "Berhasil Disetujui",
-            className: "bg-green-600 text-white",
-          });
+          return toastify.success('Berhasil Menerima Pengajuan Travel');
         }
       },
     });
