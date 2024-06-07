@@ -11,6 +11,7 @@ declare module "next-auth" {
       travel: {
         id?: string;
         role?: "manager" | 'staff';
+        settings: any;
       };
       name: string;
       image: string;
@@ -27,6 +28,7 @@ declare module "next-auth" {
     travel: {
       id?: string;
       role?: "manager" | 'staff';
+      settings: any;
     };
     tokenApi: string;
     image: string;
@@ -53,6 +55,7 @@ declare module "next-auth/jwt" {
     travel: {
       id?: string;
       role?: "manager" | 'staff';
+      settings: any;
     };
     image: string;
     isEmailVerified: boolean;
