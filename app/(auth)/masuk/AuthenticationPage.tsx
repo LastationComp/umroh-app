@@ -18,7 +18,6 @@ export default function AuthenticationPage() {
   const [recaptcha, setRecaptcha] = useState<string | null> ();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const recaptchaRef = React.useRef<ReCAPTCHA>(null);
   const handleSubmit: any = async (formData: FormData) => {
     if(recaptcha){
