@@ -76,11 +76,9 @@ export default function DraftCard({
         const result = await cancelDraft(id);
 
         if (!result) return;
-        mutate("/api/dashboard/travel/packets");
-        return toast({
-          title: "Paket Berhasil Dihapus",
-          className: "bg-green-600 text-white",
-        });
+        await mutate('/api/dashboard/travel/packets?is_publish=0');
+
+        return toast.success('Paket Berhasil Dihapus!');
       },
     });
   };

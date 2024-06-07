@@ -1,9 +1,7 @@
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import React, { Suspense } from 'react';
-import PacketForm from './PacketForm';
 import { getPacket } from '../../action';
-// import FacilitiesForm from './FacilitiesForm';
-// import Departing from './Departing';
+const PacketForm = dynamic(() => import('./PacketForm'), { loading: () => <LoadingUI /> });
 const Departing = dynamic(() => import('./Departing'), { loading: () => <LoadingUI /> });
 const FacilitiesForm = dynamic(() => import('./FacilitiesForm'), { loading: () => <LoadingUI /> });
 const Galleries = dynamic(() => import('./Galleries'), { loading: () => <LoadingUI /> });
@@ -12,6 +10,7 @@ const Categories = dynamic(() => import('./Categories'), { loading: () => <Loadi
 const Airlines = dynamic(() => import('./Airlines'), { loading: () => <LoadingUI /> });
 import dynamic from 'next/dynamic';
 import LoadingUI from '@/components/Suspense/Loading';
+
 export default async function AddPacketPage({ params }: { params: { packetId: string } }) {
   const packet = await getPacket(params.packetId);
   // const categories = await getCategories();

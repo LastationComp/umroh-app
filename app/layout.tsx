@@ -24,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-p-0 overflow-x-hidden">
-      <body className={inter.className + ' bg-tacao'}>
+    <html lang="en">
+      <body className={inter.className + ' bg-tacao m-0 p-0'}>
         <NextTopLoader showSpinner={false} initialPosition={0.3} />
         {children}
         <ToastContainer position={'top-center'} theme="colored" />

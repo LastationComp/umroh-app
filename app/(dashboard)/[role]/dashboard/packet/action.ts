@@ -2,11 +2,9 @@
 
 import { AuthOptions } from '@/app/api/auth/AuthOptions';
 import { apiFetch, newApiFetch } from '@/lib/Fetcher';
-import { responseData } from '@/lib/Handling/response';
 import { getServerSession } from 'next-auth';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { NextResponse } from 'next/server';
 
 export async function getPacket(id: string) {
   const session = await getServerSession(AuthOptions);
@@ -25,7 +23,17 @@ export async function getPacket(id: string) {
   return result.data;
 }
 
-export async function getPackets() {}
+export async function getPacketNameById(id: string) {
+  const session = await getServerSession(AuthOptions);
+  const res = await newApiFetch({
+    url: '/api/metadata/packet/' + id,
+    token: session?.user.tokenApi ?? '',
+  });
+
+  const result = await res.json();
+
+  return result;
+}
 
 export async function getCities() {
   const session = await getServerSession(AuthOptions);
@@ -87,7 +95,13 @@ export async function createPacket() {
   const session = await getServerSession(AuthOptions);
   const formData = new FormData();
   formData.set('travel_id', session?.user.travel.id ?? '');
-  const res = await apiFetch(`/api/travel/travel-packets`, session?.user.tokenApi, 'POST', formData);
+
+  const res = await newApiFetch({
+    url: '/api/travel/travel-packets',
+    token: session?.user.tokenApi ?? '',
+    method: 'POST',
+    body: formData,
+  });
 
   const result = await res.json();
 
@@ -103,8 +117,11 @@ export async function draftPacket(id: string, formData: FormData) {
 
   const result = await res.json();
 
-  revalidateTag('travel-packet');
-  revalidatePath('/(dashboard)/[role]/dashboard/packet/[packetId]/draft', 'page');
+  if (res.ok && res.status === 200) {
+    revalidateTag('travel-packet');
+    revalidatePath('/(dashboard)/[role]/dashboard/packet/[packetId]/draft', 'page');
+  }
+
   return result;
 }
 
@@ -164,5 +181,6 @@ export async function cancelDraft(id: string) {
   if (!res.ok || res.status !== 200) return false;
 
   revalidateTag('travel-packet-drafts');
+  // revalidatePath('/(dashboard)/[role]/dashboard/packet', 'page');
   return true;
 }

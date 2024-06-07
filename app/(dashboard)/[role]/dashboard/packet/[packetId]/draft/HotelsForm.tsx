@@ -9,11 +9,12 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { fetcher } from '@/lib/Fetcher';
-import React, { useEffect, useState, useTransition } from 'react';
+import React, { useEffect, useMemo, useState, useTransition } from 'react';
 import useSWR from 'swr';
 import { createPacketHotel } from '../../action';
 import CardLoading from '@/components/Suspense/CardLoading';
 import { Separator } from '@/components/ui/separator';
+import { NumericFormat } from 'react-number-format';
 
 export default function HotelsForm({ hotels, packetId }: { hotels: any[]; packetId: string }) {
   const [search, setSearch] = useState('');
@@ -24,7 +25,9 @@ export default function HotelsForm({ hotels, packetId }: { hotels: any[]; packet
     keepPreviousData: false,
   });
 
-  const hotelsIds = hotels.map((hotel) => hotel.id);
+  const hotelsIds = useMemo(() => {
+    return dataHotels.map((hotel) => hotel.id);
+  }, [dataHotels]);
   const clickHotel = (hotelId: string) => {
     startTransition(async () => {
       let formData = new FormData();
@@ -74,7 +77,17 @@ export default function HotelsForm({ hotels, packetId }: { hotels: any[]; packet
                 <div className="flex items-center gap-3 w-full">
                   <div className="grid gap-1.5 w-full">
                     <Label htmlFor="price_hotel">Harga</Label>
-                    <Input id="price_hotel" name="price_hotel[]" type="number" required defaultValue={Number(hotel?.pivot?.price ?? 0)} placeholder="Masukkan Harga Tambah..." />
+                    <NumericFormat
+                      customInput={Input}
+                      id="price_hotel"
+                      allowLeadingZeros={false}
+                      valueIsNumericString={true}
+                      placeholder="Masukkan Harga Tambah..."
+                      defaultValue={Number(hotel?.pivot?.price ?? 0)}
+                      name="price_hotel[]"
+                      decimalSeparator=","
+                      thousandSeparator="."
+                    />
                   </div>
                   <Button type="button" variant={'destructive'} onClick={() => deleteHotel(hotel.id)}>
                     Hapus

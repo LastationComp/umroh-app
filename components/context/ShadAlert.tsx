@@ -109,7 +109,7 @@ const SAlert = ({ children }: { children: React.ReactNode }) => {
             <AlertDialogTitle>{title}</AlertDialogTitle>
             <AlertDialogDescription>{text}</AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className='max-md:grid max-md:gap-1.5'>
             <Button type="button" className="flex items-center gap-3" onClick={onSuccess} disabled={isPending}>
               {isPending && <AiOutlineLoading3Quarters className={isPending ? 'animate-spin' : ''} />}
 
