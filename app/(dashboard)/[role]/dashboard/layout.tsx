@@ -8,17 +8,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getServerSession } from 'next-auth';
 import { AuthOptions } from '@/app/api/auth/AuthOptions';
 
-
 export const metadata: Metadata = {
   title: 'Dashboard | Umroh.ai',
 };
 
 export default async function Layout({ children, params }: { children: React.ReactNode; params: { role: string } }) {
-  const session = await getServerSession(AuthOptions)
+  const session = await getServerSession(AuthOptions);
   return (
     <section className="flex items-stretch justify-stretch relative divide-x">
-      <SideBar role={params.role} travelRole = {session?.user.travel.role} />
-      <div className="flex-1 flex-col relative w-full">
+      <SideBar role={params.role} travelRole={session?.user.travel.role} />
+      <div className="flex-1 flex-col relative">
         <DashboardNavbar role={params.role} session={session} />
         <section className="p-3">{children}</section>
       </div>

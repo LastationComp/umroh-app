@@ -44,7 +44,7 @@ export default function PublishPacket({ data, index }: PacketProps) {
         const result = await cancelDraft(id);
 
         if (!result) return;
-        mutate('/api/dashboard/travel/packets');
+        await mutate('/api/dashboard/travel/packets?is_publish=1');
         return toast.success('Paket Berhasil Dihapus!');
       },
     });
@@ -52,7 +52,7 @@ export default function PublishPacket({ data, index }: PacketProps) {
 
   if (!data) return;
   return (
-    <Card className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
+    <Card className="p-3 hover:outline hover:outline-1 shadow-md  hover:outline-blue-600">
       <div className="flex justify-between gap-3 items-center">
         <Image
           className="rounded object-cover w-[100px] h-[70px] cursor-pointer"
@@ -84,7 +84,7 @@ export default function PublishPacket({ data, index }: PacketProps) {
               <DropdownMenuLabel>Aksi</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href={'packet/' + data?.id + '/draft'}>Ubah Draft</Link>
+                <Link href={'packet/' + data?.id + '/draft'}>Ubah Paket</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="text-red-600" onClick={() => deletePacket(data?.id)}>
                 Hapus

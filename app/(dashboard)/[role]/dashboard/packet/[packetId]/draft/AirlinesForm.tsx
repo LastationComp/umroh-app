@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import React, { useReducer, useState } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 function airlineReducer(state: any, action: any) {
   switch (action.type) {
@@ -42,7 +43,17 @@ export default function AirlinesForm({ airlines, data = [] }: { airlines: any[];
                 </SelectContent>
               </Select>
             </div>
-            <Input type="number" name="price_airline[]" placeholder="Masukkan harga..." defaultValue={Number(airline?.pivot?.price ?? 0)} />
+            <NumericFormat
+              customInput={Input}
+              id="price_departing"
+              allowLeadingZeros={false}
+              valueIsNumericString={true}
+              placeholder="Masukkan harga..."
+              defaultValue={Number(airline?.pivot?.price ?? 0)}
+              name="price_airline[]"
+              decimalSeparator=","
+              thousandSeparator="."
+            />
           </div>
         </Card>
       ))}

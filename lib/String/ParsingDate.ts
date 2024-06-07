@@ -1,7 +1,8 @@
+'use client';
 export const DateToString = (date: string) => {
-    const result = new Date(date)
+  const result = new Date(date);
 
-    return result.toLocaleDateString('id-ID', {
-        dateStyle: 'medium'
-    })
-}
+  return result.toLocaleDateString('id-ID', {
+    dateStyle: 'medium',
+  });
+};

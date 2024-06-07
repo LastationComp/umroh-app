@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { arrayReducer } from '@/lib/Handling/reducer';
 import React, { useReducer, useState } from 'react';
+import { NumericFormat } from 'react-number-format';
 
 export default function DepartingForm({ departings, cities }: { departings: any[]; cities: any[] }) {
   const [departingData, dispatch] = useReducer(arrayReducer, departings.length === 0 ? [{}] : departings);
@@ -41,7 +42,17 @@ export default function DepartingForm({ departings, cities }: { departings: any[
                 </Select>
               </div>
               <div className="grid gap-1.5 w-full">
-                <Input id="price_departing" name="price_departing[]" type="number" required defaultValue={Number(departing?.pivot?.price ?? 0)} placeholder="Masukkan Harga Keberangkatan" />
+                <NumericFormat
+                  customInput={Input}
+                  id="price_departing"
+                  allowLeadingZeros={false}
+                  valueIsNumericString={true}
+                  placeholder="Masukkan Harga Keberangkatan..."
+                  defaultValue={Number(departing?.pivot?.price ?? 0)}
+                  name="price_departing[]"
+                  decimalSeparator=","
+                  thousandSeparator="."
+                />
               </div>
             </div>
           </Card>

@@ -11,6 +11,7 @@ import { arrayReducer, stringReducer } from '@/lib/Handling/reducer';
 import { inputName } from '@/lib/String/ArrayString';
 import { Slug } from '@/lib/String/Packet';
 import { toast } from 'react-toastify';
+import { NumericFormat } from 'react-number-format';
 
 const initialData = [
   {
@@ -162,7 +163,17 @@ export default function VariantsForm({ data = [] }: { data?: any[] }) {
                   <div className="grid gap-1" key={indexDetail}>
                     <div className="flex gap-3 items-center" key={indexDetail}>
                       <Input type="text" required defaultValue={detail?.name} name={inputName('variants_details', index, indexDetail, 'name')} placeholder="Masukkan Opsi Varian Paket disini..." />
-                      <Input type="number" required defaultValue={detail?.price} name={inputName('variants_details', index, indexDetail, 'price')} placeholder="Masukkan Harga disini..." />
+                      {/* <Input type="number" required defaultValue={detail?.price} name={inputName('variants_details', index, indexDetail, 'price')} placeholder="Masukkan Harga disini..." /> */}
+                      <NumericFormat
+                        customInput={Input}
+                        allowLeadingZeros={false}
+                        valueIsNumericString={true}
+                        placeholder="Masukkan Harga disini..."
+                        defaultValue={detail?.price}
+                        name={inputName('variants_details', index, indexDetail, 'price')}
+                        decimalSeparator=","
+                        thousandSeparator="."
+                      />
                       <input type="hidden" name={inputName('variants_details', index, indexDetail, 'id')} readOnly value={detail?.id ?? indexDetail} />
                     </div>
 

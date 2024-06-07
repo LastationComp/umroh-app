@@ -14,8 +14,13 @@ export default function Packets() {
     <section className="flex flex-col gap-3">
       <CardTitle>Draft</CardTitle>
 
-      <div className="grid grid-cols-4 gap-3">
-        <div className="col-span-4">{!drafts && <LoadingUI />}</div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        {!drafts && (
+          <div className="col-span-full">
+            <LoadingUI />
+          </div>
+        )}
+        {drafts?.data?.length === 0 && <span className="lg:col-span-4 text-center">Tidak ada Paket yang di publish.</span>}
         {drafts &&
           drafts.data.map((packet: any, index: number) => (
             <section key={index}>
@@ -25,9 +30,13 @@ export default function Packets() {
       </div>
 
       <CardTitle>Publish</CardTitle>
-      <div className="grid grid-cols-4 gap-3">
-        <div className="col-span-4">{!publish && <LoadingUI />}</div>
-        {publish?.data?.length === 0 && <span className="col-span-4 text-center">Tidak ada Paket yang di publish.</span>}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        {!publish && (
+          <div className="col-span-full">
+            <LoadingUI />
+          </div>
+        )}
+        {publish?.data?.length === 0 && <span className="lg:col-span-4 text-center">Tidak ada Paket yang di publish.</span>}
         {publish?.data &&
           publish.data.map((packet: any, index: number) => (
             <section key={index}>
