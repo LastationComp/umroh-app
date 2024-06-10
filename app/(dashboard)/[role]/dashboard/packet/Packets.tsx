@@ -25,7 +25,7 @@ export default function Packets({travel} : {travel : any}) {
         {drafts &&
           drafts.data.map((packet: any, index: number) => (
             <section key={index}>
-              <DraftCard data={packet} index={index + 1} travel={travel} />
+              <DraftCard data={packet} index={index + 1} />
             </section>
           ))}
       </div>
@@ -41,7 +41,7 @@ export default function Packets({travel} : {travel : any}) {
         {publish?.data &&
           publish.data.map((packet: any, index: number) => (
             <section key={index}>
-              <PublishPacket data={packet} index={index + 1} />
+              <PublishPacket data={packet} index={index + 1} travel={travel}/>
             </section>
           ))}
       </div>

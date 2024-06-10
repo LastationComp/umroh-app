@@ -28,43 +28,23 @@ import nProgress from "nprogress";
 export default function DraftCard({
   data,
   index,
-  travel,
+
 }: {
   data: any;
   index?: React.Key;
-  travel: any;
+
 }) {
   const SAlert = useContext(SAlertContext);
   const { mutate } = useSWRConfig();
-  const travelRole = travel.role;
-  let staffCanUpdate = "";
-  let staffCanDelete = "";
-  const regex = new RegExp("staff");
-  const isStaff = regex.test(travelRole);
   const router = useRouter();
   const updateAction = (e: any, hrefValue: string) => {
     e.preventDefault();
-    if (isStaff) {
-      staffCanUpdate = travel.settings[0].staff_can_update;
-      if (!staffCanUpdate) {
-        return toastify.error(
-          "Anda tidak dapat melakukan Update Packet! \n Silahkan Hubungi Manager Anda!"
-        );
-      }
-    }
     nProgress.start();
     return router.push(hrefValue);
   };
 
   const deletePacket = (id: string) => {
-    if (isStaff) {
-      staffCanDelete = travel.settings[0].staff_can_delete;
-      if (!staffCanDelete) {
-        return toastify.error(
-          "Anda tidak dapat melakukan Hapus Packet! \n Silahkan Hubungi Manager Anda!"
-        );
-      }
-    }
+    
 
     SAlert.trigger({
       confirmButtonText: "Ya",
@@ -78,7 +58,7 @@ export default function DraftCard({
         if (!result) return;
         await mutate('/api/dashboard/travel/packets?is_publish=0');
 
-        return toast.success('Paket Berhasil Dihapus!');
+        return toastify.success('Paket Berhasil Dihapus!');
       },
     });
   };
@@ -106,7 +86,7 @@ export default function DraftCard({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={(e) =>
-                  updateAction(e, "packet/" + data?.id + "/draft")
+                  updateAction(e, "packet/" + data?.id + "/draft" )
                 }
               >
                 Ubah Draft
