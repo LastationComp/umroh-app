@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,10 +22,10 @@ import { Separator } from '@/components/ui/separator';
 interface PacketProps {
   data: any;
   index?: number;
-  travel: any
+  travel: any;
 }
 
-export default function PublishPacket({ data, index, travel}: PacketProps) {
+export default function PublishPacket({ data, index, travel }: PacketProps) {
   const router = useRouter();
   const SAlert = useContext(SAlertContext);
   const { mutate } = useSWRConfig();
@@ -33,32 +33,25 @@ export default function PublishPacket({ data, index, travel}: PacketProps) {
     nProgress.start();
     router.push('/paket/' + url);
   };
-  const travelRole = travel.role;
-  let staffCanUpdate = "";
-  let staffCanDelete = "";
-  const regex = new RegExp("staff");
-  const isStaff = regex.test(travelRole);
+
+  const travels = useMemo(() => {
+    return {
+      role: travel.role,
+      can_delete: travel.settings.staff_can_delete,
+    };
+  }, []);
+
   const updateAction = (e: any, hrefValue: string) => {
     e.preventDefault();
-    if (isStaff) {
-      staffCanUpdate = travel.settings.staff_can_update;
-      if (!staffCanUpdate) {
-        return toast.error(
-          "Anda tidak dapat melakukan Update Packet! \n Silahkan Hubungi Manager Anda!"
-        );
-      }
-    }
     nProgress.start();
     return router.push(hrefValue);
   };
 
   const deletePacket = (id: string) => {
-    if (isStaff) {
-      staffCanDelete = travel.settings.staff_can_delete;
+    if (travels.role === 'staff') {
+      const staffCanDelete = travels.can_delete;
       if (!staffCanDelete) {
-        return toast.error(
-          "Anda tidak dapat melakukan Hapus Packet! \n Silahkan Hubungi Manager Anda!"
-        );
+        return toast.error('Anda tidak dapat melakukan Hapus Packet! \n Silahkan Hubungi Manager Anda!');
       }
     }
     SAlert.trigger({
@@ -71,7 +64,7 @@ export default function PublishPacket({ data, index, travel}: PacketProps) {
         const result = await cancelDraft(id);
 
         if (!result) return;
-        await mutate('/api/dashboard/travel/packets?is_publish=1');
+        await mutate((key) => Array.isArray(key) && key[0] === '/api/dashboard/travel/packets?is_publish=1');
         return toast.success('Paket Berhasil Dihapus!');
       },
     });
@@ -93,7 +86,7 @@ export default function PublishPacket({ data, index, travel}: PacketProps) {
 
         <div className="flex justify-between">
           <div className="grid gap-1.5">
-            <Link href={`/paket`} key={index} className="text-sm font-semibold line-clamp-2 hover:text-blue-600">
+            <Link href={`packet/${data?.id}/draft`} key={index} className="text-sm font-semibold line-clamp-2 hover:text-blue-600">
               {data.title}
             </Link>
             <div className="flex justify-between">
@@ -110,13 +103,7 @@ export default function PublishPacket({ data, index, travel}: PacketProps) {
             <DropdownMenuContent align={'end'}>
               <DropdownMenuLabel>Aksi</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-              onClick={(e) =>
-                  updateAction(e, "packet/" + data?.id + "/draft?state=edit" )
-                }
-              >
-                Ubah Packet
-              </DropdownMenuItem>
+              <DropdownMenuItem onClick={(e) => updateAction(e, 'packet/' + data?.id + '/draft')}>Ubah Paket</DropdownMenuItem>
               <DropdownMenuItem className="text-red-600" onClick={() => deletePacket(data?.id)}>
                 Hapus
               </DropdownMenuItem>

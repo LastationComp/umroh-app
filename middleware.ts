@@ -18,8 +18,6 @@ const rateLimitMap = new Map();
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
   const searchParams = req.nextUrl.searchParams;
-  console.log(pathname, searchParams);
-
   const redirect = (url: string) => {
     const newUrl = new URL(url, req.url);
     return NextResponse.redirect(newUrl);
@@ -145,12 +143,6 @@ export async function middleware(req: NextRequest) {
         let pattern: RegExp = new RegExp("");
         if (token.travel.role === "staff") {
           pattern = new RegExp("packet", "g");
-          const staffCanUpdate = token.travel.settings.staff_can_update;
-          if (pathname.includes("draft")) {
-            if (!staffCanUpdate && searchParams.get('state') === 'edit' ) {
-              return redirect(`/${token.role}/dashboard/packet`); 
-            }
-          }
         }
         if (token.travel.role === "manager") {
           pattern = new RegExp("packet|settings|travels/staffs", "g");

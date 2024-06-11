@@ -58,8 +58,9 @@ export function arrayReducer(state: any, action: any) {
   }
 }
 
-export function stringReducer(state: any, ...action: string[]) {
-  state[action[0]] = action[1];
-
-  return state;
+export function stringReducer(state: any, action: any) {
+  return {
+    ...state,
+    [action.id]: action.value
+  };
 }
