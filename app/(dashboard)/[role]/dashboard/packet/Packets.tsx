@@ -17,11 +17,6 @@ export default function Packets({ travel }: { travel: any }) {
   const { data: drafts } = useSWR(['/api/dashboard/travel/packets?is_publish=0', draftPage], ([url, paginate]) => fetcher(url + '&paginate=12&page=' + paginate));
   const { data: publish } = useSWR(['/api/dashboard/travel/packets?is_publish=1', publishPage], ([url, paginate]) => fetcher(url + '&paginate=12&page=' + paginate));
 
-  useMemo(() => {
-    if (!drafts) return;
-    if (draftPage > 1 && drafts?.data?.length === 0) return decPage('draft');
-  }, [drafts]);
-
   useEffect(() => {
     resetPage('draft');
     resetPage('publish');

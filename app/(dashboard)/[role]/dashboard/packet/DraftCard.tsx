@@ -11,10 +11,12 @@ import { toast as toastify } from 'react-toastify';
 import { useSWRConfig } from 'swr';
 import { useRouter } from 'next/navigation';
 import nProgress from 'nprogress';
+import { mutateArray } from '@/lib/Handling/Mutation';
+import { usePagination } from '@/lib/Zustands/Pagination';
 export default function DraftCard({ data, index, setPagination }: { data: any; index?: React.Key; setPagination?: any }) {
   const SAlert = useContext(SAlertContext);
-  const { mutate } = useSWRConfig();
   const router = useRouter();
+  const decPage = usePagination((state) => state.decPage);
   const updateAction = (e: any, hrefValue: string) => {
     e.preventDefault();
     nProgress.start();
@@ -32,7 +34,9 @@ export default function DraftCard({ data, index, setPagination }: { data: any; i
         const result = await cancelDraft(id);
 
         if (!result) return;
-        await mutate((key) => Array.isArray(key) && key[0] === '/api/dashboard/travel/packets?is_publish=0');
+        // await mutate((key) => Array.isArray(key) && key[0] === '/api/dashboard/travel/packets?is_publish=0');
+        await mutateArray('/api/dashboard/travel/packets?is_publish=0');
+        if (index === 1) decPage('draft');
         return toastify.success('Paket Berhasil Dihapus!');
       },
     });

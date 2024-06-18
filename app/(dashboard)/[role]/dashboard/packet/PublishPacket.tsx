@@ -18,6 +18,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
+import { NumericFormat } from 'react-number-format';
 
 interface PacketProps {
   data: any;
@@ -37,7 +38,7 @@ export default function PublishPacket({ data, index, travel }: PacketProps) {
   const travels = useMemo(() => {
     return {
       role: travel.role,
-      can_delete: travel.settings.staff_can_delete,
+      can_delete: travel.settings?.staff_can_delete ?? null,
     };
   }, []);
 
@@ -90,7 +91,9 @@ export default function PublishPacket({ data, index, travel }: PacketProps) {
               {data.title}
             </Link>
             <div className="flex justify-between">
-              <span className="text-sm text-orange-400 font-bold">Rp.{data?.variants[0]?.details[0]?.price}</span>
+              <span className="text-sm text-orange-400 font-bold">
+                <NumericFormat value={data?.variants[0]?.details[0]?.price} decimalSeparator="," thousandSeparator="." prefix="Rp. " />
+              </span>
               <span className="text-sm text-black/60">{data?.variants[0]?.details[2]?.title}</span>
             </div>
           </div>
@@ -114,7 +117,9 @@ export default function PublishPacket({ data, index, travel }: PacketProps) {
       <div className="my-2">
         <div className="flex justify-between">
           <span className="text-sm">Sisa Seat</span>
-          <span className="text-sm font-bold">{data.quota} Seat</span>
+          <span className="text-sm font-bold">
+            <NumericFormat value={data.quota} thousandSeparator="." displayType="text" decimalSeparator="," suffix=" Seat" />
+          </span>
         </div>
         <Progress className="" value={data.quota} max={data.quota} />
       </div>

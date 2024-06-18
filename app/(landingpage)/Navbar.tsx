@@ -28,7 +28,7 @@ export default function Navbar({ session }: { session: any }) {
               <SheetHeader>
                 <SheetTitle>
                   <Link href={'/'} className="text-white">
-                    Umroh.ai
+                    {process.env.NEXT_PUBLIC_APP_NAME}
                   </Link>
                 </SheetTitle>
               </SheetHeader>
@@ -62,12 +62,12 @@ export default function Navbar({ session }: { session: any }) {
             </SheetContent>
           </Sheet>
           <Link href={'/'} className="text-white">
-            Umroh.ai
+            {process.env.NEXT_PUBLIC_APP_NAME}
           </Link>
         </div>
         <div className="flex gap-3 max-md:hidden">
           <h1 className="brand text-xl font-bold my-auto text-white/90">
-            <Link href={'/'}>Umroh.ai</Link>
+            <Link href={'/'}>{process.env.NEXT_PUBLIC_APP_NAME}</Link>
           </h1>
           <div className="flex gap-3 items-center">
             <Separator orientation="vertical" />

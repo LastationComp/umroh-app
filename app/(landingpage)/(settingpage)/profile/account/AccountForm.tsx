@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { socket } from '@/lib/Services/socket';
 import imageCompression from 'browser-image-compression';
 import { toast } from 'react-toastify';
+import { useProfileAvatar } from '@/lib/Zustands/Profile';
 
 const initialState = {
   type: 'success',
@@ -25,6 +26,7 @@ const initialState = {
 export default function AccountForm({ data }: { data: any }) {
   const [urlImage, setUrlImage] = useState(data?.image);
   const [state, setState]: any = useState(initialState);
+  const setAvatar = useProfileAvatar((state) => state.setProfileAvatar);
   const router = useRouter();
   const { data: session, update } = useSession();
   const fileImage = createRef<HTMLInputElement>();
@@ -51,17 +53,15 @@ export default function AccountForm({ data }: { data: any }) {
       formData.set('image', compressedFile as File);
     }
 
-
     await delay(1000);
     const result = await updateAccount(formData);
     setState(result);
 
     if (!result.success) return toast.error(result.message);
 
-    if (result.success) 
-      {
-        toast.success(result.message);
-      }
+    if (result.success) {
+      toast.success(result.message);
+    }
 
     let data: any = {
       isEmailVerified: result.is_email_verified,
@@ -79,6 +79,8 @@ export default function AccountForm({ data }: { data: any }) {
         id: session?.user.id,
         image: result.image,
       });
+
+      setAvatar(result.image);
     }
     if (!result.is_email_verified)
       setState({
