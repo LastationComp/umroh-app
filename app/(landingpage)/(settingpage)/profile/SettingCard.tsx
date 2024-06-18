@@ -64,7 +64,7 @@ export default function SettingCard({ children, session }: SettingProps) {
             <IoMdLock />
           </GenerateMenu>
           {session?.user.role === 'travel' && (
-            <section>
+            <section className='grid gap-1.5'>
               <span className="text-sm max-md:hidden">Travel</span>
               <Separator />
               <GenerateMenu url="/travel" title="Profil">

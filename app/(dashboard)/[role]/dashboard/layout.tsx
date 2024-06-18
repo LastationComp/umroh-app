@@ -9,7 +9,10 @@ import { getServerSession } from 'next-auth';
 import { AuthOptions } from '@/app/api/auth/AuthOptions';
 
 export const metadata: Metadata = {
-  title: 'Dashboard | Umroh.ai',
+  title: {
+    template: '%s | Dashboard ' + process.env.NEXT_PUBLIC_APP_NAME,
+    default: 'Dashboard',
+  },
 };
 
 export default async function Layout({ children, params }: { children: React.ReactNode; params: { role: string } }) {

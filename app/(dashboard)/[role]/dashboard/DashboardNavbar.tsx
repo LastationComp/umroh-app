@@ -1,7 +1,6 @@
 import React from 'react';
 import ProfileMenu from '@/components/users/profile-menu';
 import { getServerSession, Session } from 'next-auth';
-import { AuthOptions } from '@/app/api/auth/AuthOptions';
 
 interface DashboardProps {
   role: string;

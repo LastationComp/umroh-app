@@ -14,8 +14,10 @@ const inter = Poppins({ subsets: ['latin-ext'], weight: '400' });
 library.add(faWifi, fas);
 
 export const metadata: Metadata = {
-  title: process.env.NEXT_PUBLIC_APP_NAME,
-  description: 'Umroh.ai by PT. UBIG',
+  title: {
+    template: '%s | ' + process.env.NEXT_PUBLIC_APP_NAME,
+    default: process.env.NEXT_PUBLIC_APP_NAME ?? 'App Name',
+  },
 };
 
 export default function RootLayout({
