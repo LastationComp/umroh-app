@@ -1,31 +1,32 @@
-'use client';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import Image from 'next/image';
-import React, { createRef, useState } from 'react';
 import avatar from '@/public/profile/avatar.png';
 import { SelectMenu } from '@/components/utils/SelectMenu';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import TravelProfileForm from './TravelProfileForm';
+import { getCities, getCountries, getProvinces, getTravelProfile } from './action';
 
-export default function TravelProfilePage() {
-  const [urlImage, setUrlImage] = useState('');
-  const fileImage = createRef<HTMLInputElement>();
-  const handleClick = (e: any) => {
-    fileImage.current?.click();
-  };
-  const handleImage = (e: any) => {
-    if (!e.target.files[0]) return;
-    const image = URL.createObjectURL(e.target.files[0]);
-    setUrlImage(image ?? '');
-  };
+export default async function TravelProfilePage() {
+  const travelProfile = await getTravelProfile();
+  const countries = await getCountries();
+  const provinces = await getProvinces();
+  const cities = await getCities();
   return (
     <section className="flex flex-col gap-3">
       <span className="font-bold">Akun Saya</span>
       <Separator />
-      <form action="" method="post" className="flex gap-3 md:divide-x w-auto max-md:flex-col max-md:flex-col-reverse">
+      <TravelProfileForm
+      travelProfile ={travelProfile}
+      countries={countries}
+      provinces={provinces}
+      cities={cities}
+      />
+      {/* <form action="" method="post" className="flex gap-3 md:divide-x w-auto max-md:flex-col max-md:flex-col-reverse">
         <div className="grid gap-3 w-full">
           <div className="grid items-center gap-1.5">
             <Label htmlFor="name">Nama Travel</Label>
@@ -98,7 +99,7 @@ export default function TravelProfilePage() {
             <span className="text-sm text-black/60">Format Gambar : .jpg, .png</span>
           </div>
         </div>
-      </form>
+      </form> */}
     </section>
   );
 }

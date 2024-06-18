@@ -16,8 +16,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function TravelProfileForm() {
+export default function TravelProfileForm({
+  travelProfile,
+  countries,
+  provinces,
+  cities,
+}: {
+  travelProfile: any;
+  countries: any;
+  provinces: any;
+  cities: any;
+}) {
   const [urlImage, setUrlImage] = useState("");
+  const country = travelProfile.country;
+  const province = travelProfile.province;
+  const city = travelProfile.city;
+
   const fileImage = createRef<HTMLInputElement>();
   const handleClick = (e: any) => {
     fileImage.current?.click();
@@ -36,7 +50,12 @@ export default function TravelProfileForm() {
       <div className="grid gap-3 w-full">
         <div className="grid items-center gap-1.5">
           <Label htmlFor="name">Nama Travel</Label>
-          <Input id="name" type={"text"} placeholder="Masukkan Email anda..." />
+          <Input
+            id="name"
+            type={"text"}
+            placeholder="Masukkan Email anda..."
+            defaultValue={travelProfile.name}
+          />
         </div>
         <div className="grid items-center gap-1.5">
           <Label htmlFor="description">Deskripsi</Label>
@@ -45,6 +64,7 @@ export default function TravelProfileForm() {
             className="resize-none"
             placeholder="Deskripsikan tentang travel anda..."
             rows={4}
+            defaultValue={travelProfile.description}
           />
         </div>
         <div className="grid items-center gap-1.5">
@@ -53,41 +73,61 @@ export default function TravelProfileForm() {
             id="email"
             type={"email"}
             placeholder="Masukkan Email anda..."
+            defaultValue={travelProfile.email}
           />
         </div>
         <div className="grid items-center gap-1.5">
           <span className="text-sm">Negara</span>
-          <Select>
+          <Select name="country" defaultValue={country.id}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Pilih Negara" />
+              <SelectValue placeholder={"Pilih Negara"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="indonesia">Indonesia</SelectItem>
-              <SelectItem value="malaysia">Malaysia</SelectItem>
+              {countries.map((country: any, index: number) => (
+                <SelectItem
+                  key={index}
+                  value={country.id}
+                  className="cursor-pointer"
+                >
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm">{country.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
         <div className="grid items-center gap-1.5">
           <span className="text-sm">Provinsi</span>
-          <Select>
+          <Select name="province" defaultValue={province.id}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Pilih Provinsi" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="jawatimur">Jawa Timur</SelectItem>
-              <SelectItem value="jawabarat">Jawa Barat</SelectItem>
+              {provinces.map((province: any, index: number) => (
+                <SelectItem key={index} value={province.id}>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm">{province.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
         <div className="grid items-center gap-1.5">
           <span className="text-sm">Kota</span>
-          <Select>
+          <Select name="city" defaultValue={city.id}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Pilih Kota" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="babat">Babat</SelectItem>
-              <SelectItem value="lamongan">Lamongan</SelectItem>
+              {cities.map((city: any, index: any) => (
+                <SelectItem key={index} value={city.id}>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm">{city.city_name}</span>
+                  </div>
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -97,6 +137,7 @@ export default function TravelProfileForm() {
             id="postal_code"
             type={"number"}
             placeholder="Masukkan Kode Pos..."
+            defaultValue={travelProfile.postal_code}
           />
         </div>
         <div className="grid items-center gap-1.5">
@@ -106,6 +147,7 @@ export default function TravelProfileForm() {
             className="resize-none"
             placeholder="Masukkan deskripsi disini..."
             rows={4}
+            defaultValue={travelProfile.address}
           />
         </div>
         <div>
