@@ -93,11 +93,11 @@ export default function ProfileMenu({ session }: { session: Session }) {
           <section>
             <DropdownMenuLabel>Travel Saya</DropdownMenuLabel>
             <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href={'/profile'}>Profil</Link>
+              <Link href={'/profile/travel'}>Profil</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild className="cursor-pointer">
+            {/* <DropdownMenuItem asChild className="cursor-pointer">
               <Link href={'/profile'}>Pengaturan</Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </section>
         )}
 
