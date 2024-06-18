@@ -10,6 +10,8 @@ import Search from './Search';
 import Partner from './Partner';
 import Gallery from './Gallery';
 
+const FeatureContent = dynamic(() => import('./FeaturesContent'), { loading: () => <LoadingUI /> });
+
 
 export default async function Home() {
   return (
@@ -19,7 +21,7 @@ export default async function Home() {
         <Search />
       </Suspense>
       <Gallery />
-      <FeaturesContent />
+      <FeatureContent />
       <Suspense fallback={<LoadingUI />}>
         <Partner />
       </Suspense>
