@@ -19,8 +19,8 @@ export async function getPacket(id: string) {
   });
 
   const result = await res.json();
-
   return result.data;
+  
 }
 
 export async function getPacketNameById(id: string) {
