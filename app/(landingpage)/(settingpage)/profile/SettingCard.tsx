@@ -70,9 +70,9 @@ export default function SettingCard({ children, session }: SettingProps) {
               <GenerateMenu url="/travel" title="Profil">
                 <BiSolidPlaneAlt />
               </GenerateMenu>
-              <GenerateMenu url="/travel/settings" title="Pengaturan">
+              {/* <GenerateMenu url="/travel/settings" title="Pengaturan">
                 <PiGearFill />
-              </GenerateMenu>
+              </GenerateMenu> */}
             </section>
           )}
         </div>

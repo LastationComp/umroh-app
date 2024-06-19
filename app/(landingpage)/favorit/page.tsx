@@ -1,9 +1,12 @@
-import { Card, CardHeader } from '@/components/ui/card';
-import React from 'react';
-import FavoritLists from './FavoritLists';
+import { Card, CardHeader } from "@/components/ui/card";
+import React from "react";
+import FavoritLists from "./FavoritLists";
+import { useFavorites } from "@/lib/Zustands/User/Favorites";
 
 async function getPaketUmroh() {
-  const res = await fetch(process.env.URL_API + '/paket_umroh', { cache: 'no-store' });
+  const res = await fetch(process.env.URL_API + "/paket_umroh", {
+    cache: "no-store",
+  });
   return res.json();
 }
 export default async function Page() {
@@ -16,7 +19,7 @@ export default async function Page() {
         is_syariah: index % 2 === 0,
       };
     });
-  };
+  };  
   return (
     <section className="flex flex-col gap-3">
       <Card>
