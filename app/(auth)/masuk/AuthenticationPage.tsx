@@ -29,12 +29,11 @@ export default function AuthenticationPage() {
   
       if (!res?.ok || res.status !== 200) 
         {
-          
           setRecaptcha(null);
           recaptchaRef.current?.reset();
           return setErrMsg('Email or Password is wrong! please try again');
         }
-  
+        
       router.refresh();
       await delay(1000);
   

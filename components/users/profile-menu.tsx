@@ -10,8 +10,10 @@ import { Session } from 'next-auth';
 // import { pusher } from '@/lib/Services/pusher';
 import { socket } from '@/lib/Services/socket';
 import { usePathname, useRouter } from 'next/navigation';
+import { useProfileAvatar } from '@/lib/Zustands/Profile';
 
 export default function ProfileMenu({ session }: { session: Session }) {
+  const profileAvatar = useProfileAvatar((state) => state.avatar);
   const [urlImage, setUrlImage] = useState(session.user.image);
   const pathname = usePathname();
   const router = useRouter();
@@ -21,6 +23,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
     await signOut();
   };
   const getAvatarUser = () => {
+    if (profileAvatar) return profileAvatar;
     if (!session) return avatar;
     if (urlImage.includes('default')) return avatar;
     return urlImage;
@@ -49,14 +52,14 @@ export default function ProfileMenu({ session }: { session: Session }) {
   //   };
   // }, [session]);
 
-  useEffect(() => {
-    socket.on('profile-' + session?.user.id, (image) => {
-      setUrlImage(image);
-    });
-    return () => {
-      socket.off('profile-' + session?.user.id);
-    };
-  }, [session]);
+  // useEffect(() => {
+  //   socket.on('profile-' + session?.user.id, (image) => {
+  //     setUrlImage(image);
+  //   });
+  //   return () => {
+  //     socket.off('profile-' + session?.user.id);
+  //   };
+  // }, [session]);
 
   return (
     <DropdownMenu>
@@ -73,7 +76,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
           <Link href={'/profile'}>Profil Saya</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          {(session.user.role !== 'subscriber') && <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>}
+          {session.user.role !== 'subscriber' && <Link href={`/${session.user.role}/dashboard`}>Dashboard Saya</Link>}
           {/* {(session.user.role === 'travel' && session.user.travel.role === 'staff') && <Link href={`/${session.user.role}/${session.user.travel.role}/dashboard`}>Dashboard Saya</Link>} */}
         </DropdownMenuItem>
         <DropdownMenuSeparator />

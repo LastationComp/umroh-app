@@ -1,14 +1,11 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { Textarea } from '@/components/ui/textarea';
 import React from 'react';
 import { getProfileData } from '../action';
-import SubmitButton from '@/components/builder/SubmitButton';
-import ProfileForm from './profileForm';
+// import ProfileForm from './profileForm';
+import dynamic from 'next/dynamic';
+import LoadingUI from '@/components/Suspense/Loading';
 
+const ProfileForm = dynamic(() => import('./profileForm'), { loading: () => <LoadingUI /> });
 export default async function ProfilePage() {
   const profileData = await getProfileData();
   return (

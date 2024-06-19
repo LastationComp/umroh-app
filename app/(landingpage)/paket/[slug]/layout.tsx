@@ -6,7 +6,7 @@ type MetadataProps = {
 };
 export async function generateMetadata({ params }: MetadataProps) {
   return {
-    title: params.slug + ' - Umroh.ai',
+    title: params.slug,
   };
 }
 

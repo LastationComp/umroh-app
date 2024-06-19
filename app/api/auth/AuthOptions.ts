@@ -1,3 +1,4 @@
+import { useProfileAvatar } from '@/lib/Zustands/Profile';
 import { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -158,14 +159,13 @@ export const AuthOptions: NextAuthOptions = {
           expires_token: result.expires_at,
           travel: {},
         };
-
+        
         if (user.role === 'travel') {
           user = {
             ...user,
             travel: {
               ...result.travel,
             },
-            
           };
         }
 

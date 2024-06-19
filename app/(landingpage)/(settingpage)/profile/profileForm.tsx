@@ -5,16 +5,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import React, { useState } from 'react';
 import SubmitButton from '@/components/builder/SubmitButton';
-import { useFormState } from 'react-dom';
 import { updateProfile } from '../action';
-import Alert from '@/components/callback/Alert';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-const initialState = {
-  type: 'success',
-  message: '',
-};
+
 export default function ProfileForm({ data }: { data: any }) {
   
   const { data: session, update } = useSession();

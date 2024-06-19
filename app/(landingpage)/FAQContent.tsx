@@ -5,7 +5,7 @@ import React from 'react';
 export default function FAQContent() {
   return (
     <section className="md:container md:mx-auto mx-3 my-5">
-      <span className="text-xl font-semibold ">Umroh.ai – Cari Paket Umroh Murah di Indonesia</span>
+      <span className="text-xl font-semibold ">{process.env.NEXT_PUBLIC_APP_NAME} – Cari Paket Umroh Murah di Indonesia</span>
       <p className="text-sm leading-7 my-5 text-black/70">
         Umroh.ai adalah marketplace yang menyediakan paket umroh lebih dari 100 travel umroh terpercaya di Indonesia dengan izin resmi Kementerian Agama. Ibadah terasa mudah karena tidak lagi pusing untuk mencari travel umroh dan temukan
         paket umroh yang diinginkan. Cari paket umroh dengan mudah dan aman, banyaknya pilihan paket umroh dari berbagai biro umroh terpercaya. Cek berbagai paket umroh pilihamu, ingin paket umroh regular, atau ingin beribadah sekaligus

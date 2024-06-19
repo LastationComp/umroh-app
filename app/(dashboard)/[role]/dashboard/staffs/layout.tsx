@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: 'Staff Admin | Dashboard - Umroh.ai',
+  title: 'Staff Admin',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
