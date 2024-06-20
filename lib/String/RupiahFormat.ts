@@ -3,6 +3,7 @@ const rupiah = new Intl.NumberFormat('id-ID', {
   currency: 'IDR',
   compactDisplay: 'short',
   currencyDisplay: 'symbol',
+
 });
 
 export const formatRupiah = (number: number) => {

@@ -7,10 +7,8 @@ import { FavoritePacket } from "./action";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import Link from "next/link";
 import { useFavorites } from "@/lib/Zustands/User/Favorites";
@@ -60,7 +58,7 @@ export default function Favorites({ data }: FavoriteProps) {
         </DialogContent>
       </Dialog>
 
-      <Button className="text-lg" variant={"ghost"} onClick={handleButton}>
+      <Button className="text-lg" title="Saya suka paket ini" variant={"ghost"} onClick={handleButton}>
         {!isFavorite ? <FaRegHeart /> : <FaHeart className="text-red-400" />}
       </Button>
     </section>
