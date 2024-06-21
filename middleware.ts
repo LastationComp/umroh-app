@@ -110,6 +110,9 @@ export async function middleware(req: NextRequest) {
 
     if (pathname === "/masuk") return redirect("/");
 
+    if (pathname === "/auth") return redirect("/");
+
+
     if (pathname === "/daftar") return redirect("/");
 
     if (pathname.includes("dashboard")) {

@@ -31,6 +31,7 @@ export default function SearchEngine({ q }: { q: string }) {
     <form action={createQuery} className="flex gap-3 w-full">
       <Input
         className="w-full"
+        type="search"
         placeholder="Masukkan nama paket..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}

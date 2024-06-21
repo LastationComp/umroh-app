@@ -18,16 +18,36 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import { BiSolidMapPin } from "react-icons/bi";
 import ProfileMenu from "@/components/users/profile-menu";
+import { useComparison } from "@/lib/Zustands/User/Comparison";
+import { toast } from "react-toastify";
+import { Compare, getUserComparison } from "./action";
 export default function Navbar({ session }: { session: any }) {
   const auth = !session === false;
+  const firstRendered = useRef(false);
+  const userComparisonRendered = useRef(false);
   const pathname = usePathname();
+  const { count, ids } = useComparison(
+    (state) => state
+  );
+  const comparison = async () => {
+    const compare = await Compare(ids);
+    if (!compare) return toast.error("terjadi kesalahan");
+  };
+  
+  // useEffect(() => {
+  //   if (firstRendered.current) {
+  //     comparison();
+  //   }
+  //   firstRendered.current = true;
+  // }, [count]);
+
   return (
     <nav className="h-[4rem] shadow-md sticky top-0 z-50 bg-blue-dark w-full ">
       <section className="md:container md:mx-auto max-md:mx-3 flex items-center justify-between h-full">
@@ -181,7 +201,11 @@ export default function Navbar({ session }: { session: any }) {
               <Link href={"/perbandingan"}>
                 <FontAwesomeIcon icon={faRightLeft} />
                 <span className="bg-red-400 px-1 rounded-full absolute -top-2 -right-2 hover:text-white">
-                  <span className="text-[10px] hover:text-white">22</span>
+                  {count > 0 && (
+                    <span className="text-[10px] hover:text-white">
+                      {count}
+                    </span>
+                  )}
                 </span>
               </Link>
             </Button>

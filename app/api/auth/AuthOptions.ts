@@ -6,6 +6,7 @@ import GoogleProvider from 'next-auth/providers/google';
 const getLaravelCsrf = async () => {
   const csrf = await fetch(process.env.NEXT_PUBLIC_URL_API + '/api/sanctum/csrf-cookie', {
     credentials: 'include',
+    cache: 'no-store'
   });
 
   const cookies = csrf.headers;

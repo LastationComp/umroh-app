@@ -31,12 +31,10 @@ export default function Page({
     <section>
       <span className=" font-bold">Pencarian Paket</span>
       <div className="grid grid-cols-12 grid-flow-row gap-3">
-        <Card className=" col-span-2 rounded max-lg:hidden shadow-md p-3">
-          <div className="flex flex-col gap-3">
-            <span>Filter</span>
-            <Separator />
-            <SearchFilter />
-          </div>
+        <Card className=" col-span-2 rounded max-lg:hidden shadow-md p-3 ">
+          <span>Filter</span>
+          <Separator />
+          <SearchFilter />
         </Card>
         <Card className="col-span-10 row-span-12 max-lg:col-span-12 rounded shadow-md p-3 ">
           <div className="flex flex-col gap-3">

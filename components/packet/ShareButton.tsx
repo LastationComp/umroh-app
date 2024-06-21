@@ -60,7 +60,8 @@ export default function ShareButton({ image_url, url, title }: ShareProps) {
               height={500}
               loading={"lazy"}
               className="w-[100px]"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+              placeholder="blur"
+              blurDataURL={"/api/image/blur?url=" + image_url}
               alt={title ?? "Share Image"}
             />
             <span className="line-clamp-2">

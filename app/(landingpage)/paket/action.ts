@@ -31,8 +31,27 @@ export async function getPackets(query: any = {}) {
   const res = await newApiFetch({
     url: "/api/public/travel-packets" + queryParams,
     token: token,
+    options: {
+      tag: ["public-travel-packets"],
+    },
   });
 
   const result = await res.json();
   return result.data;
+}
+
+export async function getUserComparison() {
+  const token = await getLaravelToken();
+
+  const res = await newApiFetch({
+    url: "/api/profile/comparison",
+    token: token,
+  });
+
+  if (res.status === 200) {
+    const result = await res.json();
+    return result;
+  } else {
+    return false;
+  }
 }

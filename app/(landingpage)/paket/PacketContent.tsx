@@ -1,14 +1,24 @@
 "use client";
-import React, { useEffect, useMemo, useState, useTransition } from "react";
-import { getPackets, getPaketUmroh } from "./action";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
+import { getPackets, getPaketUmroh, getUserComparison } from "./action";
 import { Button } from "@/components/ui/button";
 import { delay } from "@/lib/Promise/Delay";
 import LoadingSingleSkeleton from "@/components/Suspense/LoadingSingleSkeleton";
 import TravelPacketCard from "@/components/packet/TravelPacketCard";
 import { useSearchPacket } from "@/lib/Zustands/LandingPage/SearchPacket";
+import { useComparison } from "@/lib/Zustands/User/Comparison";
+import { Compare } from "../action";
 export default function PacketContent({ data }: { data: any }) {
   const [packetData, setPacketData]: any = useState(data?.data);
   const { page, incPage, resetPage } = useSearchPacket((state) => state);
+  const { setCompares, ids } = useComparison();
+  const firstRender = useRef(false);
   const [isPending, startTransition] = useTransition();
   const [hasMoreData, setHasMoreData] = useState(!!data?.next_page_url);
   const fetchData = () => {
@@ -21,7 +31,13 @@ export default function PacketContent({ data }: { data: any }) {
     });
   };
 
+  const fetchComparison = async () => {
+    const res = await getUserComparison();
+    setCompares(res.data);
+  };
+
   useEffect(() => {
+    fetchComparison();
     resetPage();
   }, []);
 
@@ -29,6 +45,14 @@ export default function PacketContent({ data }: { data: any }) {
     if (page === 1) return;
     fetchData();
   }, [page]);
+
+  // useEffect(() => {
+  //   if (firstRender.current) {
+  //     Compare(ids);
+  //   }
+
+  //   firstRender.current = true;
+  // }, [ids]);
 
   return (
     <section>
@@ -48,7 +72,9 @@ export default function PacketContent({ data }: { data: any }) {
           <Button onClick={() => incPage()}>Tampilkan Lainnya</Button>
         )}
       </div>
-      {packetData.length === 0 && <span className="flex justify-center">Tidak ada paket.</span>}
+      {packetData.length === 0 && (
+        <span className="flex justify-center">Tidak ada paket.</span>
+      )}
     </section>
   );
 }
