@@ -20,7 +20,7 @@ import {
   FaRegStar,
 } from "react-icons/fa";
 import { formatDate } from "@/lib/Parser/DateFormat";
-import { IoLocation, IoTimeSharp } from "react-icons/io5";
+import { IoExtensionPuzzle, IoLocation, IoTimeSharp } from "react-icons/io5";
 import {
   Tooltip,
   TooltipContent,
@@ -34,49 +34,31 @@ import { useDotButton } from "@/components/images/useDotButtons";
 import OrderButton from "@/components/order/OrderButton";
 import { useComparison } from "@/lib/Zustands/User/Comparison";
 import { FiTrash2 } from "react-icons/fi";
+import { formatRupiah } from "@/lib/String/RupiahFormat";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Compare } from "@/components/packet/action";
 
 export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
-  const [compare, setCompare]: any = useState([]);
   const [dots, setDots]: any = useState([]);
-  const setCount = useComparison((state) => state.setCount);
+  const decCount = useComparison((state) => state.decCount);
   const [api, setApi] = React.useState<CarouselApi>();
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
-  paket_umroh = paket_umroh.map((paket: any, index: number) => {
-    let isSyariah = true;
-    if (index === 3 || index === 1) isSyariah = false;
-    return {
-      ...paket,
-      is_syariah: isSyariah,
-    };
-  });
-
+  const [collapseId, setCollapseId] = useState("facility");
   const [paket, setPaket] = useState(paket_umroh);
-  const setComparison = (data: any) => {
-    let comparison = [...compare];
-
-    if (comparison.find((comp) => comp.id === data.id)) {
-      comparison = comparison.filter((comp) => comp.id !== data.id);
-    } else {
-      if (comparison.length === 2) comparison.pop();
-      comparison.push(data);
-    }
-
-    setCompare(comparison);
-  };
 
   const deleteCompare = (id: string) => {
-    let comparison = [...compare];
-
-    comparison = comparison.filter((comp) => comp.id !== id);
-
-    setCompare(comparison);
+    Compare("/", id, "detachment");
+    decCount();
   };
 
   const deleteComparison = (id: string) => {
+    deleteCompare(id);
     let comparison = [...paket];
-    if (compare.find((comp: any) => comp.id === id)) {
-      deleteCompare(id);
-    }
     comparison = comparison.filter((comp) => comp.id !== id);
     if (comparison.length === 0) comparison = [];
     setPaket(comparison);
@@ -110,16 +92,16 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
         </div>
       )}
       <Carousel opts={{ loop: false }} className="w-full" setApi={setApi}>
-        <CarouselContent className="p-1 py-5">
+        <CarouselContent className="p-1 py-5 ">
           {paket &&
             paket.map((paket_umroh: any, index: number) => (
               <CarouselItem
                 key={index}
-                className="md:basis-1/2 lg:basis-1/4 flex justify-center"
+                className="basis-1/1 md:basis-1/2 lg:basis-1/3 xl:basis-1/4 flex justify-center w-full"
               >
                 <Card
                   className={
-                    "p-3 hover:outline hover:outline-1 shadow-md hover:outline-blue-400 relative"
+                    "p-3 hover:outline hover:outline-1 shadow-md hover:outline-blue-400 relative w-full"
                   }
                   //   onClick={() => setComparison(paket_umroh)}
                 >
@@ -132,39 +114,36 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
                     )}
                   </div>
 
-                  <div className="flex justify-between gap-3 items-center">
+                  <div className="flex gap-3 items-start">
                     <Image
-                      className="rounded object-cover w-[100px] h-[70px]"
+                      className="rounded object-cover max-w-[100px] max-h-[70px]"
                       loading={"lazy"}
-                      src={paket_umroh?.img}
-                      alt="Pic 1"
+                      placeholder="blur"
+                      blurDataURL={
+                        "/api/image/blur?url=" + paket_umroh?.gallery?.image_url
+                      }
+                      src={paket_umroh?.gallery?.image_url}
+                      alt={paket_umroh?.gallery?.title}
+                      style={{
+                        width: "100px",
+                        height: "70px",
+                      }}
                       height={100}
                       width={100}
                     />
                     <div className="flex flex-col">
                       <Link
-                        href={`/paket/${String(paket_umroh.title).replaceAll(
-                          " ",
-                          "-"
-                        )}`}
+                        href={`/paket/${paket_umroh?.slug}`}
                         key={index}
+                        title={paket_umroh.title}
                       >
-                        <span className="text-sm font-semibold line-clamp-2 hover:text-blue-600">
+                        <span className="text-sm font-semibold line-clamp-1 hover:text-blue-600">
                           {paket_umroh.title}
                         </span>
                       </Link>
                       <div className="flex justify-between">
                         <span className="text-sm text-orange-400 font-bold">
-                          Rp.{" "}
-                          {paket_umroh.price.toString().length >= 6
-                            ? paket_umroh.price.toString().slice(0, 2) +
-                              "," +
-                              paket_umroh.price.toString().charAt(2) +
-                              "jt"
-                            : paket_umroh.price.toString().slice(0, 3) + "rb"}
-                        </span>
-                        <span className="text-sm text-black/60">
-                          {paket_umroh.feature}
+                          {formatRupiah(paket_umroh?.price)}
                         </span>
                       </div>
                     </div>
@@ -173,28 +152,32 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
                     <div className="flex justify-between">
                       <span className="text-sm">Sisa Seat</span>
                       <span className="text-sm font-bold">
-                        {paket_umroh.sisa_seat} Seat
+                        {paket_umroh?.quota} Seat
                       </span>
                     </div>
-                    <Progress className="" value={paket_umroh.sisa_seat} />
+                    <Progress
+                      className=""
+                      value={paket_umroh.quota}
+                      max={paket_umroh.quota}
+                    />
                   </div>
                   <Separator />
                   <div className="flex justify-between my-2">
                     <span className="text-sm flex gap-2 items-center">
                       <FaRegCalendarAlt />
-                      {formatDate(paket_umroh.date_going)}
+                      {formatDate(paket_umroh.departure_time)}
                     </span>
                     <span className="text-sm flex gap-2 items-center">
-                      {paket_umroh.star_hotel}{" "}
+                      {paket_umroh.hotel_class}{" "}
                       <FaRegStar className="text-yellow-500" /> <FaHotel />
                     </span>
                   </div>
                   <div className="flex justify-between my-2">
                     <span className="text-sm flex gap-2 items-center">
-                      <FaPlaneDeparture /> {paket_umroh.plane}
+                      <FaPlaneDeparture /> {paket_umroh.airline}
                     </span>
                     <span className="text-sm flex gap-2 items-center">
-                      {paket_umroh.days} Hari <IoTimeSharp />
+                      {paket_umroh.travel_duration} Hari <IoTimeSharp />
                     </span>
                   </div>
                   <div className="flex justify-between my-2">
@@ -202,32 +185,15 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
                       <IoLocation /> {paket_umroh.departing_from}
                     </span>
                     <span className="text-sm flex gap-2 items-center">
-                      {paket_umroh.feature_detail} <FaBed />
+                      {paket_umroh.variant_counts === 0
+                        ? ""
+                        : paket_umroh.variant_counts + " Add-ons"}
+                      {paket_umroh.variant_counts !== 0 && (
+                        <IoExtensionPuzzle />
+                      )}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center my-3">
-                    <div>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Image
-                              src={
-                                "https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg"
-                              }
-                              className={
-                                !paket_umroh.is_syariah ? " grayscale" : ""
-                              }
-                              alt="Is Syariah"
-                              width={60}
-                              height={20}
-                            />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Pembayaran Syariah</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </div>
+                  <div className="flex justify-end items-center my-3">
                     <div className="flex items-center gap-1 z-20">
                       <OrderButton />
                       <TooltipProvider>
@@ -247,47 +213,72 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
                       </TooltipProvider>
                     </div>
                   </div>
-                  <div className="relative w-full my-3">
-                    <div className="absolute inset-0 flex items-center">
-                      <Separator className="w-full" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
+                  <Accordion
+                    type="single"
+                    value={collapseId}
+                    collapsible
+                    onValueChange={(val) => setCollapseId(val)}
+                  >
+                    <AccordionItem value="facility">
+                      <AccordionTrigger className="uppercase text-black/70">
                         Fasilitas
-                      </span>
-                    </div>
-                  </div>
-                  <ul className="list-disc list-inside text-sm">
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    {index > 3 && <li>Lorem ipsum dolor sit amet.</li>}
-                  </ul>
-                  <div className="relative w-full my-3">
-                    <div className="absolute inset-0 flex items-center">
-                      <Separator className="w-full" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-disc list-inside text-sm">
+                          {paket_umroh?.facilities.map((facility: any) => (
+                            <li>{facility?.description}</li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="hotel">
+                      <AccordionTrigger className="uppercase text-black/70">
                         Hotel
-                      </span>
-                    </div>
-                  </div>
-                  <ul className="list-disc list-inside text-sm">
-                    <li>Le Meridien Towers Makkah</li>
-                    <li>Dar Al Eiman Al Andalus Hotel</li>
-                  </ul>
-                  <div className="relative w-full my-3">
-                    <div className="absolute inset-0 flex items-center">
-                      <Separator className="w-full" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-disc list-inside text-sm">
+                          {paket_umroh?.hotels &&
+                            paket_umroh?.hotels.map(
+                              (hotel: any, index: number) => (
+                                <li key={index}>{hotel.name}</li>
+                              )
+                            )}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="airline">
+                      <AccordionTrigger className="uppercase text-black/70">
                         Penerbangan
-                      </span>
-                    </div>
-                  </div>
-                  <ul className="list-disc list-inside text-sm">
-                    <li>Garuda Indonesia</li>
-                  </ul>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-disc list-inside text-sm">
+                          {paket_umroh?.airlines &&
+                            paket_umroh?.airlines.map(
+                              (airline: any, index: number) => (
+                                <li key={index}>{airline.airline_name}</li>
+                              )
+                            )}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="addons">
+                      <AccordionTrigger className="uppercase text-black/70">
+                        Add-ons
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <ul className="list-disc list-inside text-sm">
+                          {paket_umroh?.variants &&
+                            paket_umroh?.variants.map(
+                              (addon: any, index: number) => (
+                                <li key={index}>{addon.title}</li>
+                              )
+                            )}
+                        </ul>
+                        {paket_umroh?.variants?.length === 0 &&
+                          "Tidak ada Add-ons."}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </Card>
               </CarouselItem>
             ))}
@@ -296,11 +287,11 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
           <>
             <CarouselPrevious
               variant={"default"}
-              className="bg-green-400/70 hover:bg-green-500"
+              className="bg-green-400/70 hover:bg-green-500 z-90 mt-[3rem]"
             />
             <CarouselNext
               variant={"default"}
-              className="bg-green-400/70 hover:bg-green-500"
+              className="bg-green-400/70 hover:bg-green-500 z-90 mt-[3rem]"
             />
           </>
         )}

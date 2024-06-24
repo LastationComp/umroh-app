@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import { getServerSession } from "next-auth";
 import { AuthOptions } from "../api/auth/AuthOptions";
 import Provider from "@/components/Provider";
+import { getUserComparison } from "./action";
 
 export default async function Layout({
   children,
@@ -11,11 +12,12 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(AuthOptions);
+  const comparison_count = await getUserComparison();
   return (
     <section className="min-h-screen flex flex-col w-screen">
       <section className="relative">
         <Provider session={session}>
-          <Navbar session={session} />
+          <Navbar session={session} comparison={comparison_count} />
         </Provider>
         <div className="my-3">{children}</div>
       </section>

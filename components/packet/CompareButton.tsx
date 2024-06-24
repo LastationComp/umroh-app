@@ -28,25 +28,32 @@ import { useComparison } from "@/lib/Zustands/User/Comparison";
 interface CompareProps {
   id?: string;
   slug?: string;
+  title?: string;
   compared?: boolean;
 }
 export default function CompareButton({
   id,
   slug,
+  title,
   compared = false,
 }: CompareProps) {
   const [isCompared, setIsCompared] = useState(compared);
   const [openDialog, setOpenDialog] = useState(false);
-  const { addCompare, removeCompare, ids } = useComparison();
-
+  const { incCount, decCount } = useComparison();
   const pathname = usePathname();
   const handleButton = async () => {
     const result = await checkCompare(pathname + "/" + slug);
     if (!result) return;
-    if (!isCompared) await addCompare(id ?? "");
-    if (isCompared) await removeCompare(id ?? "");
+    if (!isCompared) {
+      Compare(pathname + "/" + slug, id, "attachment");
+      incCount();
+    }
+    if (isCompared) {
+      Compare(pathname + "/" + slug, id, "detachment");
+      decCount();
+    }
+
     setIsCompared(!isCompared);
-    Compare(pathname + "/" + slug, [...ids, id ?? ""]);
     if (isCompared) return;
 
     return setOpenDialog(true);
@@ -62,10 +69,7 @@ export default function CompareButton({
         <DialogContent className="max-w-lg scale-90 flex flex-col justify-center items-center">
           <DialogHeader className="flex flex-col items-center">
             <DialogTitle>Paket Berhasil Ditambahkan!</DialogTitle>
-            <p className="line-clamp-1">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur,
-              veritatis.
-            </p>
+            <p className="line-clamp-1">{title}</p>
           </DialogHeader>
           <div className="flex gap-3">
             <Button onClick={handleCloseDialog}>Lanjut Mencari Paket</Button>

@@ -13,12 +13,12 @@ import LoadingSingleSkeleton from "@/components/Suspense/LoadingSingleSkeleton";
 import TravelPacketCard from "@/components/packet/TravelPacketCard";
 import { useSearchPacket } from "@/lib/Zustands/LandingPage/SearchPacket";
 import { useComparison } from "@/lib/Zustands/User/Comparison";
-import { Compare } from "../action";
 export default function PacketContent({ data }: { data: any }) {
   const [packetData, setPacketData]: any = useState(data?.data);
-  const { page, incPage, resetPage } = useSearchPacket((state) => state);
-  const { setCompares, ids } = useComparison();
-  const firstRender = useRef(false);
+  const page = useSearchPacket((state) => state.page);
+  const incPage = useSearchPacket((state) => state.incPage);
+  const resetPage = useSearchPacket((state) => state.resetPage);
+  const firstRendered = useRef(false);
   const [isPending, startTransition] = useTransition();
   const [hasMoreData, setHasMoreData] = useState(!!data?.next_page_url);
   const fetchData = () => {
@@ -31,28 +31,18 @@ export default function PacketContent({ data }: { data: any }) {
     });
   };
 
-  const fetchComparison = async () => {
-    const res = await getUserComparison();
-    setCompares(res.data);
-  };
-
-  useEffect(() => {
-    fetchComparison();
+  useMemo(() => {
     resetPage();
   }, []);
 
   useEffect(() => {
-    if (page === 1) return;
-    fetchData();
+    if (firstRendered.current) {
+      if (page === 1) return;
+      fetchData();
+    }
+
+    firstRendered.current = true;
   }, [page]);
-
-  // useEffect(() => {
-  //   if (firstRender.current) {
-  //     Compare(ids);
-  //   }
-
-  //   firstRender.current = true;
-  // }, [ids]);
 
   return (
     <section>

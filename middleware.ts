@@ -112,7 +112,6 @@ export async function middleware(req: NextRequest) {
 
     if (pathname === "/auth") return redirect("/");
 
-
     if (pathname === "/daftar") return redirect("/");
 
     if (pathname.includes("dashboard")) {
@@ -158,6 +157,8 @@ export async function middleware(req: NextRequest) {
   if (!token) {
     if (pathname.includes("dashboard")) return redirect("/");
     if (pathname.startsWith("/profile")) return redirect("/");
+    if (pathname.startsWith("/perbandingan")) return redirect("/masuk");
+    if (pathname.startsWith("/tracks")) return redirect("/masuk");
     if (pathname.startsWith("/verify/email")) return redirect("/");
     if (pathname.startsWith("/admin")) return redirect("/");
     if (pathname.startsWith("/travel")) return redirect("/");

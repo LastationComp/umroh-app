@@ -25,7 +25,7 @@ export async function getPackets(query: any = {}) {
   const token = await getLaravelToken();
   const queryParams = createQueryParams({
     page: query.page,
-    paginate: 3,
+    paginate: 6,
     q: query.q,
   });
   const res = await newApiFetch({

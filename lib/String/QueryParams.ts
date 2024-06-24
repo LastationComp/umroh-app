@@ -5,7 +5,9 @@ export function createQueryParams(object: any) {
   const queryArray: any[] = [];
   keys.forEach((key) => {
     if (!object[key]) return;
-    const concatQuery = `${key}=${object[key]}`;
+    const valueKey: string = object[key];
+    if (!valueKey) return;
+    const concatQuery = `${key}=${String(valueKey).replaceAll(" ", "+")}`;
     queryArray.push(concatQuery);
   });
 

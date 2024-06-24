@@ -39,13 +39,15 @@ export default function AuthenticationPage() {
 
   const continueWithGooglo = async () => {
     nProgress.start();
-    await signIn("google", { redirect: false });
+    await signIn("google", { redirect: true, callbackUrl: "/validation" });
   };
   return (
     <section className="flex flex-col gap-5 items-center">
-      <span className="text-2xl font-bold">Masuk Umroh.ai</span>
+      <span className="text-2xl font-bold">
+        Masuk {process.env.NEXT_PUBLIC_APP_NAME}
+      </span>
       <span className="text-sm text-center">
-        Masukkan username dan password untuk login ke umroh.ai
+        Masukkan username dan password untuk login ke {process.env.NEXT_PUBLIC_APP_NAME}
       </span>
       <div className="flex w-full">
         {errMsg !== "" && <Alert variant={"error"} message={errMsg} />}

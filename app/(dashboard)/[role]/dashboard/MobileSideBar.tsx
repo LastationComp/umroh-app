@@ -15,8 +15,18 @@ import {
   MdHotelClass,
   MdManageAccounts,
 } from "react-icons/md";
-import { FaGear, FaPerson } from "react-icons/fa6";
-export default function SideBar({
+import { FaBars, FaGear, FaPerson } from "react-icons/fa6";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+export default function MobileSidebar({
   role,
   travelRole,
 }: {
@@ -45,21 +55,25 @@ export default function SideBar({
 
     return (
       <Button variant={variant()} asChild className="flex justify-start">
-        <Link
-          href={newUrl}
-          className="flex items-center max-lg:justify-center gap-3"
-        >
+        <Link href={newUrl} className="flex items-center justify-start gap-3">
           {children}
-          <span className="max-lg:hidden line-clamp-1">{title}</span>
+          <span className="line-clamp-1">{title}</span>
         </Link>
       </Button>
     );
   };
   return (
-    <section className="bg-white min-h-svh max-md:hidden">
-      <aside className="p-3 sticky top-0">
+    <Sheet>
+      <SheetTrigger asChild className="md:hidden">
+        <Button type="button" variant={"outline"}>
+          <FaBars />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side={"left"}>
+        <SheetHeader>
+          <SheetTitle>Dashboard</SheetTitle>
+        </SheetHeader>
         <div className="flex flex-col gap-2">
-          <span className="text-lg font-bold">Dashboard</span>
           <Separator />
           <GenerateBar url="" title="Dashboard">
             <IoMdHome />
@@ -134,7 +148,7 @@ export default function SideBar({
             </section>
           )}
         </div>
-      </aside>
-    </section>
+      </SheetContent>
+    </Sheet>
   );
 }

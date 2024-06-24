@@ -21,6 +21,10 @@ export const useSearchPacket = create<PageProps & PageState>((set) => ({
   search: "",
   incPage: () => set((state) => ({ page: state.page + 1 })),
   decPage: () => set((state) => ({ page: state.page - 1 })),
-  resetPage: () => set(() => ({ page: 1 })),
+  resetPage: () =>
+    set({
+      page: 1,
+      search: "",
+    }),
   setSearch: (value: string) => set(() => ({ search: value })),
 }));

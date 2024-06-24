@@ -9,29 +9,6 @@ export async function Logout(formData: FormData) {
   cookiesStorage.delete("auth");
 }
 
-export async function Compare(packetIds?: string[]) {
-  const token = await getLaravelToken();
-
-  const formData = new FormData();
-  formData.set("compare_ids", packetIds?.join(",") ?? "");
-
-  const res = await newApiFetch({
-    url: "/api/public/travel-packets/compare",
-    method: "POST",
-    token: token,
-    body: formData,
-    options: {
-      cache: false,
-    },
-  });
-
-  revalidateTag("public-travel-packets");
-  // console.log(await res.json());
-  if (!res.ok && res.status !== 200) return false;
-
-  return true;
-}
-
 export async function getUserComparison() {
   const token = await getLaravelToken();
 
@@ -42,8 +19,8 @@ export async function getUserComparison() {
 
   if (res.status === 200) {
     const result = await res.json();
-    return result;
+    return result.count;
   } else {
-    return false;
+    return 0;
   }
 }

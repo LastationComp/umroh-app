@@ -12,12 +12,12 @@ export default function page() {
 
   const fetchUserProfile = async () => {
     const compare = await getUserComparison();
-
-    setCompares(compare?.data);
+    setCount(compare.count);
 
     router.push("/");
     router.refresh();
   };
+  
   useEffect(() => {
     if (firstRendered.current) {
       fetchUserProfile();

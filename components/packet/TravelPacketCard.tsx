@@ -15,7 +15,7 @@ import {
   FaRegStar,
 } from "react-icons/fa";
 import { formatDate } from "@/lib/Parser/DateFormat";
-import { IoLocation, IoTimeSharp } from "react-icons/io5";
+import { IoExtensionPuzzle, IoLocation, IoTimeSharp } from "react-icons/io5";
 import CompareButton from "./CompareButton";
 import OrderButton from "../order/OrderButton";
 import Favorites from "../order/Favorites";
@@ -98,8 +98,8 @@ export default function TravelPacketCard({ data, index, props }: PacketProps) {
           <IoLocation /> {data?.departing_from}
         </span>
         <span className="text-sm flex gap-2 items-center">
-          {/* {data.feature_detail} <FaBed /> */}
-          Development
+          {data.variant_counts === 0 ? "" : data.variant_counts + " Add-ons"}
+          {data.variant_counts !== 0 && <IoExtensionPuzzle />}
         </span>
       </div>
       <div className="flex justify-between items-center my-3">
@@ -131,6 +131,7 @@ export default function TravelPacketCard({ data, index, props }: PacketProps) {
             id={data?.id ?? ""}
             slug={data?.slug}
             compared={data?.is_compared}
+            title={data?.title}
           />
           <Favorites data={data} />
 

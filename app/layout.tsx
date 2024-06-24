@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={inter.className + " bg-tacao m-0 p-0"}>
         <NextTopLoader showSpinner={false} initialPosition={0.3} />
         {children}
-        <Suspense>
+        <Suspense fallback>
           <ToastContainer position={"top-center"} theme="colored" />
         </Suspense>
         <Toaster />

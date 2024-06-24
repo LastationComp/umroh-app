@@ -4,7 +4,11 @@ import { getLaravelToken } from "@/lib/Handling/userSession";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function Compare(urlRedirect?: string, packetIds?: string[]) {
+export async function Compare(
+  urlRedirect?: string,
+  packetId?: string,
+  type: string = "attachment"
+) {
   const token = await getLaravelToken();
   if (!token)
     return redirect(
@@ -12,8 +16,8 @@ export async function Compare(urlRedirect?: string, packetIds?: string[]) {
     );
 
   const formData = new FormData();
-  console.log(packetIds);
-  formData.set("compare_ids", packetIds?.join(",") ?? "");
+  formData.set("compare_id", packetId ?? "");
+  formData.set("compare_type", type);
 
   const res = await newApiFetch({
     url: "/api/public/travel-packets/compare",
@@ -23,6 +27,7 @@ export async function Compare(urlRedirect?: string, packetIds?: string[]) {
   });
 
   revalidateTag("public-travel-packets");
+  revalidateTag("user-comparison");
   if (!res.ok && res.status !== 200) return false;
 
   return true;

@@ -75,7 +75,7 @@ export default function Page({
               key={searchParams?.q}
               fallback={<LoadingSkeleton grid={3} card={12} />}
             >
-              <SearchContent query={searchParams?.q ?? ""} />
+              <SearchContent query={searchParams?.q ?? ''} />
             </Suspense>
           </div>
         </Card>
