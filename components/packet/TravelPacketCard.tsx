@@ -70,9 +70,13 @@ export default function TravelPacketCard({ data, index, props }: PacketProps) {
       <div className="my-2">
         <div className="flex justify-between">
           <span className="text-sm">Sisa Seat</span>
-          <span className="text-sm font-bold">{"999"} Seat</span>
+          <span className="text-sm font-bold">{data?.quota} Seat</span>
         </div>
-        <Progress className="" value={50} max={data?.quota} />
+        <Progress
+          className=""
+          value={data?.quota - Math.floor(data?.quota / 2)}
+          max={data?.quota}
+        />
       </div>
       <Separator />
       <div className="flex justify-between my-2">

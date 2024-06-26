@@ -131,6 +131,13 @@ export default function SideBar({
                   <FaGear />
                 </GenerateBar>
               )}
+              <div className="flex flex-col max-md:hidden">
+                <span className="text-sm">Monitoring</span>
+                <Separator />
+              </div>
+              <GenerateBar url="/monitoring/packets" title="Paket">
+                <MdDomainVerification />
+              </GenerateBar>
             </section>
           )}
         </div>

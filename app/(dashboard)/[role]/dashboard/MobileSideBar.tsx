@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -34,6 +34,7 @@ export default function MobileSidebar({
   travelRole: any;
 }) {
   const pathname = usePathname();
+  const [openMobile, setOpenMobile] = useState(false);
   const GenerateBar = ({
     url,
     title,
@@ -54,7 +55,12 @@ export default function MobileSidebar({
     };
 
     return (
-      <Button variant={variant()} asChild className="flex justify-start">
+      <Button
+        variant={variant()}
+        onClick={() => setOpenMobile(!openMobile)}
+        asChild
+        className="flex justify-start"
+      >
         <Link href={newUrl} className="flex items-center justify-start gap-3">
           {children}
           <span className="line-clamp-1">{title}</span>
@@ -63,7 +69,7 @@ export default function MobileSidebar({
     );
   };
   return (
-    <Sheet>
+    <Sheet open={openMobile} onOpenChange={setOpenMobile}>
       <SheetTrigger asChild className="md:hidden">
         <Button type="button" variant={"outline"}>
           <FaBars />
@@ -80,7 +86,7 @@ export default function MobileSidebar({
           </GenerateBar>
           {(role === "admin" || role === "staff") && (
             <section className="flex flex-col gap-3">
-              <div className="flex flex-col max-md:hidden">
+              <div className="flex flex-col">
                 <span className="text-sm">Master Data</span>
                 <Separator />
               </div>
@@ -106,7 +112,7 @@ export default function MobileSidebar({
                 <FaHotel />
               </GenerateBar>
               {role === "admin" && (
-                <div className="flex flex-col max-md:hidden">
+                <div className="flex flex-col">
                   <span className="text-sm">Master Akun</span>
                   <Separator />
                 </div>
@@ -116,7 +122,7 @@ export default function MobileSidebar({
                   <MdManageAccounts />
                 </GenerateBar>
               )}
-              <div className="flex flex-col max-md:hidden">
+              <div className="flex flex-col">
                 <span className="text-sm">Travel</span>
                 <Separator />
               </div>
@@ -128,7 +134,7 @@ export default function MobileSidebar({
 
           {role === "travel" && (
             <section className="flex flex-col gap-3">
-              <div className="flex flex-col max-md:hidden">
+              <div className="flex flex-col">
                 <span className="text-sm">Travel</span>
                 <Separator />
               </div>
@@ -145,6 +151,13 @@ export default function MobileSidebar({
                   <FaGear />
                 </GenerateBar>
               )}
+              <div className="flex flex-col">
+                <span className="text-sm">Monitoring</span>
+                <Separator />
+              </div>
+              <GenerateBar url="/monitoring/packets" title="Paket">
+                <MdDomainVerification />
+              </GenerateBar>
             </section>
           )}
         </div>

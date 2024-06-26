@@ -147,7 +147,10 @@ export async function middleware(req: NextRequest) {
           pattern = new RegExp("packet", "g");
         }
         if (token.travel.role === "manager") {
-          pattern = new RegExp("packet|settings|travels/staffs", "g");
+          pattern = new RegExp(
+            "packet|settings|travels/staffs|monitoring/packets",
+            "g"
+          );
         }
         if (!pattern.test(pathname)) return redirect("/");
       }

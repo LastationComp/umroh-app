@@ -29,7 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-tacao m-0 p-0"}>
+      <body
+        className={
+          inter.className +
+          " bg-tacao m-0 p-0 bg-blend-soft-light bg-kabah bg-center bg-repeat  relative"
+        }
+      >
         <NextTopLoader showSpinner={false} initialPosition={0.3} />
         {children}
         <Suspense fallback>

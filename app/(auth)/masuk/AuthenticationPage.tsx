@@ -47,7 +47,7 @@ export default function AuthenticationPage() {
         Masuk {process.env.NEXT_PUBLIC_APP_NAME}
       </span>
       <span className="text-sm text-center">
-        Masukkan username dan password untuk login ke {process.env.NEXT_PUBLIC_APP_NAME}
+        Masukkan username dan password untuk login ke {process.env.NEXT_PUBLIC_APP_NAME}  
       </span>
       <div className="flex w-full">
         {errMsg !== "" && <Alert variant={"error"} message={errMsg} />}

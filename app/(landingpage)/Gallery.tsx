@@ -28,7 +28,7 @@ export default function Gallery() {
           <h1 className="text-[24px] font-bold">Galeri Jamaah</h1>
         </div>
       </section>
-      <section className="flex justify-center items-center my-3 max-md:container max-md:mx-auto bg-blue-dark h-[250px]">
+      <section className="flex justify-center items-center max-md:container max-md:mx-auto bg-blue-dark h-[250px]">
         <Carousel
           plugins={[
             Autoplay({

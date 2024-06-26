@@ -256,7 +256,7 @@ export default function SearchContent({ data }: { data: any[] }) {
             </div>
           </div>
 
-          <Button className="flex gap-3 bg-orange-500 hover:bg-orange-600 mt-auto">
+          <Button className="flex gap-1.5 mt-auto">
             <IoIosSearch /> Cari Paket
           </Button>
         </div>
