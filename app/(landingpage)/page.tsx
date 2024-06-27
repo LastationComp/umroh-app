@@ -12,14 +12,11 @@ import Gallery from './Gallery';
 
 const FeatureContent = dynamic(() => import('./FeaturesContent'), { loading: () => <LoadingUI /> });
 
-
 export default async function Home() {
   return (
     <>
       <TopCarousel />
-      <Suspense fallback={<LoadingUI />}>
-        <Search />
-      </Suspense>
+      <Search />
       <Gallery />
       <FeatureContent />
       <Suspense fallback={<LoadingUI />}>

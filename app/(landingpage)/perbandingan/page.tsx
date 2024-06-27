@@ -1,7 +1,5 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import React, { Suspense, useState } from 'react';
-import { Separator } from '@/components/ui/separator';
-import ComparisonCarts from './ComparisonCarts';
+import React, { Suspense } from 'react';
 import LoadingUI from '@/components/Suspense/Loading';
 import Comparison from './Comparison';
 

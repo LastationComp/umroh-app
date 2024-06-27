@@ -14,7 +14,7 @@ export default async function Layout({
   const session = await getServerSession(AuthOptions);
   const comparison_count = await getUserComparison();
   return (
-    <section className="min-h-screen flex flex-col w-screen">
+    <section className="min-h-screen flex flex-col">
       <section className="relative">
         <Provider session={session}>
           <Navbar session={session} comparison={comparison_count} />

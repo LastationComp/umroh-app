@@ -69,8 +69,8 @@ export default function MobileSidebar({
     );
   };
   return (
-    <Sheet open={openMobile} onOpenChange={setOpenMobile}>
-      <SheetTrigger asChild className="md:hidden">
+    <Sheet open={openMobile} onOpenChange={setOpenMobile} >
+      <SheetTrigger asChild className="md:hidden z-50">
         <Button type="button" variant={"outline"}>
           <FaBars />
         </Button>

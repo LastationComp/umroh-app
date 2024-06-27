@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
-import { getUserComparison } from "./action";
-import { useComparison } from "@/lib/Zustands/User/Comparison";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useRef } from 'react';
+import { getUserComparison } from './action';
+import { useComparison } from '@/lib/Zustands/User/Comparison';
+import { useRouter } from 'next/navigation';
 
 export default function page() {
   const firstRendered = useRef(false);
@@ -14,10 +14,10 @@ export default function page() {
     const compare = await getUserComparison();
     setCount(compare.count);
 
-    router.push("/");
+    router.replace('/');
     router.refresh();
   };
-  
+
   useEffect(() => {
     if (firstRendered.current) {
       fetchUserProfile();

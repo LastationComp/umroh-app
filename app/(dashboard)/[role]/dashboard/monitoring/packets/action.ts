@@ -1,12 +1,9 @@
-"use server";
+'use server';
 
-import { newApiFetch } from "@/lib/Fetcher";
-import { getLaravelToken } from "@/lib/Handling/userSession";
-import { createQueryParams } from "@/lib/String/QueryParams";
-import {
-  getTimeString,
-  parseDateToTimeString,
-} from "@/lib/String/server/ParsingDate";
+import { newApiFetch } from '@/lib/Fetcher';
+import { getLaravelToken } from '@/lib/Handling/userSession';
+import { createQueryParams } from '@/lib/String/QueryParams';
+import { getTimeString, parseDateToTimeString } from '@/lib/String/server/ParsingDate';
 
 export async function getMonitoringPackets(data: any) {
   const token = await getLaravelToken();
@@ -16,7 +13,7 @@ export async function getMonitoringPackets(data: any) {
     paginate: 10,
   });
   const res = await newApiFetch({
-    url: "/api/travel/monitoring/packets" + queryParams,
+    url: '/api/travel/monitoring/packets' + queryParams,
     token: token,
     options: {
       cache: false,
@@ -24,7 +21,6 @@ export async function getMonitoringPackets(data: any) {
   });
 
   const result = await res.json();
-
   return result.data;
 }
 
@@ -32,7 +28,7 @@ export async function getPacketName(id: string) {
   const token = await getLaravelToken();
 
   const res = await newApiFetch({
-    url: "/api/metadata/packet/" + id,
+    url: '/api/metadata/packet/' + id,
     token: token,
   });
 
@@ -45,7 +41,7 @@ export async function getMonitoringPacketById(id: string) {
   const token = await getLaravelToken();
 
   const res = await newApiFetch({
-    url: "/api/travel/monitoring/packets/" + id,
+    url: '/api/travel/monitoring/packets/' + id,
     token: token,
   });
 
@@ -56,7 +52,7 @@ export async function getMonitoringReportPacket(id: string) {
   const token = await getLaravelToken();
 
   const res = await newApiFetch({
-    url: "/api/travel/monitoring/packets/" + id + "/graph",
+    url: '/api/travel/monitoring/packets/' + id + '/graph',
     token: token,
   });
 
@@ -67,19 +63,17 @@ export async function getMonitoringReportPacket(id: string) {
 
   for (let int = -3; int <= 3; int++) {
     const date = new Date(new Date().setHours(new Date().getHours() + int));
-    const timeFinal: any = parseDateToTimeString(date);
+    const timeFinal: any = parseDateToTimeString(date.toString());
     datasets[timeFinal] = 0;
+
     const findGraph = result.comparisons_curdate.find((graph: any) => {
       const dateHour = parseDateToTimeString(graph.datetime);
-      console.log(timeFinal);
       return dateHour.toString() === timeFinal.toString();
     });
 
-    if (!findGraph) continue;
-
-    const parseTimeGraph = parseDateToTimeString(findGraph.datetime);
-
-    datasets[timeFinal] = findGraph.user_count;
+    if (findGraph) {
+      datasets[timeFinal] = findGraph.user_count;
+    }
   }
 
   labels = Object.keys(datasets);

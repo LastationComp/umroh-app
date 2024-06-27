@@ -1,4 +1,3 @@
-"use server";
 
 import { isString } from "util";
 
@@ -16,7 +15,7 @@ export const getTimeString = () => {
 export const parseDateToTimeString = (dateString: string | Date) => {
   let date = new Date();
   if (isString(dateString)) {
-    date = new Date(dateString + " GMT");
+    date = new Date(dateString);
   } else {
     date = dateString;
   }
