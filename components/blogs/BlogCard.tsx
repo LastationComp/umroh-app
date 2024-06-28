@@ -8,6 +8,7 @@ import PopupSingleImage from '../images/PopupSingleImage';
 import { MdOutlineDateRange } from 'react-icons/md';
 import Tag from './Tag';
 import { Separator } from '../ui/separator';
+import LazyLoadedContent from '../images/LazyLoadedContent';
 
 interface BlogProps {
   props?: Attributes | DOMAttributes<HTMLDivElement>;
@@ -22,7 +23,18 @@ export default function BlogCard({ props }: BlogProps) {
             <FontAwesomeIcon icon={faEye} className="text-white" />
           </span>
         </div>
-        <Image src={'https://c4.wallpaperflare.com/wallpaper/216/846/440/mount-fuji-japan-landscape-calm-waters-wallpaper-preview.jpg'} className="rounded-xl w-full object-cover h-[200px]" alt="blog 1" width={1000} height={1000} />
+        <LazyLoadedContent>
+          <Image
+            loading={'lazy'}
+            placeholder="blur"
+            blurDataURL="/api/image/blur?url=https://c4.wallpaperflare.com/wallpaper/216/846/440/mount-fuji-japan-landscape-calm-waters-wallpaper-preview.jpg"
+            src={'https://c4.wallpaperflare.com/wallpaper/216/846/440/mount-fuji-japan-landscape-calm-waters-wallpaper-preview.jpg'}
+            className="rounded-xl w-full object-cover h-[200px]"
+            alt="blog 1"
+            width={1000}
+            height={1000}
+          />
+        </LazyLoadedContent>
       </div>
       <section className="p-3 flex flex-col gap-3">
         <div className="flex justify-between gap-3 text-slate-500">

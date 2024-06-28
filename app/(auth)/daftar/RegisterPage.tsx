@@ -48,9 +48,11 @@ export default function RegisterPage() {
   };
   return (
     <section className="flex flex-col gap-5 max-md:w-full">
-      <span className="text-2xl font-bold text-center">Daftar Umroh.ai</span>
+      <span className="text-2xl font-bold text-center">
+        Daftar {process.env.NEXT_PUBLIC_APP_NAME}
+      </span>
       <span className="text-sm text-center">
-        Masukkan data anda untuk daftar ke umroh.ai
+        Masukkan data anda untuk daftar ke {process.env.NEXT_PUBLIC_APP_NAME}
       </span>
       <form
         action={register}

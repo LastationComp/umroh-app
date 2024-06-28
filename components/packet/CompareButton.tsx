@@ -1,40 +1,58 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
-import { Button } from '../ui/button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
-import nProgress from 'nprogress';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useToast } from '../ui/use-toast';
-import { FaCheck } from 'react-icons/fa';
-import { delay } from '@/lib/Promise/Delay';
-import { Compare } from './action';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import Link from 'next/link';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
+import { Button } from "../ui/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
+import { usePathname } from "next/navigation";
+import { checkCompare, Compare } from "./action";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Link from "next/link";
+import { useComparison } from "@/lib/Zustands/User/Comparison";
 
 interface CompareProps {
   id?: string;
+  slug?: string;
+  title?: string;
+  compared?: boolean;
 }
-export default function CompareButton({ id }: CompareProps) {
-  const [isCompared, setIsCompared] = useState(false);
+export default function CompareButton({
+  id,
+  slug,
+  title,
+  compared = false,
+}: CompareProps) {
+  const [isCompared, setIsCompared] = useState(compared);
   const [openDialog, setOpenDialog] = useState(false);
-  const { toast } = useToast();
+  const { incCount, decCount } = useComparison();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams]
-  );
-
   const handleButton = async () => {
-    const compare = await Compare(pathname + '?' + createQueryString('paket', '123'));
+    const result = await checkCompare(pathname + "/" + slug);
+    if (!result) return;
+    if (!isCompared) {
+      Compare(pathname + "/" + slug, id, "attachment");
+      incCount();
+    }
+    if (isCompared) {
+      Compare(pathname + "/" + slug, id, "detachment");
+      decCount();
+    }
 
-    if (!compare) return;
     setIsCompared(!isCompared);
     if (isCompared) return;
 
@@ -44,19 +62,19 @@ export default function CompareButton({ id }: CompareProps) {
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
-  useEffect(() => {}, [pathname, searchParams]);
+
   return (
     <section>
       <Dialog open={openDialog} onOpenChange={setOpenDialog} key={id}>
         <DialogContent className="max-w-lg scale-90 flex flex-col justify-center items-center">
           <DialogHeader className="flex flex-col items-center">
             <DialogTitle>Paket Berhasil Ditambahkan!</DialogTitle>
-            <p className="line-clamp-1">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, veritatis.</p>
+            <p className="line-clamp-1">{title}</p>
           </DialogHeader>
           <div className="flex gap-3">
             <Button onClick={handleCloseDialog}>Lanjut Mencari Paket</Button>
-            <Button variant={'outline'} asChild>
-              <Link href={'/perbandingan'}>Ke Perbandingan Paket</Link>
+            <Button variant={"outline"} asChild>
+              <Link href={"/perbandingan"}>Ke Perbandingan Paket</Link>
             </Button>
           </div>
         </DialogContent>
@@ -64,7 +82,10 @@ export default function CompareButton({ id }: CompareProps) {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant={isCompared ? 'secondary' : 'outline'} onClick={handleButton}>
+            <Button
+              variant={isCompared ? "default" : "outline"}
+              onClick={handleButton}
+            >
               <FontAwesomeIcon icon={faRightLeft} />
             </Button>
           </TooltipTrigger>

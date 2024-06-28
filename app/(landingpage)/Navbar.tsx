@@ -4,25 +4,34 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { usePathname } from 'next/navigation';
 import { BiSolidMapPin } from 'react-icons/bi';
 import ProfileMenu from '@/components/users/profile-menu';
-export default function Navbar({ session }: { session: any }) {
+import { useComparison } from '@/lib/Zustands/User/Comparison';
+import Logo from '@/public/assets/Logo.jpg';
+import Image from 'next/image';
+export default function Navbar({ session, comparison }: { session: any; comparison: any }) {
   const auth = !session === false;
   const pathname = usePathname();
+  const { count, setCount } = useComparison((state) => state);
+
+  useMemo(() => {
+    setCount(comparison);
+  }, []);
+
   return (
-    <nav className="h-[4rem] shadow-md fixed top-0 z-50 bg-blue-dark w-full ">
+    <nav className="h-[4rem] shadow-md sticky top-0 z-50 bg-blue-dark w-full ">
       <section className="md:container md:mx-auto max-md:mx-3 flex items-center justify-between h-full">
         <div className="flex md:hidden items-center gap-3">
           <Sheet>
-            <SheetTrigger className="my-3">
-              <span className="text-white flex my-auto items-center">
+            <SheetTrigger className="my-3" asChild>
+              <Button className="text-white flex my-auto items-center bg-blue-dark hover:bg-blue-dark" variant={'outline'}>
                 <FaBars className="text-md" />
-              </span>
+              </Button>
             </SheetTrigger>
             <SheetContent side={'left'} className="bg-blue-dark text-white">
               <SheetHeader>
@@ -34,7 +43,7 @@ export default function Navbar({ session }: { session: any }) {
               </SheetHeader>
               <div className="flex flex-col gap-3 items-center">
                 <Button variant={'ghost'} className="w-full" asChild>
-                  <Link href={'/paket'}>Paket Promo</Link>
+                  <Link href={'/paket'}>Paket</Link>
                 </Button>
                 <Button variant={'ghost'} className="w-full" asChild>
                   <Link href={'/blog'}>Blog</Link>
@@ -75,7 +84,7 @@ export default function Navbar({ session }: { session: any }) {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <Link href={'/paket'} legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle() + ' bg-transparent hover:bg-transparent text-white/90 hover:text-white/70'}>Paket Promo</NavigationMenuLink>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle() + ' bg-transparent hover:bg-transparent text-white/90 hover:text-white/70'}>Paket</NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -106,43 +115,28 @@ export default function Navbar({ session }: { session: any }) {
             </NavigationMenu>
           </div>
         </div>
-        {!auth && (
-          <div className="flex items-center gap-3">
-            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/masuk?redirect=/perbandingan'}>
-                <FontAwesomeIcon icon={faRightLeft} />
-              </Link>
-            </Button>
-            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/tracks'}>
-                <BiSolidMapPin />
-              </Link>
-            </Button>
+
+        <div className="flex items-center gap-3">
+          <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+            <Link href={'/perbandingan'} title="Perbandingan">
+              <FontAwesomeIcon icon={faRightLeft} />
+              <span className="bg-red-400 px-1 rounded-full absolute -top-2 -right-2 hover:text-white">{count > 0 && <span className="text-[10px] hover:text-white">{count}</span>}</span>
+            </Link>
+          </Button>
+          <Button title="Order Track" variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
+            <Link href={'/tracks'}>
+              <BiSolidMapPin />
+            </Link>
+          </Button>
+          {!auth && (
             <Button className="bg-green-600 hover:bg-green-700">
               <Link href={'/masuk?redirect=' + pathname} className="text-white/90">
                 Masuk
               </Link>
             </Button>
-          </div>
-        )}
-        {auth && (
-          <div className="flex items-center gap-3">
-            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/perbandingan'}>
-                <FontAwesomeIcon icon={faRightLeft} />
-                <span className="bg-red-400 px-1 rounded-full absolute -top-2 -right-2 hover:text-white">
-                  <span className="text-[10px] hover:text-white">22</span>
-                </span>
-              </Link>
-            </Button>
-            <Button variant={'outline'} className="text-white relative bg-transparent" size={'sm'} asChild>
-              <Link href={'/tracks'}>
-                <BiSolidMapPin />
-              </Link>
-            </Button>
-            <ProfileMenu session={session} />
-          </div>
-        )}
+          )}
+          {auth && <ProfileMenu session={session} />}
+        </div>
       </section>
     </nav>
   );

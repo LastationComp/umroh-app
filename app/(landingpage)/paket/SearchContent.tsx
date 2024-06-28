@@ -1,11 +1,14 @@
-import PacketCard from '@/components/packet/PacketCard';
-import React from 'react';
-import { getPaketUmroh } from './action';
-import PacketContent from './PacketContent';
-import SearchEngine from './SearchEngine';
+import React from "react";
+import { getPackets, getPaketUmroh } from "./action";
+import PacketContent from "./PacketContent";
+import { useSearchPacket } from "@/lib/Zustands/LandingPage/SearchPacket";
 
-export default async function SearchContent() {
-  const data = await getPaketUmroh(1);
+export default async function SearchContent({ query }: { query: string }) {
+  const data = await getPackets({
+    page: 1,
+    q: query,
+  });
+
   return (
     <section>
       <PacketContent data={data} />

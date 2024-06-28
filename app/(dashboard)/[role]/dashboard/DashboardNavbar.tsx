@@ -1,18 +1,20 @@
-import React from 'react';
-import ProfileMenu from '@/components/users/profile-menu';
-import { getServerSession, Session } from 'next-auth';
+import React from "react";
+import ProfileMenu from "@/components/users/profile-menu";
+import { getServerSession, Session } from "next-auth";
+import MobileSidebar from "./MobileSideBar";
 
 interface DashboardProps {
   role: string;
-  session: Session | null
+  session: Session | null;
 }
 
 export default function DashboardNavbar({ role, session }: DashboardProps) {
   return (
     <nav className="py-3 z-40 flex justify-between bg-white items-center gap-3 px-5 shadow-lg">
       <div className="flex items-center gap-3">
-        {role === 'travel' && (
+        {role === "travel" && (
           <section className="flex gap-3 items-center">
+            <MobileSidebar role={role} travelRole={session?.user.travel.role} />
             <span className="text-black/70">Travel Partner</span>
           </section>
         )}

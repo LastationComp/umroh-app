@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { Button } from '@/components/ui/button';
+import LazyLoadedContent from '@/components/images/LazyLoadedContent';
 
 export default function PartnerContent({ data }: { data: any[] }) {
   return (
@@ -33,9 +34,20 @@ export default function PartnerContent({ data }: { data: any[] }) {
           <CarouselContent className="">
             {data?.map((patner: any, index: number) => (
               <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">
-                <Link href={'http://localhost:3000/travel/name-travel'} className='h-full' target="_blank">
+                <Link href={'http://localhost:3000/travel/name-travel'} className="h-full" target="_blank">
                   <div className="p-5 bg-white shadow border border-1 flex items-center h-full">
-                    <Image src={patner.img_url} className=" rounded transition border-black w-[150px] object-cover" alt="Galeri " width={1000} height={1000} />
+                    <LazyLoadedContent>
+                      <Image
+                        loading={'lazy'}
+                        placeholder={'blur'}
+                        blurDataURL={'/api/image/blur?url=' + patner.img_url}
+                        src={patner.img_url}
+                        className=" rounded transition border-black object-cover"
+                        alt="Galeri"
+                        width={1000}
+                        height={1000}
+                      />
+                    </LazyLoadedContent>
                   </div>
                 </Link>
               </CarouselItem>

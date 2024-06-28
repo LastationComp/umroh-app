@@ -110,6 +110,8 @@ export async function middleware(req: NextRequest) {
 
     if (pathname === "/masuk") return redirect("/");
 
+    if (pathname === "/auth") return redirect("/");
+
     if (pathname === "/daftar") return redirect("/");
 
     if (pathname.includes("dashboard")) {
@@ -145,7 +147,10 @@ export async function middleware(req: NextRequest) {
           pattern = new RegExp("packet", "g");
         }
         if (token.travel.role === "manager") {
-          pattern = new RegExp("packet|settings|travels/staffs", "g");
+          pattern = new RegExp(
+            "packet|settings|travels/staffs|monitoring/packets",
+            "g"
+          );
         }
         if (!pattern.test(pathname)) return redirect("/");
       }
@@ -155,6 +160,8 @@ export async function middleware(req: NextRequest) {
   if (!token) {
     if (pathname.includes("dashboard")) return redirect("/");
     if (pathname.startsWith("/profile")) return redirect("/");
+    if (pathname.startsWith("/perbandingan")) return redirect("/masuk");
+    if (pathname.startsWith("/tracks")) return redirect("/masuk");
     if (pathname.startsWith("/verify/email")) return redirect("/");
     if (pathname.startsWith("/admin")) return redirect("/");
     if (pathname.startsWith("/travel")) return redirect("/");

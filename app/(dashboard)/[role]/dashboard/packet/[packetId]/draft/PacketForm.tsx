@@ -37,7 +37,7 @@ export default function PacketForm({
 }: {
   packet: any;
   packetId: string;
-  packetGalleries: React.ReactNode;
+  packetGalleries?: React.ReactNode;
   packetFacilities: React.ReactNode;
   packetDeparting: React.ReactNode;
   packetHotels: React.ReactNode;

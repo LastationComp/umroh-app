@@ -6,6 +6,7 @@ import GoogleProvider from 'next-auth/providers/google';
 const getLaravelCsrf = async () => {
   const csrf = await fetch(process.env.NEXT_PUBLIC_URL_API + '/api/sanctum/csrf-cookie', {
     credentials: 'include',
+    cache: 'no-store',
   });
 
   const cookies = csrf.headers;
@@ -147,7 +148,7 @@ export const AuthOptions: NextAuthOptions = {
         if (!res.ok && res.status !== 200) return null;
 
         const result = await res.json();
-        let user = {
+        let user: any = {
           id: result.data.id,
           name: result.data.name,
           image: result.data.image,
@@ -159,7 +160,7 @@ export const AuthOptions: NextAuthOptions = {
           expires_token: result.expires_at,
           travel: {},
         };
-        
+
         if (user.role === 'travel') {
           user = {
             ...user,
