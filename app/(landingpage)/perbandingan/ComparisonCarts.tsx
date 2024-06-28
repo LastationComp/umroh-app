@@ -226,7 +226,7 @@ export default function ComparisonCarts({ paket_umroh }: { paket_umroh: any }) {
                       <AccordionContent>
                         <ul className="list-disc list-inside text-sm">
                           {paket_umroh?.facilities.map((facility: any) => (
-                            <li>{facility?.description}</li>
+                            <li key={index}>{facility?.description}</li>
                           ))}
                         </ul>
                       </AccordionContent>

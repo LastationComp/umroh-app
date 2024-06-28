@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import PopupSliders from '@/components/images/PopupSliders';
+import LazyLoadedContent from '@/components/images/LazyLoadedContent';
 export default function Gallery() {
   const images = [
     'http://127.0.0.1:8000/storage/galleries/1.jpg',
@@ -61,20 +62,22 @@ export default function Gallery() {
             {images.map((image, i) => (
               <CarouselItem key={i} className="basis-1/1 md:basis-1/2 lg:basis-1/4 lg:basis-1/6 pl-5 flex justify-center">
                 <div className="pt-1 pb-5 px-1 bg-white shadow border border-1 flex flex-col">
-                  <Image
-                    src={`${image}`}
-                    onClick={() => {
-                      setOpenPopup(!openPopup);
-                      setSlide(i);
-                    }}
-                    className="w-[250px] h-[150px] object-cover shadow-lg rounded transition border-black cursor-pointer"
-                    alt="Galeri "
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL={'/api/image/blur?url=' + image}
-                    width={300}
-                    height={300}
-                  />
+                  <LazyLoadedContent>
+                    <Image
+                      src={`${image}`}
+                      onClick={() => {
+                        setOpenPopup(!openPopup);
+                        setSlide(i);
+                      }}
+                      className="w-[250px] h-[150px] object-cover shadow-lg rounded transition border-black cursor-pointer"
+                      alt="Galeri "
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={'/api/image/blur?url=' + image}
+                      width={300}
+                      height={300}
+                    />
+                  </LazyLoadedContent>
                   <span className="line-clamp-1 max-w-[250px] text-center " title={title[i]}>
                     {title[i]}
                   </span>

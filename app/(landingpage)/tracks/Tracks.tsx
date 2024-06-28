@@ -81,7 +81,7 @@ export default async function Tracks({ q }: { q: string }) {
             <p className="text-sm font-normal text-gray-500 dark:text-gray-400">Mengurus VISA dengan regulasi yang ada</p>
           </li> */}
           {data.map((track: any, index: number) => (
-            <li className="mb-10 ms-6">
+            <li className="mb-10 ms-6" key={index}>
               <span className="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-dark text-white ring-8 ring-white dark:bg-gray-700 dark:ring-gray-800">
                 {index + 1 === data.length ? <GiPin /> : <FaCheck />}
               </span>

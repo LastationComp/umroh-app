@@ -38,6 +38,7 @@ export default function MonitoringPacketCard({ data }: { data?: any }) {
             {data?.comparison &&
               data?.comparison.map((user: any, index: number) => (
                 <Image
+                  key={index}
                   loading="lazy"
                   placeholder="blur"
                   blurDataURL={getBlurUserAvatar(user?.image)}

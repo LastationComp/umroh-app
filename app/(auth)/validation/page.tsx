@@ -5,7 +5,7 @@ import { getUserComparison } from './action';
 import { useComparison } from '@/lib/Zustands/User/Comparison';
 import { useRouter } from 'next/navigation';
 
-export default function page() {
+export default function Page() {
   const firstRendered = useRef(false);
   const router = useRouter();
   const { setCompares, setCount } = useComparison((state) => state);

@@ -12,9 +12,9 @@ export default function Search() {
   return (
     <section className="grid gap-1 container w-full">
       <SearchFilter />
-      <Suspense fallback={<LoadingUI />}>
+      {/* <Suspense fallback={<LoadingUI />}> */}
         <SearchContent />;
-      </Suspense>
+      {/* </Suspense> */}
     </section>
   );
 }

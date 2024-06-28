@@ -1,18 +1,13 @@
-"use client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Image from "next/image";
-import React from "react";
-import Autoplay from "embla-carousel-autoplay";
-import Cover1 from "@/public/assets/Cover website Umrohkan_pages-to-jpg-0001.jpg";
-import Cover2 from "@/public/assets/Cover website Umrohkan_pages-to-jpg-0002.jpg";
+'use client';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import Image from 'next/image';
+import React from 'react';
+import Autoplay from 'embla-carousel-autoplay';
+import Cover1 from '@/public/assets/Cover website Umrohkan_pages-to-jpg-0001.jpg';
+import Cover2 from '@/public/assets/Cover website Umrohkan_pages-to-jpg-0002.jpg';
 
-import Link from "next/link";
+import Link from 'next/link';
+import LazyLoadedContent from '@/components/images/LazyLoadedContent';
 export default function TopCarousel() {
   const url = [
     {
@@ -38,15 +33,15 @@ export default function TopCarousel() {
             {url.map((cover: any, index: number) => (
               <CarouselItem key={index}>
                 <div className="flex justify-center">
-                  <Link href={"/blog/category/title"}>
+                  <Link href={'/blog/category/title'}>
                     <Image
                       className="object-contain"
                       loading="lazy"
                       placeholder="blur"
                       style={{
-                        objectFit: "contain",
-                        width: "full",
-                        height: "full",
+                        objectFit: 'contain',
+                        width: 'full',
+                        height: 'full',
                       }}
                       blurDataURL={cover.blurUrl}
                       src={cover.src}
