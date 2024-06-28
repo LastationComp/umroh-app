@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef } from 'react';
-import { getUserComparison } from './action';
-import { useComparison } from '@/lib/Zustands/User/Comparison';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useRef } from "react";
+import { getUserComparison, redirectTo } from "./action";
+import { useComparison } from "@/lib/Zustands/User/Comparison";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const firstRendered = useRef(false);
@@ -13,17 +13,11 @@ export default function Page() {
   const fetchUserProfile = async () => {
     const compare = await getUserComparison();
     setCount(compare.count);
-
-    router.replace('/');
-    router.refresh();
+    router.push("/");
   };
 
   useEffect(() => {
-    if (firstRendered.current) {
-      fetchUserProfile();
-    }
-
-    firstRendered.current = true;
+    fetchUserProfile();
   }, []);
   return <div>Sedang Memuat Akun Kamu...</div>;
 }
