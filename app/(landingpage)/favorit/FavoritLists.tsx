@@ -11,7 +11,7 @@ export default function FavoritLists({ data }: { data: any[] }) {
     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
       {favorit &&
         favorit.map((paket_umroh: any, index: number) => (
-          <section key={index}>
+          <section key={indexnb}>
             <PacketCard data={paket_umroh} index={index} />
           </section>
         ))}
