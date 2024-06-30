@@ -60,7 +60,7 @@ export async function getMonitoringReportPacket(id: string) {
 
   let labels: any[] = [];
   let datasets: any = {};
-
+  console.log(result);
   for (let int = -3; int <= 3; int++) {
     const date = new Date(new Date().setHours(new Date().getHours() + int));
     const timeFinal: any = parseDateToTimeString(date.toString());
