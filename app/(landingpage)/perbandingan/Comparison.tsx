@@ -10,7 +10,6 @@ async function getPaketUmroh() {
 }
 
 export default async function Comparison() {
-  const data = await getPaketUmroh();
   const comparisonData = await userComparison();
   return <ComparisonCarts paket_umroh={comparisonData.data} />;
 }

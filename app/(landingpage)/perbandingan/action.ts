@@ -1,18 +1,15 @@
-'use server'
+'use server';
 
-import { newApiFetch } from "@/lib/Fetcher"
-import { getLaravelToken } from "@/lib/Handling/userSession"
+import { newApiFetch } from '@/lib/Fetcher';
+import { getLaravelToken } from '@/lib/Handling/userSession';
 
 export async function userComparison() {
-    const token = await getLaravelToken()
+  const token = await getLaravelToken();
 
-    const res = await newApiFetch({
-        url: '/api/profile/comparison?details=1',
-        token: token,
-        options: {
-            tag: ['user-comparison']
-        }
-    });
+  const res = await newApiFetch({
+    url: '/api/profile/comparison?details=1',
+    token: token,
+  });
 
-    return res.json()
+  return res.json();
 }

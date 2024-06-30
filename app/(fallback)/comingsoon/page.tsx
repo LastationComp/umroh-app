@@ -1,10 +1,11 @@
-import { CardDescription } from "@/components/ui/card";
-import { Metadata } from "next";
-import Image from "next/image";
-import React from "react";
+import { CardDescription } from '@/components/ui/card';
+import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
 export const metadata: Metadata = {
-  title: "Segera Datang",
+  title: 'Segera Datang',
 };
 
 export default function Page() {
@@ -13,13 +14,16 @@ export default function Page() {
       <div className="text-2xl max-md:text-sm flex flex-col items-center text-center">
         <span className="font-semibold">Halaman Masih Dalam Perbaikan...</span>
         <CardDescription>Mohon bersabar. Kami sedang mengalami perbaikan pada halaman ini.</CardDescription>
+        <CardDescription>
+          <Link href={'/'} className='text-blue-600'>Kembali ke halaman utama</Link>
+        </CardDescription>
         <Image
-          src={"/comingsoon.png"}
+          src={'/comingsoon.png'}
           alt="Segera Datang Ya..."
           className="w-[500px]"
           style={{
-            width: "auto",
-            height: "auto",
+            width: 'auto',
+            height: 'auto',
           }}
           width={500}
           height={1000}

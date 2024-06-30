@@ -39,9 +39,10 @@ export const newApiFetch = ({ url, token, method = 'GET', body, headers, options
       Authorization: 'Bearer ' + token,
     },
     credentials: 'include',
+    // cache: !options?.cache ? 'no-store' : 'default',
     cache: 'no-store',
     next: {
-      tags: options?.tag ?? [],
+      tags: options?.tag ?? undefined,
     },
   });
 };

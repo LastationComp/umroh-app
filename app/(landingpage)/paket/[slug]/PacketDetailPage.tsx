@@ -2,7 +2,7 @@
 import Favorites from '@/components/order/Favorites';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardDescription } from '@/components/ui/card';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Carousel as ShadCarousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -15,31 +15,12 @@ import { faArrowsLeftRight, faLeftRight, faRightLeft } from '@fortawesome/free-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { url } from 'inspector';
 import Image from 'next/image';
-import React, { Suspense, useRef, useState } from 'react';
+import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegBookmark, FaRegCalendarAlt, FaRegHeart, FaStar } from 'react-icons/fa';
 import { FiShoppingCart } from 'react-icons/fi';
 import PopupSliders from '@/components/images/PopupSliders';
-
-const pricelist = [
-  {
-    name: 'Double',
-    price: 38900000,
-  },
-
-  {
-    name: 'Triple',
-    price: 48000000,
-  },
-  {
-    name: 'Quad',
-    price: 59000000,
-  },
-];
-
-let allPrice: any[] = [];
-pricelist.map((price) => {
-  allPrice.push(price.price);
-});
+import { formatDate } from '@/lib/Parser/DateFormat';
+import CompareButton from '@/components/packet/CompareButton';
 
 const responsive = {
   mobile: {
@@ -49,33 +30,40 @@ const responsive = {
   },
 };
 
-const images = [
-  {
-    url: 'https://cloud.umroh.com/images/upload/c_contain,f_auto,g_face,b_rgb:000000,dpr_2.0,h_391,w_627,q_80,fl_progressive/WhatsApp%20Image%202022-12-20%20at%2008.14.41.jpeg',
-  },
-  {
-    url: 'https://cloud.umroh.com/images/upload/c_contain,f_auto,g_face,b_rgb:000000,dpr_2.0,h_391,w_627,q_80,fl_progressive/Flyer%20Katalog%20Umrah%20Ramadhan%20Maret%202024_03012024_MITRA_page-0005.jpg',
-  },
-];
-
-export default function PacketDetailPage({ slug }: { slug: string }) {
+export default function PacketDetailPage({ data }: { data: any }) {
   const [list, setList] = useState('');
   const [qty, setQty] = useState(1);
   const [openImage, setOpenImage] = useState(false);
   const [slide, setSlide] = useState(0);
 
-  const imagesData = images.map((image) => {
+  const allPrice = useMemo(() => {
+    return data?.variants[0].details.map((detail: any) => {
+      return detail?.price;
+    });
+  }, []);
+
+  const pricelist: any = useMemo(() => {
+    return data.variants[0].details;
+  }, []);
+
+  const images = useMemo(() => {
+    return data?.galleries;
+  }, []);
+
+  const imagesData = images.map((image: any) => {
     return {
-      original: image.url,
-      thumbnail: image.url,
+      original: image.image_url,
+      thumbnail: image.image_url,
     };
   });
-  const orderSlideSelecter = (data: any, index: number) => {
-    return index === slide;
-  };
-  const orderNotSlide = (data: any, index: number) => {
-    return index !== slide;
-  };
+
+  function isPrimary(data: any) {
+    return Boolean(data.is_primary) === true;
+  }
+
+  function isAddons(data: any) {
+    return Boolean(data.is_primary) === false;
+  }
   return (
     <Card className="p-5 gap-5">
       <PopupSliders data={imagesData} currentSlide={slide} open={openImage} onOpenChange={setOpenImage} />
@@ -96,7 +84,18 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
                   setOpenImage(!openImage);
                 }}
               >
-                <Image src={image.url} alt="Image Promo" className="w-[600px] object-cover" loading={'lazy'} width={600} height={400} />
+                <Image
+                  src={image.image_url}
+                  alt={image.title}
+                  placeholder="blur"
+                  objectFit={'cover'}
+                  blurDataURL={'/api/image/blur?url=' + image.image_url}
+                  title={data?.title}
+                  className="w-[600px] object-cover"
+                  loading={'lazy'}
+                  width={600}
+                  height={600}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -105,7 +104,7 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
         </ShadCarousel>
         <div className="flex flex-col gap-5">
           <div className="flex justify-between items-center">
-            <span className="text-xl font-bold">{slug}</span>
+            <span className="text-xl font-bold">{data.title}</span>
             <div className="mb-auto">
               <Favorites />
             </div>
@@ -113,16 +112,16 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
           {!list && (
             <span className="text-xl font-semibold flex items-center gap-3 font-bold">
               {formatRupiah(Math.min(...allPrice))} - {formatRupiah(Math.max(...allPrice))} <Separator orientation={'vertical'} />
-              <Badge>Pembayaran Syariah</Badge>
+              {Boolean(data?.is_syariah) && <Badge>Pembayaran Syariah</Badge>}
             </span>
           )}
           {list &&
             pricelist
-              .filter((price) => price.name.toLowerCase() === list.toLowerCase())
-              .map((price, index) => (
+              .filter((price: any) => price.name.toLowerCase() === list.toLowerCase())
+              .map((price: any, index: number) => (
                 <span key={index} className="text-xl font-semibold flex items-center gap-3 font-bold fw-800">
                   {formatRupiah(price.price)} <Separator orientation={'vertical'} />
-                  <Badge>Pembayaran Syariah</Badge>
+                  {Boolean(data?.is_syariah) && <Badge>Pembayaran Syariah</Badge>}
                 </span>
               ))}
           <Separator />
@@ -131,28 +130,28 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
               <FaRegCalendarAlt />
               <div className="flex flex-col ">
                 <span className="font-semibold">Waktu Keberangkatan</span>
-                <span className="text-sm ">27 Maret 2024</span>
+                <span className="text-sm ">{formatDate(data.departure_time)}</span>
               </div>
             </span>
             <span className="flex items-center gap-3">
               <FaLocationArrow />
               <div className="flex flex-col ">
                 <span className="font-semibold">Lokasi Keberangkatan</span>
-                <span className="text-sm ">Jakarta</span>
+                <span className="text-sm ">{data?.departing_from}</span>
               </div>
             </span>
             <span className="flex items-center gap-3">
               <FaClock />
               <div className="flex flex-col ">
                 <span className="font-semibold">Durasi Perjalanan</span>
-                <span className="text-sm ">6 Hari</span>
+                <span className="text-sm ">{data?.travel_duration} Hari</span>
               </div>
             </span>
             <span className="flex items-center gap-3">
               <FaPlaneDeparture />
               <div className="flex flex-col ">
                 <span className="font-semibold">Pesawat</span>
-                <span className="text-sm ">Garuda Indonesia</span>
+                <span className="text-sm ">{data?.airline}</span>
               </div>
             </span>
             <span className="flex items-center gap-3">
@@ -160,14 +159,57 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
               <div className="flex flex-col ">
                 <span className="font-semibold">Kelas Hotel</span>
                 <span className="text-sm flex gap-1 items-center">
-                  4 <FaStar className="text-yellow-600" />
+                  {data?.hotel_class} <FaStar className="text-yellow-600" />
                 </span>
               </div>
             </span>
           </div>
 
           <Separator />
-          <div className="flex items-center gap-5">
+          {data?.variants.filter(isPrimary).map((variant: any, index: number) => (
+            <div className="flex items-center gap-5" key={index}>
+              <span>{variant.title}</span>
+              <Separator orientation="vertical" />
+              <ToggleGroup
+                type={variant.type}
+                variant={'outline'}
+                onValueChange={(value: string) => {
+                  if (index === 0) return setList(value);
+                }}
+                className="flex justify-start flex-wrap gap-2.5"
+              >
+                {variant.details.map((detail: any, index: number) => (
+                  <ToggleGroupItem key={index} value={detail.name.toLowerCase()} className="data-[state=on]:outline data-[state=on]:outline-blue-dark data-[state=on]:outline-2">
+                    {detail.name}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
+          ))}
+
+          {data?.variants.filter(isAddons).length !== 0 && (
+            <div className="flex flex-col gap-3">
+              <div>
+                <CardDescription>Add-ons</CardDescription>
+                <Separator />
+              </div>
+
+              {data?.variants.filter(isAddons).map((variant: any, index: number) => (
+                <div className="flex items-center gap-5" key={index}>
+                  <span>{variant.title}</span>
+                  <Separator orientation="vertical" />
+                  <ToggleGroup type={variant.type} variant={'outline'} className="flex justify-start flex-wrap gap-2.5">
+                    {variant.details.map((detail: any, index: number) => (
+                      <ToggleGroupItem key={index} value={detail.name.toLowerCase()} className="data-[state=on]:outline data-[state=on]:outline-blue-dark data-[state=on]:outline-2">
+                        {detail.name}
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
+                </div>
+              ))}
+            </div>
+          )}
+          {/* <div className="flex items-center gap-5">
             <span>Pilih Paket</span>
             <Separator orientation="vertical" />
             <ToggleGroup type="single" variant={'outline'} value={list} onValueChange={(value) => setList(value)} className="flex justify-start ">
@@ -177,14 +219,14 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>
-          </div>
+          </div> */}
 
           <div className="flex flex-col">
             <div className="flex justify-between">
               <span>Sisa Seat</span>
-              <span>33 Seat</span>
+              <span>{data?.quota} Seat</span>
             </div>
-            <Progress value={33} />
+            <Progress value={Math.floor(data?.quota / 2)} max={data?.quota} />
           </div>
           <div className="flex items-center gap-3">
             <span className="text-sm">Jumlah Paket</span>
@@ -198,9 +240,9 @@ export default function PacketDetailPage({ slug }: { slug: string }) {
             </Button>
           </div>
           <div className="flex gap-3 items-center flex-wrap">
-            <Button variant={'outline'} className="flex items-center gap-3">
-              <FontAwesomeIcon icon={faRightLeft} /> Bandingkan
-            </Button>
+            <CompareButton compared={data?.is_compared} id={data?.id} slug={data?.slug} title={data?.title}>
+              Bandingkan
+            </CompareButton>
             {/* <Button variant={'secondary'} className="flex items-center gap-3" disabled={!list}>
               <MdGroup /> Pesan Group
             </Button> */}

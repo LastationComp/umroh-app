@@ -29,7 +29,7 @@ export default function BlogCard({ props }: BlogProps) {
             placeholder="blur"
             blurDataURL="/api/image/blur?url=https://c4.wallpaperflare.com/wallpaper/216/846/440/mount-fuji-japan-landscape-calm-waters-wallpaper-preview.jpg"
             src={'https://c4.wallpaperflare.com/wallpaper/216/846/440/mount-fuji-japan-landscape-calm-waters-wallpaper-preview.jpg'}
-            className="rounded-xl w-full object-cover h-[200px]"
+            className="rounded-xl w-full object-cover h-[200px] z-0"
             alt="blog 1"
             width={1000}
             height={1000}
