@@ -4,8 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: 'Gabung Travel Partner - Umroh.ai',
-  description: 'Register to full access umroh.ai',
+  title: 'Gabung Travel Partner',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -15,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <nav className="flex justify-between items-center py-3 gap-3">
           <div className="flex items-center gap-3">
             <Link href={'/'} className="text-lg font-bold">
-              Umroh.ai
+              {process.env.NEXT_PUBLIC_APP_NAME}
             </Link>
             <Separator orientation={'vertical'} className="h-5" />
             <span>Travel Partner</span>

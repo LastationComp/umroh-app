@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: 'Verifikasi Travel Partner - Umroh.ai',
+  title: 'Verifikasi Travel Partner',
   description: 'Register to full access umroh.ai',
 };
 export default async function Layout({ children }: { children: React.ReactNode }) {
