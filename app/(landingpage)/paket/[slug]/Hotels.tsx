@@ -1,17 +1,7 @@
 'use client';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { FaHotel, FaWifi } from 'react-icons/fa';
-import { IoLocation } from 'react-icons/io5';
-import { GiBus } from 'react-icons/gi';
-import Autoplay from 'embla-carousel-autoplay';
-import { Button } from '@/components/ui/button';
-import { MdFamilyRestroom, MdFoodBank, MdOutlineRoomService } from 'react-icons/md';
-import { Separator } from '@/components/ui/separator';
-import PopupSliders from '@/components/images/PopupSliders';
-import GetHotelFacilities from '@/components/facilities/GetHotelFacilities';
 import HotelCard from './HotelCard';
 
 const images = [
