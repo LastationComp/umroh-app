@@ -2,27 +2,24 @@
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
-import React from 'react';
-
-export default function TravelProfile() {
+import React, { useMemo } from 'react';
+import travelLogo from '@/public/assets/travel.png';
+export default function TravelProfile({ travel }: { travel: any }) {
+  const travel_legalities: any[] = useMemo(() => {
+    return travel.travel_legalities.map((legality: any) => legality.number);
+  }, []);
   return (
     <Card className="p-3 my-3 flex gap-3">
-      <Image
-        src={'https://cloud.umroh.com/images/upload/c_cover,f_auto,dpr_2.0,h_75,w_75,q_80,fl_progressive/LF6Gv6jy_400x400.jpg'}
-        alt="Travel Profile"
-        width={1000}
-        height={1000}
-        className="rounded-full w-[80px] h-[80px] object-cover my-auto"
-      />
+      <Image src={travel.logo ?? travelLogo} alt={travel.name} title={travel.name} width={1000} height={1000} className="rounded-full w-[80px] h-[80px] object-cover my-auto" />
       <div className="flex flex-col gap-3 justify-center">
-        <span className="text-xl font-semibold">Jejak Imani</span>
+        <span className="text-xl font-semibold">{travel.name}</span>
         <div className="flex gap-3 items-center text-sm text-black/70 max-md:hidden">
-          <span className="font-bold text-black">7</span> Penilaian
+          <span className="font-bold text-black">??</span> Penilaian
           <Separator orientation={'vertical'} />
-          <span className="font-bold text-black">77</span> Terjual
+          <span className="font-bold text-black">??</span> Terjual
           <Separator orientation={'vertical'} />
           <span>
-            Izin Umroh : <span className="font-bold text-black">Lorem, ipsum dolor.</span>
+            Nomor Legalitas : <span className="font-bold text-black">{travel_legalities.join(',')}</span>
           </span>
         </div>
         <div className="flex gap-2 flex-col text-sm text-black/70 md:hidden">
@@ -35,7 +32,7 @@ export default function TravelProfile() {
           </span>
           <Separator orientation={'horizontal'} />
           <span className="basis-2/2">
-            Izin Umroh : <span className="font-bold text-black">Lorem, ipsum dolor.</span>
+            Nomor Legalitas : <span className="font-bold text-black">{travel_legalities.join(',')}</span>
           </span>
         </div>
       </div>

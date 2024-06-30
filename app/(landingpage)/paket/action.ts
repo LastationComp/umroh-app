@@ -1,23 +1,15 @@
-"use server";
+'use server';
 
-import { newApiFetch } from "@/lib/Fetcher";
-import { getLaravelToken } from "@/lib/Handling/userSession";
-import { delay } from "@/lib/Promise/Delay";
-import { createQueryParams } from "@/lib/String/QueryParams";
-import { revalidateTag } from "next/cache";
+import { newApiFetch } from '@/lib/Fetcher';
+import { getLaravelToken } from '@/lib/Handling/userSession';
+import { delay } from '@/lib/Promise/Delay';
+import { createQueryParams } from '@/lib/String/QueryParams';
+import { shuffleArray } from '@/lib/utils';
+import { revalidateTag } from 'next/cache';
 
-export async function getPaketUmroh(
-  page: number,
-  perpage: number = 3,
-  query: string = ""
-) {
+export async function getPaketUmroh(page: number, perpage: number = 3, query: string = '') {
   await delay(1000);
-  const res = await fetch(
-    `${process.env.URL_API}/paket_umroh?_start=${
-      page * perpage - perpage
-    }&_limit=${perpage * page}`,
-    { cache: "no-store" }
-  );
+  const res = await fetch(`${process.env.URL_API}/paket_umroh?_start=${page * perpage - perpage}&_limit=${perpage * page}`, { cache: 'no-store' });
   return res.json();
 }
 
@@ -29,10 +21,10 @@ export async function getPackets(query: any = {}) {
     q: query.q,
   });
   const res = await newApiFetch({
-    url: "/api/public/travel-packets" + queryParams,
+    url: '/api/public/travel-packets' + queryParams,
     token: token,
     options: {
-      tag: ["public-travel-packets"],
+      tag: ['public-travel-packets'],
     },
   });
 
@@ -40,11 +32,36 @@ export async function getPackets(query: any = {}) {
   return result.data;
 }
 
+export async function getPacketNameBySlug(slug: string) {
+  const token = await getLaravelToken();
+
+  const res = await newApiFetch({
+    url: '/api/metadata/packet/slugs/' + slug,
+    token: token,
+  });
+
+  const result = await res.json();
+
+  return result.data.title;
+}
+
+export async function getPacketBySlug(slug: string) {
+  const token = await getLaravelToken();
+
+  const res = await newApiFetch({
+    url: '/api/public/travel-packets/' + slug + '?details=1',
+    token: token,
+  });
+
+  const result = await res.json();
+  return result;
+}
+
 export async function getUserComparison() {
   const token = await getLaravelToken();
 
   const res = await newApiFetch({
-    url: "/api/profile/comparison",
+    url: '/api/profile/comparison',
     token: token,
   });
 

@@ -19,10 +19,7 @@ export default function PartnerContent({ data }: { data: any[] }) {
       <section className="container mx-auto">
         <div className="flex justify-center items-center">
           <div className="flex flex-col text-center">
-            <span className="text-[24px]">Rekan Biro Travel Umroh Kami</span>
-            <span className="text-black/60">
-              Lebih Dari 100 Biro Travel Umroh telah Menjadi Rekan Kami
-            </span>
+            <span className="text-[24px]">Rekan Travel Umroh Kami</span>
           </div>
         </div>
       </section>

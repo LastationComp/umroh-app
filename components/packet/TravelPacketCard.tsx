@@ -116,7 +116,7 @@ export default function TravelPacketCard({ data, index, props }: PacketProps) {
         </div>
         <div className="flex items-center gap-1">
           <OrderButton />
-          <CompareButton id={data?.id ?? ''} slug={data?.slug} compared={data?.is_compared} title={data?.title} />
+          <CompareButton id={data?.id ?? ''} logged={data?.is_logged} slug={data?.slug} compared={data?.is_compared} title={data?.title} />
           <Favorites data={data} />
 
           <ShareButton image_url={data?.gallery?.image_url} title={data?.title} url={'/paket/' + data?.slug} />

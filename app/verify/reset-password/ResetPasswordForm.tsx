@@ -28,7 +28,7 @@ export default function ResetPasswordForm() {
         recaptchaRef.current?.reset();
       }
   };
-  if (state.type !== 'success')
+  if (state?.type !== 'success')
     return (
       <form action={handleSubmit} className="flex flex-col gap-3">
         <span className="text-black/70">Masukkan email anda agar kami bisa mengirim verifikasi reset password pada email anda.</span>

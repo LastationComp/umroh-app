@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef } from "react";
-import { getUserComparison, redirectTo } from "./action";
-import { useComparison } from "@/lib/Zustands/User/Comparison";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useRef } from 'react';
+import { getUserComparison, redirectTo } from './action';
+import { useComparison } from '@/lib/Zustands/User/Comparison';
+import { useRouter } from 'next/navigation';
+import LoadingUI from '@/components/Suspense/Loading';
 
 export default function Page() {
   const firstRendered = useRef(false);
@@ -13,11 +14,11 @@ export default function Page() {
   const fetchUserProfile = async () => {
     const compare = await getUserComparison();
     setCount(compare.count);
-    router.push("/");
+    router.push('/');
   };
 
   useEffect(() => {
     fetchUserProfile();
   }, []);
-  return <div>Sedang Memuat Akun Kamu...</div>;
+  return <LoadingUI text="Sedang memuat akun kamu..." />;
 }
