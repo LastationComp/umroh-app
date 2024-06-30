@@ -68,6 +68,8 @@ export async function getMonitoringReportPacket(id: string) {
 
     const findGraph = result.comparisons_curdate.find((graph: any) => {
       const dateHour = parseDateToTimeString(graph.datetime);
+      console.log(timeFinal, timeFinal);
+
       return dateHour.toString() === timeFinal.toString();
     });
 
