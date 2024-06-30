@@ -14,8 +14,8 @@ export default function HotelCard({ hotel }: { hotel: any }) {
   const [openGallery, setOpenGallery] = useState(false);
   const imagesData = hotel.hotel_gallery.map((image: any) => {
     return {
-      original: image.image_url,
-      thumbnail: image.image_url,
+      original: image.image,
+      thumbnail: image.image,
     };
   });
   const hotelId = useId();
@@ -47,13 +47,14 @@ export default function HotelCard({ hotel }: { hotel: any }) {
                 <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6  flex justify-center">
                   <div className="p-3 bg-white shadow border border-1 flex items-center">
                     <Image
-                      src={image.url}
+                      src={image.image}
                       className=" rounded transition border-black w-[150px] h-auto cursor-pointer"
                       onClick={() => {
                         setSlide(index);
                         setOpenGallery(!openGallery);
                       }}
-                      alt={'Galeri ' + index}
+                      alt={hotel.name}
+                      title={hotel.name}
                       width={1000}
                       height={1000}
                     />
