@@ -1,9 +1,16 @@
-'use client';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import Image from 'next/image';
-import React from 'react';
-import Autoplay from 'embla-carousel-autoplay';
-import LazyLoadedContent from '@/components/images/LazyLoadedContent';
+"use client";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Image from "next/image";
+import React from "react";
+import Autoplay from "embla-carousel-autoplay";
+import LazyLoadedContent from "@/components/images/LazyLoadedContent";
+import LazyImage from "@/components/images/LazyImage";
 export default function CoverContent() {
   const urls = [
     `https://cloud.umroh.com/images/upload/c_cover,w_60,dpr_2.0,q_20,fl_progressive/web/Image_63_2x.png`,
@@ -31,17 +38,24 @@ export default function CoverContent() {
           ]}
           opts={{
             loop: true,
-            align: 'start',
+            align: "start",
           }}
           className="w-full -ml-5 md:container md:mx-auto "
         >
           <CarouselContent className="">
             {urls.map((url, index) => (
-              <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center">
+              <CarouselItem
+                key={index}
+                className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center"
+              >
                 <div className="p-5 bg-white shadow border border-1 flex items-center h-full">
-                  <LazyLoadedContent>
-                    <Image loading="lazy" placeholder="blur" blurDataURL={'/api/image/blur?url=' + url} src={url} className=" rounded transition border-black w-[150px]" alt="Galeri " width={1000} height={1000} />
-                  </LazyLoadedContent>
+                  <LazyImage
+                    src={url}
+                    className=" rounded transition border-black w-[150px]"
+                    alt="Galeri "
+                    width={1000}
+                    height={1000}
+                  />
                 </div>
               </CarouselItem>
             ))}
