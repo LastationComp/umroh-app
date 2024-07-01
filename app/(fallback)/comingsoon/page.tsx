@@ -20,13 +20,13 @@ export default function Page() {
         <Image
           src={'/comingsoon.png'}
           alt="Segera Datang Ya..."
-          className="w-[500px]"
+          className="w-[250px]"
           style={{
-            width: 'auto',
-            height: 'auto',
+            width: '500px',
+            height: '500px',
           }}
           width={500}
-          height={1000}
+          height={500}
         />
       </div>
     </section>
