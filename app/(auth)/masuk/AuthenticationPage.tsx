@@ -55,7 +55,7 @@ export default function AuthenticationPage() {
         <Input type="email" name="email" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Email Anda..." />
         <Input type="password" name="password" className="w-full outline outline-1 outline-slate-400" placeholder="Masukkan Password Anda..." />
         <div className="w-full">
-          <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!} ref={recaptchaRef} className="w-full" onChange={setRecaptcha} />
+          <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}  ref={recaptchaRef} className="w-full" onChange={setRecaptcha} />
         </div>
         {!recaptcha && <Button disabled>Masuk</Button>}
         {recaptcha && <SubmitButton>Masuk</SubmitButton>}

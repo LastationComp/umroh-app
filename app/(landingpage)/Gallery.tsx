@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import PopupSliders from "@/components/images/PopupSliders";
 import LazyLoadedContent from "@/components/images/LazyLoadedContent";
+import LazyImage from "@/components/images/LazyImage";
 export default function Gallery() {
   const images = [
     process.env.NEXT_PUBLIC_URL_API + "/storage/galleries/1.jpg",
@@ -71,22 +72,19 @@ export default function Gallery() {
                 className="basis-1/1 md:basis-1/2 lg:basis-1/4 lg:basis-1/6 pl-5 flex justify-center"
               >
                 <div className="pt-1 pb-5 px-1 bg-white shadow border border-1 flex flex-col">
-                  <LazyLoadedContent>
-                    <Image
-                      src={`${image}`}
-                      onClick={() => {
-                        setOpenPopup(!openPopup);
-                        setSlide(i);
-                      }}
-                      className="w-[250px] h-[150px] object-cover shadow-lg rounded transition border-black cursor-pointer"
-                      alt="Galeri "
-                      loading="lazy"
-                      placeholder="blur"
-                      blurDataURL={"/api/image/blur?url=" + image}
-                      width={300}
-                      height={300}
-                    />
-                  </LazyLoadedContent>
+                  {/* <LazyLoadedContent> */}
+                  <LazyImage
+                    onClick={() => {
+                      setOpenPopup(!openPopup);
+                      setSlide(i);
+                    }}
+                    className="w-[250px] h-[150px] object-cover shadow-lg rounded transition border-black cursor-pointer"
+                    alt="Galeri "
+                    src={`${image}`}
+                    width={300}
+                    height={300}
+                  />
+                  {/* </LazyLoadedContent> */}
                   <span
                     className="line-clamp-1 max-w-[250px] text-center "
                     title={title[i]}

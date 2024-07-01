@@ -12,6 +12,8 @@ export async function Logout(formData: FormData) {
 export async function getUserComparison() {
   const token = await getLaravelToken();
 
+  if (!token) return 0;
+
   const res = await newApiFetch({
     url: "/api/profile/comparison",
     token: token,
