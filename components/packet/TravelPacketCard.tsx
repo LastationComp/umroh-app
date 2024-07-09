@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { Card } from "../ui/card";
-import Image from "next/image";
 import Link from "next/link";
 import nProgress from "nprogress";
 import { useRouter } from "next/navigation";
@@ -21,15 +20,21 @@ import OrderButton from "../order/OrderButton";
 import Favorites from "../order/Favorites";
 import ShareButton from "./ShareButton";
 import { formatRupiah } from "@/lib/String/RupiahFormat";
-import LazyLoadedContent from "../images/LazyLoadedContent";
 import LazyImage from "../images/LazyImage";
+import { NumericFormat } from "react-number-format";
 interface PacketProps {
   data: any;
   index?: number;
   props?: React.Attributes;
+  userRole?: string;
 }
 
-export default function TravelPacketCard({ data, index, props }: PacketProps) {
+export default function TravelPacketCard({
+  data,
+  index,
+  props,
+  userRole = "subscriber",
+}: PacketProps) {
   const router = useRouter();
   const handleUrlImage = (url: string) => {
     nProgress.start();
@@ -71,7 +76,15 @@ export default function TravelPacketCard({ data, index, props }: PacketProps) {
       <div className="my-2">
         <div className="flex justify-between">
           <span className="text-sm">Sisa Seat</span>
-          <span className="text-sm font-bold">{data?.quota} Seat</span>
+          <span className="text-sm font-bold flex items-center gap-1.5">
+            <NumericFormat
+              displayType={"text"}
+              value={data?.quota ?? 0}
+              decimalSeparator=","
+              thousandSeparator="."
+            />
+            Seat
+          </span>
         </div>
         <Progress
           className=""
@@ -107,46 +120,27 @@ export default function TravelPacketCard({ data, index, props }: PacketProps) {
           {data.variant_counts !== 0 && <IoExtensionPuzzle />}
         </span>
       </div>
-      <div className="flex justify-between items-center my-3">
-        <div>
-          {/* <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link href={`/blog/pembayaran-syariah`} target="_blank">
-                  <Image
-                    src={
-                      "https://assets.umroh.com/borobudur/img/amitra-syariah.1c01c48.svg"
-                    }
-                    className={index === 3 || index === 1 ? " grayscale" : ""}
-                    alt="Is Syariah"
-                    width={60}
-                    height={20}
-                  />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Pembayaran Syariah</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider> */}
-        </div>
-        <div className="flex items-center gap-1">
-          <OrderButton />
-          <CompareButton
-            id={data?.id ?? ""}
-            logged={data?.is_logged}
-            slug={data?.slug}
-            compared={data?.is_compared}
-            title={data?.title}
-          />
-          <Favorites data={data} />
+      <div className="flex justify-between items-center">
+        <div></div>
+        {userRole === "subscriber" && (
+          <div className="flex items-center gap-1">
+            <OrderButton />
+            <CompareButton
+              id={data?.id ?? ""}
+              logged={data?.is_logged}
+              slug={data?.slug}
+              compared={data?.is_compared}
+              title={data?.title}
+            />
+            <Favorites data={data} />
 
-          <ShareButton
-            image_url={data?.gallery?.image_url}
-            title={data?.title}
-            url={"/paket/" + data?.slug}
-          />
-        </div>
+            <ShareButton
+              image_url={data?.gallery?.image_url}
+              title={data?.title}
+              url={"/paket/" + data?.slug}
+            />
+          </div>
+        )}
       </div>
     </Card>
   );

@@ -20,50 +20,41 @@ export default function CoverContent() {
     `https://cloud.umroh.com/images/upload/c_cover,w_60,dpr_2.0,q_20,fl_progressive/web/Image_63_2x.png`,
   ];
   return (
-    <>
-      <section className="container mx-auto">
-        <div className="flex justify-center items-center">
-          <div className="flex flex-col text-center">
-            <span className="text-[24px]">Diliput Oleh</span>
-          </div>
-        </div>
-      </section>
+    <section className="md:container max-md:container-md">
 
-      <section className="flex justify-center my-3 max-md:container max-md:mx-auto bg-blue-dark py-5">
-        <Carousel
-          plugins={[
-            Autoplay({
-              delay: 3000,
-            }),
-          ]}
-          opts={{
-            loop: true,
-            align: "start",
-          }}
-          className="w-full -ml-5 md:container md:mx-auto "
-        >
-          <CarouselContent className="">
-            {urls.map((url, index) => (
-              <CarouselItem
-                key={index}
-                className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6 pl-5 flex justify-center"
-              >
-                <div className="p-5 bg-white shadow border border-1 flex items-center h-full">
-                  <LazyImage
-                    src={url}
-                    className=" rounded transition border-black w-[150px]"
-                    alt="Galeri "
-                    width={1000}
-                    height={1000}
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </section>
-    </>
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 3000,
+          }),
+        ]}
+        opts={{
+          loop: true,
+          align: "start",
+        }}
+        className="bg-blue-dark p-3"
+      >
+        <CarouselContent className="">
+          {urls.map((url, index) => (
+            <CarouselItem
+              key={index}
+              className="basis-1/3 md:basis-1/4 lg:basis-1/6 flex justify-center"
+            >
+              <div className="p-5 bg-white shadow border border-1 flex items-center h-full">
+                <LazyImage
+                  src={url}
+                  className=" rounded transition border-black w-[150px]"
+                  alt="Galeri "
+                  width={1000}
+                  height={1000}
+                />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </section>
   );
 }

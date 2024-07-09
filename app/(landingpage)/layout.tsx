@@ -22,7 +22,7 @@ export default async function Layout({
         <div className="my-3">{children}</div>
       </section>
 
-      <section className=" mt-auto">
+      <section className=" mt-auto max-md:container-md max-md:mx-3">
         <ContactContent />
         <Footer />
       </section>

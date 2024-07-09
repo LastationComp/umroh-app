@@ -10,10 +10,10 @@ async function getPaketUmroh() {
 
 export default function Search() {
   return (
-    <section className="grid gap-1 container w-full">
+    <section className="grid gap-1">
       <SearchFilter />
       {/* <Suspense fallback={<LoadingUI />}> */}
-        <SearchContent />;
+        <SearchContent />
       {/* </Suspense> */}
     </section>
   );

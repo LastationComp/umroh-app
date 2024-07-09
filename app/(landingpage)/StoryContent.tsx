@@ -8,7 +8,7 @@ import BlogCard from '@/components/blogs/BlogCard';
 export default function StoryContent() {
   const blogs = [1, 2, 3];
   return (
-    <div className=" md:container md:mx-auto mx-3 my-5">
+    <div className="">
       <Card className="bg-white p-5 relative">
         <div className="bg-black/40 absolute top-0 left-0 w-full h-full rounded-md z-50">
           <div className="flex justify-center items-center w-full h-full text-white">

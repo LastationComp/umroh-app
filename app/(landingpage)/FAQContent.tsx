@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function FAQContent() {
   return (
-    <section className="md:container md:mx-auto mx-3 my-5">
+    <section className="">
       <span className="text-xl font-semibold ">{process.env.NEXT_PUBLIC_APP_NAME} – Pilihan Utama untuk Perjalanan Umroh dan Haji yang Aman</span>
       <p className="text-sm leading-7 my-5 text-black/70">
         {process.env.NEXT_PUBLIC_APP_NAME} menjadi pilihan utama karena kami mengutamakan keamanan dalam setiap aspek perjalanan umroh dan haji Anda. Dengan kerja sama bersama agen travel terpercaya dan sistem keamanan data yang canggih,

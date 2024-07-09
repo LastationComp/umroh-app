@@ -20,8 +20,8 @@ export default function TopCarousel() {
     },
   ];
   return (
-    <section className="md:container container-md mx-auto mb-3">
-      <div className="flex justify-center mx-3">
+    <section className="mb-3">
+      <div className="flex justify-center">
         <Carousel
           plugins={[
             Autoplay({

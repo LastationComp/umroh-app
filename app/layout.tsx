@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Suspense } from "react";
+import { cn } from "@/lib/utils";
 
 config.autoAddCss = false;
 const inter = Poppins({ subsets: ["latin-ext"], weight: "400" });
@@ -30,10 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={
-          inter.className +
-          " bg-tacao m-0 p-0 bg-blend-soft-light bg-kabah bg-center bg-repeat  relative"
-        }
+        className={cn(
+          inter.className,
+          "bg-tacao m-0 p-0 bg-blend-soft-light bg-kabah bg-center bg-repeat relative",
+          'overflow-x-hidden'
+        )}
       >
         <NextTopLoader showSpinner={false} initialPosition={0.3} />
         {children}

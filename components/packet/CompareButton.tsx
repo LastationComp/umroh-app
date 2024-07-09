@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +20,8 @@ import {
 import Link from "next/link";
 import { useComparison } from "@/lib/Zustands/User/Comparison";
 import nProgress from "nprogress";
+import { getUserRole } from "@/app/_actions/Authentication";
+import { toast } from "react-toastify";
 
 interface CompareProps {
   id?: string;
@@ -53,6 +49,7 @@ export default function CompareButton({
       nProgress.start();
       return router.push("/masuk");
     }
+
     if (!isCompared) {
       Compare(pathname + "/" + slug, id, "attachment");
       incCount();

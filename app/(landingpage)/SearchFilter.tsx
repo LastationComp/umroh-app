@@ -73,7 +73,7 @@ export default function SearchFilter() {
   const [openPrice, setOpenPrice] = useState(false);
   const [priceValue, setPriceValue] = useState('');
   return (
-    <Card className="p-3">
+    <Card className="p-3 text-sm md:text-md lg:text-lg">
       <div className="flex items-center max-md:flex-col gap-3">
         <div className="flex gap-3 max-lg:flex-col max-md:w-full">
           <div className="flex flex-col">
@@ -82,7 +82,7 @@ export default function SearchFilter() {
               <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                 <Button variant="outline" role="combobox" aria-expanded={openLocation} className="w-auto xl:w-[300px] justify-between">
                   <div className="flex gap-3 items-center">
-                    <CiLocationOn className="text-lg" />
+                    <CiLocationOn className="" />
                     {locationValue ? city.find((city: any) => city.value === locationValue)?.label : 'Lokasi Keberangkatan...'}
                   </div>
 
@@ -121,7 +121,7 @@ export default function SearchFilter() {
               <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                 <Button variant="outline" role="combobox" aria-expanded={openDate} className="w-auto xl:w-[300px] justify-between">
                   <div className="flex gap-3 items-center">
-                    <MdDateRange className="text-lg" />
+                    <MdDateRange className="" />
                     {dateValue ? keberangkatan.find((keberangkatan) => keberangkatan.value === dateValue)?.label : 'Waktu Keberangkatan...'}
                   </div>
                   <HiChevronUpDown />
@@ -159,7 +159,7 @@ export default function SearchFilter() {
               <PopoverTrigger asChild className="outline outline-1 outline-slate-400">
                 <Button variant="outline" role="combobox" aria-expanded={openPrice} className="w-auto xl:w-[300px] justify-between">
                   <div className="flex gap-3 items-center">
-                    <IoPricetagOutline className="text-lg" />
+                    <IoPricetagOutline className="" />
                     {priceValue ? biaya.find((biaya) => biaya.value === priceValue)?.label : 'Biaya Umroh/Haji...'}
                   </div>
                   <HiChevronUpDown />
