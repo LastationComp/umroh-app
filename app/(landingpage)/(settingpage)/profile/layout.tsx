@@ -6,7 +6,10 @@ import { AuthOptions } from '@/app/api/auth/AuthOptions';
 import Provider from '@/components/Provider';
 
 export const metadata: Metadata = {
-  title: 'Profile Saya - Umroh.ai',
+  title: {
+    template: '%s | ' + process.env.NEXT_PUBLIC_APP_NAME,
+    default: 'Profile Saya',
+  },
 };
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(AuthOptions);

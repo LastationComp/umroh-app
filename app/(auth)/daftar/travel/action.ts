@@ -38,6 +38,7 @@ export async function checkTravel() {
     "/api/travel/verification/check",
     session?.user.tokenApi ?? ""
   );
+  if (res.status === 403) return redirect("/");
   if (!res.ok || res.status !== 200) return false;
 
   return true;
@@ -80,4 +81,17 @@ export async function toDashboard() {
   const session = await getServerSession(AuthOptions);
 
   return redirect(`/${session?.user.role}/dashboard`);
+}
+
+export async function travelVerified() {
+  const session = await getServerSession(AuthOptions);
+
+  const res = await newApiFetch({
+    url: "/api/travel/verification/verified",
+    token: session?.user.tokenApi ?? "",
+  });
+
+  const result = await res.json();
+
+  return result.data;
 }

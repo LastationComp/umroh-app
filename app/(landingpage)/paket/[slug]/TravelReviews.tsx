@@ -9,7 +9,12 @@ import ReviewsPagination from './ReviewsPagination';
 
 export default function TravelReviews() {
   return (
-    <Card>
+    <Card className="relative">
+      <div className="bg-black/40 absolute top-0 left-0 w-full h-full rounded-md">
+        <div className="flex justify-center items-center w-full h-full text-white">
+          <span className='font-semibold'>Masih dalam pengembangan...</span>
+        </div>
+      </div>
       <CardHeader>
         <div className="flex gap-3 font-bold">Penilaian Travel</div>
       </CardHeader>

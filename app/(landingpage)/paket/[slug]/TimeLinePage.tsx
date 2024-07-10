@@ -1,38 +1,19 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import TimeLine from '@/components/ui/timeline';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CiLocationOn } from 'react-icons/ci';
 import { FaLocationArrow, FaRegMap } from 'react-icons/fa';
 import { IoLocateOutline } from 'react-icons/io5';
 
-const data = [
-  {
-    title: 'Hari 1',
-    content: "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat Hari ke-1",
-  },
-  {
-    title: 'Hari 2',
-    content: "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat Hari ke-2",
-  },
-  {
-    title: 'Hari 3',
-    content: "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat Hari ke-3",
-  },
-  {
-    title: 'Hari 4',
-    content: "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat Hari ke-4",
-  },
-  {
-    title: 'Hari 5',
-    content: "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat Hari ke-5",
-  },
-  {
-    title: 'Hari 6',
-    content: "Umroh I'tikaf Ramadhan Ruby Free Kereta Cepat Hari ke-6",
-  },
-];
-
-export default function TimeLinePage() {
+export default function TimeLinePage({ data }: { data: any[] }) {
+  const plans = useMemo(() => {
+    return data.map((plan) => {
+      return {
+        title: 'Hari ' + plan.day,
+        content: plan.description ?? 'Tidak ada keterangan...',
+      };
+    });
+  }, []);
   return (
     <Card>
       <CardHeader>
@@ -42,7 +23,7 @@ export default function TimeLinePage() {
         </div>
       </CardHeader>
       <CardContent className="mx-3">
-        <TimeLine items={data} icon={<CiLocationOn />} />
+        <TimeLine items={plans} icon={<CiLocationOn />} />
       </CardContent>
     </Card>
   );

@@ -1,92 +1,161 @@
-'use client';
-import React, { useContext } from 'react';
+"use client";
+import React, { useContext, useMemo } from "react";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import nProgress from 'nprogress';
-import { useRouter } from 'next/navigation';
-import { FaBed, FaHotel, FaPlaneDeparture, FaRegCalendarAlt, FaRegStar } from 'react-icons/fa';
-import { formatDate } from '@/lib/Parser/DateFormat';
-import { IoLocation, IoTimeSharp } from 'react-icons/io5';
-import { CiMenuKebab } from 'react-icons/ci';
-import { useSWRConfig } from 'swr';
-import SAlertContext from '@/components/context/ShadAlert';
-import { cancelDraft } from './action';
-import { toast } from 'react-toastify';
-import { Card } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
+import Image from "next/image";
+import Link from "next/link";
+import nProgress from "nprogress";
+import { useRouter } from "next/navigation";
+import {
+  FaBed,
+  FaHotel,
+  FaPlaneDeparture,
+  FaRegCalendarAlt,
+  FaRegStar,
+} from "react-icons/fa";
+import { formatDate } from "@/lib/Parser/DateFormat";
+import { IoLocation, IoTimeSharp } from "react-icons/io5";
+import { CiMenuKebab } from "react-icons/ci";
+import { useSWRConfig } from "swr";
+import SAlertContext from "@/components/context/ShadAlert";
+import { cancelDraft } from "./action";
+import { toast } from "react-toastify";
+import { Card } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { NumericFormat } from "react-number-format";
+import { usePagination } from "@/lib/Zustands/Pagination";
+import { mutateArray } from "@/lib/Handling/Mutation";
 
 interface PacketProps {
   data: any;
   index?: number;
+  travel: any;
 }
 
-export default function PublishPacket({ data, index }: PacketProps) {
+export default function PublishPacket({ data, index, travel }: PacketProps) {
   const router = useRouter();
   const SAlert = useContext(SAlertContext);
+  const decPage = usePagination((state) => state.decPage);
+  const publishPage = usePagination((state) => state.publish);
   const { mutate } = useSWRConfig();
   const handleUrlImage = (url: string) => {
     nProgress.start();
-    router.push('/paket/' + url);
+    router.push("/paket/" + url);
+  };
+
+  const travels = useMemo(() => {
+    return {
+      role: travel.role,
+      can_delete: travel.settings?.staff_can_delete ?? null,
+    };
+  }, []);
+
+  const updateAction = (e: any, hrefValue: string) => {
+    e.preventDefault();
+    nProgress.start();
+    return router.push(hrefValue);
   };
 
   const deletePacket = (id: string) => {
+    if (travels.role === "staff") {
+      const staffCanDelete = travels.can_delete;
+      if (!staffCanDelete) {
+        return toast.error(
+          "Anda tidak dapat melakukan Hapus Packet! \n Silahkan Hubungi Manager Anda!"
+        );
+      }
+    }
     SAlert.trigger({
-      confirmButtonText: 'Ya',
-      cancelButtonText: 'Tidak',
-      title: 'Apakah kamu yakin ingin menghapus paket ini?',
-      text: 'Kamu akan kehilangan paket ini selamanya.',
-      icon: 'warning',
+      confirmButtonText: "Ya",
+      cancelButtonText: "Tidak",
+      title: "Apakah kamu yakin ingin menghapus paket ini?",
+      text: "Kamu akan kehilangan paket ini selamanya.",
+      icon: "warning",
       async onSuccess() {
         const result = await cancelDraft(id);
 
         if (!result) return;
-        mutate('/api/dashboard/travel/packets');
-        return toast.success('Paket Berhasil Dihapus!');
+
+        if (publishPage !== 1 && index === 1) decPage("publish");
+
+        await mutateArray("/api/dashboard/travel/packets?is_publish=1");
+
+        return toast.success("Paket Berhasil Dihapus!");
       },
     });
   };
 
   if (!data) return;
   return (
-    <Card className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
+    <Card className="p-3 hover:outline hover:outline-1 shadow-md  hover:outline-blue-600">
       <div className="flex justify-between gap-3 items-center">
-        <Image
-          className="rounded object-cover w-[100px] h-[70px] cursor-pointer"
-          onClick={() => handleUrlImage(String(data.title).replaceAll(' ', '-'))}
-          loading={'lazy'}
-          src={data?.galleries[0]?.image_url}
-          alt="Pic 1"
-          height={100}
-          width={100}
-        />
-
-        <div className="flex justify-between">
-          <div className="grid gap-1.5">
-            <Link href={`/paket`} key={index} className="text-sm font-semibold line-clamp-2 hover:text-blue-600">
+        <div className="flex gap-1.5">
+          <Image
+            className="rounded object-cover w-[100px] h-[70px] cursor-pointer"
+            onClick={() =>
+              handleUrlImage(String(data.title).replaceAll(" ", "-"))
+            }
+            loading={"lazy"}
+            src={data?.galleries[0]?.image_url}
+            alt="Pic 1"
+            height={100}
+            width={100}
+          />
+          <div>
+            <Link
+              href={`packet/${data?.id}/draft`}
+              key={index}
+              className="text-sm font-semibold line-clamp-2 hover:text-blue-600"
+            >
               {data.title}
             </Link>
-            <div className="flex justify-between">
-              <span className="text-sm text-orange-400 font-bold">Rp.{data?.variants[0]?.details[0]?.price}</span>
-              <span className="text-sm text-black/60">{data?.variants[0]?.details[2]?.title}</span>
+            <div>
+              <span className="text-sm text-orange-400 font-bold">
+                <NumericFormat
+                  value={data?.variants[0]?.details[0]?.price}
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  prefix="Rp. "
+                  displayType={"text"}
+                />
+              </span>
+              <span className="text-sm text-black/60">
+                {data?.variants[0]?.details[2]?.title}
+              </span>
             </div>
           </div>
+        </div>
+
+        <div className="flex">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant={'ghost'} className="text-lg">
+              <Button variant={"ghost"} className="text-lg">
                 <CiMenuKebab />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={'end'}>
+            <DropdownMenuContent align={"end"}>
               <DropdownMenuLabel>Aksi</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href={'packet/' + data?.id + '/draft'}>Ubah Draft</Link>
+              <DropdownMenuItem
+                onClick={(e) =>
+                  updateAction(e, "packet/" + data?.id + "/draft")
+                }
+              >
+                Ubah Paket
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-red-600" onClick={() => deletePacket(data?.id)}>
+              <DropdownMenuItem
+                className="text-red-600"
+                onClick={() => deletePacket(data?.id)}
+              >
                 Hapus
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -96,7 +165,15 @@ export default function PublishPacket({ data, index }: PacketProps) {
       <div className="my-2">
         <div className="flex justify-between">
           <span className="text-sm">Sisa Seat</span>
-          <span className="text-sm font-bold">{data.quota} Seat</span>
+          <span className="text-sm font-bold">
+            <NumericFormat
+              value={data.quota}
+              thousandSeparator="."
+              displayType="text"
+              decimalSeparator=","
+              suffix=" Seat"
+            />
+          </span>
         </div>
         <Progress className="" value={data.quota} max={data.quota} />
       </div>
@@ -107,12 +184,13 @@ export default function PublishPacket({ data, index }: PacketProps) {
           {formatDate(data.departure_time)}
         </span>
         <span className="text-sm flex gap-2 items-center">
-          {data?.hotels[0]?.class} <FaRegStar className="text-yellow-500" /> <FaHotel />
+          {data?.hotels[0]?.class} <FaRegStar className="text-yellow-500" />{" "}
+          <FaHotel />
         </span>
       </div>
       <div className="flex justify-between my-2">
         <span className="text-sm flex gap-2 items-center">
-          <FaPlaneDeparture /> {data.airlines[0].airline_name}
+          <FaPlaneDeparture /> {data.airlines[0]?.airline_name}
         </span>
         <span className="text-sm flex gap-2 items-center">
           {data.travel_duration} Hari <IoTimeSharp />
@@ -120,9 +198,11 @@ export default function PublishPacket({ data, index }: PacketProps) {
       </div>
       <div className="flex justify-between my-2">
         <span className="text-sm flex gap-2 items-center">
-          <IoLocation /> {data.departings[0].city_name}
+          <IoLocation /> {data.departings[0]?.city_name}
         </span>
-        <span className="text-sm flex gap-2 items-center">{/* {data.feature_detail} <FaBed /> */}</span>
+        <span className="text-sm flex gap-2 items-center">
+          {/* {data.feature_detail} <FaBed /> */}
+        </span>
       </div>
       {/* <div className="flex justify-between items-center my-3">
         <div>

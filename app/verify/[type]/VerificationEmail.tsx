@@ -1,35 +1,40 @@
-'use client';
-import React, { useState } from 'react';
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
-import SubmitButton from '@/components/builder/SubmitButton';
-import { verify } from './action';
-import Alert from '@/components/callback/Alert';
-import { useSession } from 'next-auth/react';
-import { redirect, useRouter } from 'next/navigation';
-import { delay } from '@/lib/Promise/Delay';
-import { toast  } from 'react-toastify';
+"use client";
+import React, { useRef, useState } from "react";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import SubmitButton from "@/components/builder/SubmitButton";
+import { verify } from "./action";
+import Alert from "@/components/callback/Alert";
+import { useSession } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
+import { delay } from "@/lib/Promise/Delay";
+import { toast } from "react-toastify";
 
 const initialState: any = {
-  type: 'success',
-  message: '',
+  type: "success",
+  message: "",
 };
 export default function VerificationEmail({ hash }: { hash: string }) {
   const [state, setState]: any = useState(initialState);
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
   const { update } = useSession();
   const verifyAction = async (formData: FormData) => {
     setState(initialState);
-    const result = await verify(formData, 'email');
+    const result = await verify(formData, "email");
 
     setState(result);
-    
-    if (result?.type !== 'success')
-      {
-        toast.error(result?.message)
-      }
 
-    if (result?.type === 'success') {
-      toast.success('Verifikasi Email Berhasil!');
+    if (result?.type !== "success") {
+      toast.error(result?.message);
+    }
+
+    if (result?.type === "success") {
+      toast.success("Verifikasi Email Berhasil!");
 
       update({
         isEmailVerified: true,
@@ -37,16 +42,20 @@ export default function VerificationEmail({ hash }: { hash: string }) {
       router.refresh();
 
       await delay(1000);
-      router.push('/')
+      router.push("/");
       // ('use server');
       // redirect('/');
     }
   };
   return (
-    <form action={verifyAction} className="flex flex-col gap-3 items-center justify-center my-3">
+    <form
+      action={verifyAction}
+      ref={formRef}
+      className="flex flex-col gap-3 items-center justify-center my-3"
+    >
       {/* {state?.message && <Alert variant={state?.type} message={state?.message} />} */}
       <input type="hidden" name="hash" value={hash} />
-      <input type="hidden" name="type" value={'email'} />
+      <input type="hidden" name="type" value={"email"} />
       <InputOTP maxLength={6} name="token">
         <InputOTPGroup>
           <InputOTPSlot index={0} />

@@ -16,7 +16,13 @@ import {
   MdManageAccounts,
 } from "react-icons/md";
 import { FaGear, FaPerson } from "react-icons/fa6";
-export default function SideBar({ role }: { role: string }) {
+export default function SideBar({
+  role,
+  travelRole,
+}: {
+  role: string;
+  travelRole: any;
+}) {
   const pathname = usePathname();
   const GenerateBar = ({
     url,
@@ -50,7 +56,7 @@ export default function SideBar({ role }: { role: string }) {
     );
   };
   return (
-    <section className="bg-white min-h-svh">
+    <section className="bg-white min-h-svh max-md:hidden">
       <aside className="p-3 sticky top-0">
         <div className="flex flex-col gap-2">
           <span className="text-lg font-bold">Dashboard</span>
@@ -58,7 +64,7 @@ export default function SideBar({ role }: { role: string }) {
           <GenerateBar url="" title="Dashboard">
             <IoMdHome />
           </GenerateBar>
-          {role === "admin" && (
+          {(role === "admin" || role === "staff") && (
             <section className="flex flex-col gap-3">
               <div className="flex flex-col max-md:hidden">
                 <span className="text-sm">Master Data</span>
@@ -85,25 +91,17 @@ export default function SideBar({ role }: { role: string }) {
               <GenerateBar url="/hotels" title="Hotel">
                 <FaHotel />
               </GenerateBar>
-              <div className="flex flex-col max-md:hidden">
-                <span className="text-sm">Master Akun</span>
-                <Separator />
-              </div>
-              <GenerateBar url="/staffs" title="Staff">
-                <MdManageAccounts />
-              </GenerateBar>
-              <div className="flex flex-col max-md:hidden">
-                <span className="text-sm">Travel</span>
-                <Separator />
-              </div>
-              <GenerateBar url="/travel-verification" title="Verifikasi Travel">
-                <MdDomainVerification />
-              </GenerateBar>
-            </section>
-          )}
-
-          {role === "staff" && (
-            <section className="flex flex-col gap-3">
+              {role === "admin" && (
+                <div className="flex flex-col max-md:hidden">
+                  <span className="text-sm">Master Akun</span>
+                  <Separator />
+                </div>
+              )}
+              {role === "admin" && (
+                <GenerateBar url="/staffs" title="Staff">
+                  <MdManageAccounts />
+                </GenerateBar>
+              )}
               <div className="flex flex-col max-md:hidden">
                 <span className="text-sm">Travel</span>
                 <Separator />
@@ -123,11 +121,22 @@ export default function SideBar({ role }: { role: string }) {
               <GenerateBar url="/packet" title="Paket">
                 <MdDomainVerification />
               </GenerateBar>
-              <GenerateBar url="/travels/staffs" title="Staff">
-                <FaPerson />
-              </GenerateBar>
-              <GenerateBar url="/settings" title="Pengaturan">
-                <FaGear />
+              {travelRole !== "staff" && (
+                <GenerateBar url="/travels/staffs" title="Staff">
+                  <FaPerson />
+                </GenerateBar>
+              )}
+              {travelRole !== "staff" && (
+                <GenerateBar url="/settings" title="Pengaturan">
+                  <FaGear />
+                </GenerateBar>
+              )}
+              <div className="flex flex-col max-md:hidden">
+                <span className="text-sm">Monitoring</span>
+                <Separator />
+              </div>
+              <GenerateBar url="/monitoring/packets" title="Paket">
+                <MdDomainVerification />
               </GenerateBar>
             </section>
           )}

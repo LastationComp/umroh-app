@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: 'Hotel | Dashboard - Umroh.ai',
+  title: 'Hotel',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

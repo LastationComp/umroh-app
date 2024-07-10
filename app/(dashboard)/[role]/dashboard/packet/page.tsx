@@ -6,8 +6,11 @@ import { Card, CardTitle } from '@/components/ui/card';
 import Packets from './Packets';
 import LoadingSkeleton from '@/components/Suspense/LoadingSkeleton';
 import LoadingUI from '@/components/Suspense/Loading';
+import { getServerSession } from 'next-auth';
+import { AuthOptions } from '@/app/api/auth/AuthOptions';
 
-export default function Page() {
+export default async function Page() {
+  const session = await getServerSession(AuthOptions);
   return (
     <Card className="flex flex-col gap-3 p-3">
       <section className="flex items-center justify-between">
@@ -15,7 +18,7 @@ export default function Page() {
         <PacketAdd />
       </section>
       <Separator />
-      <Packets />
+      <Packets travel = {session?.user.travel}/>
     </Card>
   );
 }

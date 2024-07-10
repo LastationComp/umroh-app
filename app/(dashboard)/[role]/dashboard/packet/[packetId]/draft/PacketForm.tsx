@@ -24,6 +24,7 @@ import PlanForm from './PlanForm';
 import TermsAndConditions from './TermsAndConditions';
 import VariantsForm from './VariantsForm';
 import { IoMdCloudUpload } from 'react-icons/io';
+import { NumericFormat, PatternFormat } from 'react-number-format';
 export default function PacketForm({
   packet,
   packetId,
@@ -36,7 +37,7 @@ export default function PacketForm({
 }: {
   packet: any;
   packetId: string;
-  packetGalleries: React.ReactNode;
+  packetGalleries?: React.ReactNode;
   packetFacilities: React.ReactNode;
   packetDeparting: React.ReactNode;
   packetHotels: React.ReactNode;
@@ -137,7 +138,18 @@ export default function PacketForm({
             </div>
             <div className="grid gap-1.5 mb-auto">
               <Label htmlFor="quota">Kuota Paket</Label>
-              <Input id="quota" type="number" placeholder="Masukkan Kuota Paket Disini..." name="quota" defaultValue={packet.quota ?? 0} />
+              <NumericFormat
+                customInput={Input}
+                id="quota"
+                allowLeadingZeros={false}
+                valueIsNumericString={true}
+                placeholder="Masukkan Kuota Paket Disini..."
+                defaultValue={packet.quota ?? 0}
+                name="quota"
+                decimalSeparator=","
+                thousandSeparator="."
+              />
+              {/* <Input id="quota" type="number" placeholder="Masukkan Kuota Paket Disini..." name="quota" defaultValue={packet.quota ?? 0} /> */}
             </div>
             <div className="grid gap-1.5 mb-auto">
               <Label htmlFor="departure_time">Waktu Keberangkatan</Label>
@@ -148,7 +160,7 @@ export default function PacketForm({
               <Suspense fallback={<LoadingUI />}>{packetCategories}</Suspense>
             </div>
             <div className="grid gap-1.5 mb-auto relative">
-              <Label htmlFor="description">Description</Label>
+              <Label htmlFor="description">Deskripsi</Label>
               <Textarea id="description" name="description" defaultValue={packet.description} placeholder="Masukkan Deskripsi Paket Kamu..." rows={4}></Textarea>
             </div>
           </section>
@@ -201,9 +213,11 @@ export default function PacketForm({
               <RiDraftLine />
             </SubmitButton>
 
-            <Button type="button" variant={'secondary'} onClick={cancelPacket}>
-              Batal
-            </Button>
+            {!packet?.is_active && (
+              <Button type="button" variant={'secondary'} onClick={cancelPacket}>
+                Batal
+              </Button>
+            )}
           </div>
         </section>
       </form>

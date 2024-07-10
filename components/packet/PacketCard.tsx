@@ -29,9 +29,19 @@ export default function PacketCard({ data, index, props }: PacketProps) {
     router.push('/paket/' + url);
   };
   return (
-    <Card {...props} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
+    <Card {...props} key={index} className="p-3 hover:outline hover:outline-1  shadow-md  hover:outline-blue-600">
       <div className="flex justify-between gap-3 items-center">
-        <Image className="rounded object-cover w-[100px] h-[70px] cursor-pointer" onClick={() => handleUrlImage(String(data.title).replaceAll(' ', '-'))} loading={'lazy'} src={data?.img} alt="Pic 1" height={100} width={100} />
+        <Image
+          className="rounded object-cover w-[100px] h-[70px] cursor-pointer"
+          onClick={() => handleUrlImage(String(data.title).replaceAll(' ', '-'))}
+          loading={'lazy'}
+          src={data?.img}
+          placeholder="blur"
+          blurDataURL={'/api/image/blur?url=' + data?.img}
+          alt="Pic 1"
+          height={100}
+          width={100}
+        />
 
         <div className="flex flex-col">
           <Link href={`/paket/${String(data.title).replaceAll(' ', '-')}`} key={index}>
@@ -98,7 +108,7 @@ export default function PacketCard({ data, index, props }: PacketProps) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <div>
-                  <Favorites />
+                  <Favorites data={data} />
                 </div>
               </TooltipTrigger>
               <TooltipContent className="bg-blue-dark">

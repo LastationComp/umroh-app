@@ -1,8 +1,12 @@
+import getTitleTemplate from '@/lib/Handling/Metadata';
 import { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-  title: 'Blog - umroh.ai',
+  title: {
+    template: getTitleTemplate(),
+    default: 'Blog',
+  },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

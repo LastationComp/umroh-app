@@ -10,15 +10,8 @@ import { useMemo, useReducer } from "react";
 export default function FacilitiesForm({ facilities }: { facilities: any[] }) {
   const [facilitiesData, dispatch] = useReducer(
     arrayReducer,
-    facilities.length !== 0 ? facilities : [{}]
+    facilities.length === 0 ? [{}] : facilities
   );
-
-  const tes = useMemo(() => {
-    dispatch({
-      type: "reFetch",
-      data: facilities,
-    });
-  }, [facilities]);
 
   const addData = () => {
     dispatch({
@@ -31,6 +24,15 @@ export default function FacilitiesForm({ facilities }: { facilities: any[] }) {
       type: "remove",
     });
   };
+
+  useMemo(() => {
+    if (facilities.length === 0) return;
+    dispatch({
+      type: "reFetch",
+      data: facilities,
+    });
+  }, [facilities]);
+
   return (
     <section className="grid md:grid-cols-2 gap-5">
       <section>
