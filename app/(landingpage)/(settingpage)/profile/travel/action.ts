@@ -1,19 +1,19 @@
-"use server";
+'use server';
 
-import { AuthOptions } from "@/app/api/auth/AuthOptions";
-import { newApiFetch } from "@/lib/Fetcher";
-import { getLaravelToken, getUserSession } from "@/lib/Handling/userSession";
-import { getServerSession } from "next-auth";
-import { revalidateTag } from "next/cache";
+import { AuthOptions } from '@/app/api/auth/AuthOptions';
+import { newApiFetch } from '@/lib/Fetcher';
+import { getLaravelToken, getUserSession } from '@/lib/Handling/userSession';
+import { getServerSession } from 'next-auth';
+import { revalidateTag } from 'next/cache';
 
 export async function getTravelProfile() {
   const session = await getServerSession(AuthOptions);
   const travelId = session?.user.travel.id;
   const res = await newApiFetch({
-    url: "/api/profile/travel/" + travelId,
-    token: session?.user.tokenApi ?? "",
+    url: '/api/profile/travel/' + travelId,
+    token: session?.user.tokenApi ?? '',
     options: {
-      tag: ["travel-profile"],
+      tag: ['travel-profile'],
     },
   });
 
@@ -25,7 +25,7 @@ export async function getTravelProfile() {
 export async function getCountries() {
   const token = await getLaravelToken();
   const res = await newApiFetch({
-    url: "/api/data/countries",
+    url: '/api/data/countries',
     token: token,
   });
 
@@ -37,7 +37,7 @@ export async function getProvinces() {
   const token = await getLaravelToken();
 
   const res = await newApiFetch({
-    url: "/api/data/provinces",
+    url: '/api/data/provinces',
     token: token,
   });
 
@@ -48,7 +48,7 @@ export async function getProvinces() {
 export async function getCities() {
   const token = await getLaravelToken();
   const res = await newApiFetch({
-    url: "/api/data/cities",
+    url: '/api/data/cities',
     token: token,
   });
 
@@ -59,12 +59,13 @@ export async function getCities() {
 export async function saveTravelProfile(formData: FormData) {
   const user = await getUserSession();
   const res = await newApiFetch({
-    url: "/api/profile/travel/" + user?.travel.id,
-    token: user?.tokenApi ?? "",
-    method: "POST",
+    url: '/api/profile/travel/' + user?.travel.id,
+    token: user?.tokenApi ?? '',
+    method: 'POST',
     body: formData,
   });
 
-  revalidateTag("travel-profile");
+  revalidateTag('travel-profile');
+  // console.log(await res.json());
   return res.json();
 }

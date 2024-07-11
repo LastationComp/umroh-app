@@ -8,6 +8,7 @@ import { IoLocation } from 'react-icons/io5';
 import Autoplay from 'embla-carousel-autoplay';
 import PopupSliders from '@/components/images/PopupSliders';
 import GetHotelFacilities from '@/components/facilities/GetHotelFacilities';
+import LazyImage from '@/components/images/LazyImage';
 
 export default function HotelCard({ hotel }: { hotel: any }) {
   const [slide, setSlide] = useState(0);
@@ -46,7 +47,7 @@ export default function HotelCard({ hotel }: { hotel: any }) {
               {hotel?.hotel_gallery.map((image: any, index: number) => (
                 <CarouselItem key={index} className="basis-1/1 md:basis-1/2 lg:basis-1/3 lg:basis-1/6  flex justify-center">
                   <div className="p-3 bg-white shadow border border-1 flex items-center">
-                    <Image
+                    <LazyImage
                       src={image.image}
                       className=" rounded transition border-black w-[150px] h-auto cursor-pointer"
                       onClick={() => {

@@ -1,19 +1,17 @@
-import TopCarousel from "./TopCarousel";
-import FeaturesContent from "./FeaturesContent";
-import StoryContent from "./StoryContent";
-import CoverContent from "./CoverContent";
-import FAQContent from "./FAQContent";
-import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import LoadingUI from "@/components/Suspense/Loading";
-import Search from "./Search";
-import Partner from "./Partner";
-import Gallery from "./Gallery";
-import { Button } from "@/components/ui/button";
 
-const FeatureContent = dynamic(() => import("./FeaturesContent"), {
-  loading: () => <LoadingUI />,
-});
+import TopCarousel from './TopCarousel';
+import FeaturesContent from './FeaturesContent';
+import StoryContent from './StoryContent';
+import CoverContent from './CoverContent';
+import FAQContent from './FAQContent';
+import { Suspense } from 'react';
+import LoadingUI from '@/components/Suspense/Loading';
+import Search from './Search';
+import Partner from './Partner';
+import Gallery from './Gallery';
+import { Button } from '@/components/ui/button';
+
+// export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   return (
@@ -32,7 +30,9 @@ export default async function Home() {
       </div>
 
       <div className="md:container grid gap-3">
-        <FeatureContent />
+        <Suspense fallback={<LoadingUI />}>
+          <FeaturesContent />
+        </Suspense>
       </div>
 
       <div className="flex justify-center">
@@ -45,10 +45,8 @@ export default async function Home() {
       </div>
 
       <section className="flex justify-center my-3">
-        <Button variant={"ghost"} className="hover:bg-blue-dark/200">
-          <span className="text-blue-dark  font-semibold">
-            Lihat Lebih Banyak {">"}
-          </span>
+        <Button variant={'ghost'} className="hover:bg-blue-dark/200">
+          <span className="text-blue-dark  font-semibold">Lihat Lebih Banyak {'>'}</span>
         </Button>
       </section>
 

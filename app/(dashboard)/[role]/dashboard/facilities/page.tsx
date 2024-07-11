@@ -12,6 +12,7 @@ export default function FacilitiesPage() {
         <div className="flex justify-between">
           <span className="font-bold">Data Fasilitas</span>
           <FormBuilder
+            formName="Fasilitas"
             endpoint="/api/dashboard/facilities"
             refreshEndpoint="/api/dashboard/facilities"
             forms={[
@@ -36,7 +37,6 @@ export default function FacilitiesPage() {
           <ScrollBar orientation={'horizontal'} />
         </ScrollArea>
       </CardContent>
-
     </Card>
   );
 }

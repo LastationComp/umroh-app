@@ -18,6 +18,7 @@ export default function ProfileMenu({ session }: { session: Session }) {
   const handleLogout = async (formData: FormData) => {
     const res = await Logout(formData);
     if (!res) return;
+    await router.refresh();
     await signOut({ redirect: true, callbackUrl: '/' });
   };
   const getAvatarUser = () => {

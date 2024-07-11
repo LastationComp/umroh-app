@@ -48,15 +48,15 @@ export default function DeleteButton({ endpoint = '', refreshEndpoint }: FormBui
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg max-md:scale-95">
           <DialogHeader>Hapus Data</DialogHeader>
+          <span className="">Anda yakin ingin menghapus data ini?</span>
           <Separator />
           {state?.message && <Alert variant={state.type} message={state?.message} />}
           <form action={handleFormAction} method="post" className="grid gap-3">
-            <span className="flex justify-center">Anda yakin ingin menghapus data ini?</span>
-            <div className="flex justify-end gap-3">
-              <SubmitButton>Hapus</SubmitButton>
+            <div className="flex justify-between gap-3">
               <Button type="reset" variant={'outline'} onClick={handleOpenCloseFormAdd}>
                 Batal
               </Button>
+              <SubmitButton>Hapus</SubmitButton>
             </div>
           </form>
         </DialogContent>
