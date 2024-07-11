@@ -1,27 +1,17 @@
-"use client";
-import React, { useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
-import { Button } from "../ui/button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightLeft } from "@fortawesome/free-solid-svg-icons";
-import { usePathname, useRouter } from "next/navigation";
-import { checkCompare, Compare } from "./action";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import Link from "next/link";
-import { useComparison } from "@/lib/Zustands/User/Comparison";
-import nProgress from "nprogress";
-import { getUserRole } from "@/app/_actions/Authentication";
-import { toast } from "react-toastify";
+'use client';
+import React, { useState } from 'react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../ui/tooltip';
+import { Button } from '../ui/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
+import { usePathname, useRouter } from 'next/navigation';
+import { checkCompare, Compare } from './action';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import Link from 'next/link';
+import { useComparison } from '@/lib/Zustands/User/Comparison';
+import nProgress from 'nprogress';
+import { getUserRole } from '@/app/_actions/Authentication';
+import { toast } from 'react-toastify';
 
 interface CompareProps {
   id?: string;
@@ -31,15 +21,8 @@ interface CompareProps {
   logged?: boolean;
   children?: React.ReactNode;
 }
-export default function CompareButton({
-  id,
-  slug,
-  title,
-  compared = false,
-  logged = false,
-  children,
-}: CompareProps) {
-  const [isCompared, setIsCompared] = useState(compared);
+export default function CompareButton({ id, slug, title, compared = false, logged = false, children }: CompareProps) {
+  const [isCompared, setIsCompared] = useState(compared ?? false);
   const [openDialog, setOpenDialog] = useState(false);
   const { incCount, decCount } = useComparison();
   const pathname = usePathname();
@@ -47,15 +30,15 @@ export default function CompareButton({
   const handleButton = async () => {
     if (!logged) {
       nProgress.start();
-      return router.push("/masuk");
+      return router.push('/masuk');
     }
 
     if (!isCompared) {
-      Compare(pathname + "/" + slug, id, "attachment");
+      Compare(pathname + '/' + slug, id, 'attachment');
       incCount();
     }
     if (isCompared) {
-      Compare(pathname + "/" + slug, id, "detachment");
+      Compare(pathname + '/' + slug, id, 'detachment');
       decCount();
     }
 
@@ -79,8 +62,8 @@ export default function CompareButton({
           </DialogHeader>
           <div className="flex gap-3 max-md:flex-col">
             <Button onClick={handleCloseDialog}>Lanjut Mencari Paket</Button>
-            <Button variant={"outline"} asChild>
-              <Link href={"/perbandingan"}>Ke Perbandingan Paket</Link>
+            <Button variant={'outline'} asChild>
+              <Link href={'/perbandingan'}>Ke Perbandingan Paket</Link>
             </Button>
           </div>
         </DialogContent>
@@ -88,11 +71,7 @@ export default function CompareButton({
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant={isCompared ? "default" : "outline"}
-              className="flex items-center justify-center gap-1.5"
-              onClick={handleButton}
-            >
+            <Button variant={isCompared ? 'default' : 'outline'} className="flex items-center justify-center gap-1.5" onClick={handleButton}>
               <FontAwesomeIcon icon={faRightLeft} />
               {children}
             </Button>

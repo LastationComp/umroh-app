@@ -28,7 +28,7 @@ export default function Page({
   };
 }) {
   return (
-    <section>
+    <Card className="p-3">
       <span className=" font-bold">Pencarian Paket</span>
       <div className="grid grid-cols-12 grid-flow-row gap-3">
         <Card className=" col-span-2 rounded max-lg:hidden shadow-md p-3 ">
@@ -36,7 +36,7 @@ export default function Page({
           <Separator />
           <SearchFilter />
         </Card>
-        <Card className="col-span-10 row-span-12 max-lg:col-span-12 rounded shadow-md p-3 ">
+        <section className="col-span-10 row-span-12 max-lg:col-span-12 rounded ">
           <div className="flex flex-col gap-3">
             <div className="flex max-md:flex-col md:justify-between md:gap-10 items-center w-full">
               <div className="flex gap-3 w-full md:w-1/2">
@@ -78,8 +78,8 @@ export default function Page({
               <SearchContent query={searchParams?.q ?? ''} />
             </Suspense>
           </div>
-        </Card>
+        </section>
       </div>
-    </section>
+    </Card>
   );
 }

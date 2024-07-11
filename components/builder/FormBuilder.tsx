@@ -38,6 +38,7 @@ export interface FormBuilderProps {
   forms: FormBuilderForms[];
   endpoint?: string;
   type?: 'Edit' | 'Add';
+  formName?: string;
   refreshEndpoint?: string;
   refreshServer?: boolean;
 }
@@ -48,7 +49,7 @@ const initialState = {
   message: '',
 };
 
-export default function FormBuilder({ forms, endpoint, type = 'Add', refreshEndpoint = '', refreshServer = false }: FormBuilderProps) {
+export default function FormBuilder({ forms, endpoint, type = 'Add', refreshEndpoint = '', refreshServer = false, formName = 'Data' }: FormBuilderProps) {
   const [open, setOpen] = useState(false);
   const [allSelectData, setAllSelectData]: any = useState([]);
   const router = useRouter();
@@ -101,7 +102,7 @@ export default function FormBuilder({ forms, endpoint, type = 'Add', refreshEndp
       {type === 'Add' && (
         <Button className="flex items-center gap-3" onClick={handleOpenCloseFormAdd}>
           <IoAddOutline />
-          Tambah Data
+          Tambah {formName}
         </Button>
       )}
       {type === 'Edit' && (
@@ -112,7 +113,9 @@ export default function FormBuilder({ forms, endpoint, type = 'Add', refreshEndp
       )}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg max-md:scale-95">
-          <DialogHeader>{getHeaderType()} Data</DialogHeader>
+          <DialogHeader>
+            {getHeaderType()} {formName}
+          </DialogHeader>
           <Separator />
           {state?.message && <Alert variant={state.type} message={state?.message} />}
           <form action={handleFormAction} className="grid gap-3">

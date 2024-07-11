@@ -1,19 +1,13 @@
 'use client';
 import Favorites from '@/components/order/Favorites';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription } from '@/components/ui/card';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Carousel as ShadCarousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { formatRupiah } from '@/lib/String/RupiahFormat';
-import { faArrowsLeftRight, faLeftRight, faRightLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { url } from 'inspector';
 import Image from 'next/image';
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { FaClock, FaHotel, FaLocationArrow, FaPlaneDeparture, FaPlus, FaRegBookmark, FaRegCalendarAlt, FaRegHeart, FaStar } from 'react-icons/fa';
@@ -21,16 +15,7 @@ import { FiShoppingCart } from 'react-icons/fi';
 import PopupSliders from '@/components/images/PopupSliders';
 import { formatDate } from '@/lib/Parser/DateFormat';
 import CompareButton from '@/components/packet/CompareButton';
-
-const responsive = {
-  mobile: {
-    breakpoint: { max: 3000, min: 0 },
-    items: 1,
-    slideToSlide: 1,
-  },
-};
-
-export default function PacketDetailPage({ data }: { data: any }) {
+export default function PacketDetailPage({ data, userRole = 'subscriber' }: { data: any; userRole?: string }) {
   const [list, setList] = useState('');
   const [qty, setQty] = useState(1);
   const [openImage, setOpenImage] = useState(false);
@@ -68,7 +53,7 @@ export default function PacketDetailPage({ data }: { data: any }) {
     <Card className="p-5 gap-5">
       <PopupSliders data={imagesData} currentSlide={slide} open={openImage} onOpenChange={setOpenImage} />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <ShadCarousel className="w-full flex justify-center place-self-center">
+        <ShadCarousel className="w-full flex justify-center items-center">
           <CarouselPrevious />
           <CarouselContent
             className="cursor-pointer"
@@ -83,13 +68,16 @@ export default function PacketDetailPage({ data }: { data: any }) {
                   setSlide(index);
                   setOpenImage(!openImage);
                 }}
+                className="my-auto"
               >
                 <Image
                   src={image.image_url}
                   alt={image.title}
                   placeholder="blur"
-                  objectFit={'cover'}
-                  blurDataURL={'/api/image/blur?url=' + image.image_url}
+                  style={{
+                    maxHeight: '400px',
+                  }}
+                  blurDataURL={'/api/image/blur'}
                   title={data?.title}
                   className="w-[600px] object-cover"
                   loading={'lazy'}
@@ -105,14 +93,17 @@ export default function PacketDetailPage({ data }: { data: any }) {
         <div className="flex flex-col gap-5">
           <div className="flex justify-between items-center">
             <span className="text-xl font-bold">{data.title}</span>
-            <div className="mb-auto">
-              <Favorites />
-            </div>
+
+            {userRole === 'subscriber' && (
+              <div className="mb-auto">
+                <Favorites />
+              </div>
+            )}
           </div>
           {!list && (
             <span className="text-xl font-semibold flex items-center gap-3 font-bold">
-              {formatRupiah(Math.min(...allPrice))} - {formatRupiah(Math.max(...allPrice))} <Separator orientation={'vertical'} />
-              {Boolean(data?.is_syariah) && <Badge>Pembayaran Syariah</Badge>}
+              {formatRupiah(Math.min(...allPrice))} - {formatRupiah(Math.max(...allPrice))}
+              {/* {Boolean(data?.is_syariah) && <Badge>Pembayaran Syariah</Badge>} */}
             </span>
           )}
           {list &&
@@ -120,8 +111,8 @@ export default function PacketDetailPage({ data }: { data: any }) {
               .filter((price: any) => price.name.toLowerCase() === list.toLowerCase())
               .map((price: any, index: number) => (
                 <span key={index} className="text-xl font-semibold flex items-center gap-3 font-bold fw-800">
-                  {formatRupiah(price.price)} <Separator orientation={'vertical'} />
-                  {Boolean(data?.is_syariah) && <Badge>Pembayaran Syariah</Badge>}
+                  {formatRupiah(price.price)}
+                  {/* {Boolean(data?.is_syariah) && <Badge>Pembayaran Syariah</Badge>} */}
                 </span>
               ))}
           <Separator />
@@ -166,6 +157,7 @@ export default function PacketDetailPage({ data }: { data: any }) {
           </div>
 
           <Separator />
+          {!list && userRole === 'subscriber' && <span className="text-red-600 text-sm">Pilih paket utama untuk memesan</span>}
           {data?.variants.filter(isPrimary).map((variant: any, index: number) => (
             <div className="flex items-center gap-5" key={index}>
               <span>{variant.title}</span>
@@ -228,28 +220,32 @@ export default function PacketDetailPage({ data }: { data: any }) {
             </div>
             <Progress value={Math.floor(data?.quota / 2)} max={data?.quota} />
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm">Jumlah Paket</span>
-            <Separator orientation="vertical" />
-            <Button variant={'outline'} size={'sm'} onClick={() => setQty((qty) => qty - 1)} disabled={qty <= 1}>
-              -
-            </Button>
-            <span className="text-sm">{qty}</span>
-            <Button variant={'outline'} size={'sm'} onClick={() => setQty((qty) => qty + 1)}>
-              +
-            </Button>
-          </div>
-          <div className="flex gap-3 items-center flex-wrap">
-            <CompareButton compared={data?.is_compared} id={data?.id} slug={data?.slug} title={data?.title}>
-              Bandingkan
-            </CompareButton>
-            {/* <Button variant={'secondary'} className="flex items-center gap-3" disabled={!list}>
+          {userRole === 'subscriber' && (
+            <div className="flex items-center gap-3">
+              <span className="text-sm">Jumlah Paket</span>
+              <Separator orientation="vertical" />
+              <Button variant={'outline'} size={'sm'} onClick={() => setQty((qty) => qty - 1)} disabled={qty <= 1}>
+                -
+              </Button>
+              <span className="text-sm">{qty}</span>
+              <Button variant={'outline'} size={'sm'} onClick={() => setQty((qty) => qty + 1)}>
+                +
+              </Button>
+            </div>
+          )}
+          {userRole === 'subscriber' && (
+            <div className="flex gap-3 items-center flex-wrap">
+              <CompareButton compared={data?.is_compared} id={data?.id} slug={data?.slug} title={data?.title}>
+                Bandingkan
+              </CompareButton>
+              {/* <Button variant={'secondary'} className="flex items-center gap-3" disabled={!list}>
               <MdGroup /> Pesan Group
             </Button> */}
-            <Button className="flex items-center gap-3" disabled={!list}>
-              <FiShoppingCart /> Pesan Paket
-            </Button>
-          </div>
+              <Button className="flex items-center gap-3" disabled={!list}>
+                <FiShoppingCart /> Pesan Paket
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </Card>

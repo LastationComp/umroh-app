@@ -53,10 +53,10 @@ export default function DeleteButton({ endpoint = '', children, message, refresh
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg max-md:scale-95">
           <DialogHeader>Hapus Data</DialogHeader>
+          <span className="flex justify-center">{message ?? 'Anda yakin ingin menghapus data ini?'}</span>
           <Separator />
           {/* {state?.message && <Alert variant={state.type} message={state?.message} />} */}
           <form action={handleFormAction} method="post" className="grid gap-3">
-            <span className="flex justify-center">{message ?? 'Anda yakin ingin menghapus data ini?'}</span>
             <div className="flex justify-end gap-3">
               <SubmitButton variant={'destructive'}>Hapus</SubmitButton>
               <Button type="reset" variant={'outline'} onClick={handleOpenCloseFormAdd}>

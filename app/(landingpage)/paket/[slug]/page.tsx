@@ -10,12 +10,14 @@ import TravelReviews from './TravelReviews';
 import OtherPacketLists from './OtherPacketLists';
 import LoadingUI from '@/components/Suspense/Loading';
 import { getPacketBySlug } from '../action';
+import { getUserRole } from '@/app/_actions/Authentication';
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const packet = await getPacketBySlug(params.slug);
+  const userRole = await getUserRole();
   return (
     <section className=" md:container md:mx-auto">
-      <PacketDetailPage data={packet.data} />
+      <PacketDetailPage data={packet.data} userRole={userRole} />
       <TravelProfile travel={packet.data.travel} />
       <Facilities fac={packet.data.facilities} />
       <Hotels data={packet.data.hotels} />
@@ -23,9 +25,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <TimeLine data={packet.data.plans} />
       <TermsAndConditions data={packet.data.terms_conditions} />
       <TravelReviews />
-      {/* <Suspense fallback={<LoadingUI />}>
+      <Suspense fallback={<LoadingUI />}>
         <OtherPacketLists />
-      </Suspense> */}
+      </Suspense>
     </section>
   );
 }

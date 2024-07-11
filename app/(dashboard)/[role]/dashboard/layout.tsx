@@ -18,13 +18,12 @@ export const metadata: Metadata = {
 export default async function Layout({ children, params }: { children: React.ReactNode; params: { role: string } }) {
   const session = await getServerSession(AuthOptions);
   return (
-    <section className="flex items-stretch justify-stretch relative divide-x">
+    <section className="flex items-stretch justify-stretch relative divide-x bg-tacao">
       <SideBar role={params.role} travelRole={session?.user.travel.role} />
       <div className="flex-1 flex-col relative">
         <DashboardNavbar role={params.role} session={session} />
         <section className="p-3">{children}</section>
       </div>
-      {/* <ToastContainer position={'top-center'} theme="colored" /> */}
     </section>
   );
 }
