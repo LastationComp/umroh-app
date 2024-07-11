@@ -7,7 +7,7 @@ import LoadingSingleSkeleton from '@/components/Suspense/LoadingSingleSkeleton';
 import TravelPacketCard from '@/components/packet/TravelPacketCard';
 import { useSearchPacket } from '@/lib/Zustands/LandingPage/SearchPacket';
 import { useComparison } from '@/lib/Zustands/User/Comparison';
-export default function PacketContent({ data, userRole }: { data: any; userRole: any }) {
+export default function PacketContent({ data, userRole, q = '' }: { data: any; userRole: any; q: string }) {
   const [packetData, setPacketData]: any = useState(data?.data);
   const page = useSearchPacket((state) => state.page);
   const incPage = useSearchPacket((state) => state.incPage);
@@ -19,6 +19,7 @@ export default function PacketContent({ data, userRole }: { data: any; userRole:
     startTransition(async () => {
       const result = await getPackets({
         page: page,
+        q: q,
       });
       setPacketData([...packetData, ...result.data]);
       setHasMoreData(!!result?.next_page_url);

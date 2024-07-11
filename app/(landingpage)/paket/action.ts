@@ -19,17 +19,32 @@ export async function getPackets(query: any = {}) {
     page: query.page,
     paginate: 6,
     q: query.q,
+    category: query.category,
+    location: query.location,
+    depart: query.depart,
+    price: query.price
   });
   const res = await newApiFetch({
     url: '/api/public/travel-packets' + queryParams,
     token: token,
-    options: {
-      tag: ['public-travel-packets'],
-    },
+    // options: {
+    //   tag: ['public-travel-packets'],
+    // },
   });
 
   const result = await res.json();
   return result.data;
+}
+
+export async function getPacketFilters() {
+  const res = await newApiFetch({
+    url: '/api/public/travel-packets/filters',
+    token: '',
+  });
+
+  const result = await res.json();
+
+  return result;
 }
 
 export async function getPacketNameBySlug(slug: string) {
